@@ -43,7 +43,6 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
   }
   .layout-header-dark {
     position: -webkit-sticky;
@@ -58,7 +57,6 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
   }
   .styled-link {
     display: flex;

@@ -47,6 +47,7 @@
   }
   .slot-wrapper {
     margin: 4rem 4rem;
+    min-height: 100vh;
   }
   .layout-grid {
     display: grid;
