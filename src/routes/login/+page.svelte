@@ -29,7 +29,7 @@
 </svelte:head>
 
 <div>
-  <h1>Use your email to login.</h1>
+  <h1>Logged in. Continue here or on new tab.</h1>
   {#if !data.session}
     <div style="width: 15rem;" class="card">
       <div class="input-group">
