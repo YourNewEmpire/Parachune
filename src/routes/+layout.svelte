@@ -42,15 +42,15 @@
   .main-light {
     background-color: #fff;
     color: #000;
+    min-height: 100vh;
   }
   .main-dark {
     background-color: #000;
     color: #fff;
+    min-height: 100vh;
   }
   .slot-wrapper {
     margin: 4rem 4rem;
-    border: 1px solid red;
-    min-height: 100svh;
   }
   .layout-grid {
     display: grid;
