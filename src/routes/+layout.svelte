@@ -21,10 +21,10 @@
   <title>Connected Music</title>
 </svelte:head>
 <div>
+  <Menu />
   <div class="layout-grid">
-    <Menu />
     <div class="desktop-header">
-      <Header />
+      <Header open={false} />
     </div>
     <Player />
     <div class="main-{$theme}">
@@ -49,6 +49,7 @@
   }
   .slot-wrapper {
     margin: 4rem 4rem;
+    border: 1px solid red;
     min-height: 100svh;
   }
   .layout-grid {

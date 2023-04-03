@@ -1,4 +1,7 @@
 <script>
+  import ThemeSwitch from "./themeSwitch.svelte";
+  import { theme } from "./stores";
+  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     UserCircle,
@@ -7,21 +10,28 @@
     CircleStack,
   } from "svelte-hero-icons";
 
-  import ThemeSwitch from "./themeSwitch.svelte";
-  import { theme } from "./stores";
+  const dispatch = createEventDispatcher();
+  export let open;
+  function closeMenu() {
+    if (open) {
+      dispatch("closemenu", {
+        menu: false,
+      });
+    }
+  }
 </script>
 
 <header class="layout-header-{$theme}">
-  <a class="styled-link" href="/account"
+  <a on:click={closeMenu} class="styled-link" href="/account"
     ><Icon class="icon" src={UserCircle} />Your Profile</a
   >
-  <a class="styled-link" href="/discover"
+  <a on:click={closeMenu} class="styled-link" href="/discover"
     ><Icon class="icon" src={MagnifyingGlass} />Find Music</a
   >
-  <a class="styled-link" href="/account/music"
+  <a on:click={closeMenu} class="styled-link" href="/account/music"
     ><Icon class="icon" src={CircleStack} />Your Music</a
   >
-  <a class="styled-link" href="/account/saved"
+  <a on:click={closeMenu} class="styled-link" href="/account/saved"
     ><Icon class="icon" src={Star} />Saved Music</a
   >
   <!-- Perhaps causing the laggy 100vh  -->

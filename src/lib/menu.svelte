@@ -29,6 +29,9 @@
   }
 
   let menuVisible = false;
+  function handleLinkClick(event) {
+    menuVisible = event.detail.menu;
+  }
 </script>
 
 <div
@@ -44,10 +47,10 @@
     </button>
   </div>
   {#if menuVisible}
-    <div transition:fly={{ x: -300, duration: 500 }} class="header-wrapper">
-      <Header />
+    <div transition:fly={{ x: -300, duration: 200 }} class="header-wrapper">
+      <Header on:closemenu={handleLinkClick} open={menuVisible} />
     </div>
-    <div transition:fly={{ x: -300, duration: 500 }} class="close-menu-btn">
+    <div transition:fly={{ x: -300, duration: 200 }} class="close-menu-btn">
       <button
         on:click={() => {
           menuVisible = false;
