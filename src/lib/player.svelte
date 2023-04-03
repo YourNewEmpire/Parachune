@@ -26,6 +26,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    border-radius: 1rem 100px 10px 0px;
     background-color: blueviolet;
   }
 </style>

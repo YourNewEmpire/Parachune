@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import { songsQueued, songSelectedUrl } from "$lib/stores";
+  import Playbutton from "$lib/playbutton.svelte";
   export let data: PageData;
   let { dbData } = data;
   const playSong = (newUrl: string) => {
@@ -15,8 +16,12 @@
   <h1>find music</h1>
   {#each dbData as song}
     <div class="card">
-      {song.name}
-      <button on:click={() => playSong(song.song_url)}>Play Song</button>
+      <div class="row-container">
+        <div>
+          <Playbutton songUrl={song.song_url} />
+        </div>
+        <p>{song.name}</p>
+      </div>
     </div>
   {/each}
   {#each $songsQueued as item}

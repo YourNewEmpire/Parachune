@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import ThemeSwitch from "./themeSwitch.svelte";
   import { theme } from "./stores";
   import { createEventDispatcher } from "svelte";
@@ -11,7 +11,7 @@
   } from "svelte-hero-icons";
 
   const dispatch = createEventDispatcher();
-  export let open;
+  export let open: boolean;
   function closeMenu() {
     if (open) {
       dispatch("closemenu", {
