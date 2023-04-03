@@ -24,6 +24,7 @@
   <a class="styled-link" href="/account/saved"
     ><Icon class="icon" src={Star} />Saved Music</a
   >
+  <!-- Perhaps causing the laggy 100vh  -->
   <div style="margin-top: auto;">
     <ThemeSwitch />
   </div>
@@ -31,10 +32,12 @@
 
 <style>
   .layout-header-light {
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
+    width: 250px;
     top: 0;
-    height: 100vh;
+    bottom: 0;
+    left: 0;
+    min-height: 100svh;
     background-color: rgba(210, 210, 210, 1);
     color: #000;
     font-size: 1rem;
@@ -45,10 +48,12 @@
     flex-direction: column;
   }
   .layout-header-dark {
-    position: -webkit-sticky;
-    position: sticky;
+    position: fixed;
+    width: 250px;
     top: 0;
-    height: 100vh;
+    bottom: 0px;
+    left: 0;
+    min-height: 100svh;
     background-color: rgba(38, 30, 30, 1);
     color: #ddd;
     font-size: 1rem;
@@ -72,14 +77,5 @@
   .styled-link:hover {
     background-color: #856bdc;
     box-shadow: 0px 0px 8px #856bdc;
-  }
-
-  @media only screen and (min-width: 320px) and (max-width: 768px) {
-    .layout-header-light {
-      font-size: 0.75rem;
-    }
-    .layout-header-dark {
-      font-size: 0.75rem;
-    }
   }
 </style>

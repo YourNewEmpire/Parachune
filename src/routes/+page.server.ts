@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({
     .eq("id", session?.user.id)
     .single();
   message = `Welcome ${
-    profile?.username ?? session?.user.email
+    profile?.username ?? session?.user.email ?? "Newcomer"
   }. This project is a spotify clone, where you create an account, upload for free, and can donate to eachother. 
   Navigate to Account to start uploading music.`;
   return {

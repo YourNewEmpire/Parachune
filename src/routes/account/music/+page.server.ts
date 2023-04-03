@@ -8,7 +8,9 @@ type SongRow = {
   name: string | null;
   song_url: string | null;
 };
-export const load = (async ({ locals: { supabase, getSession } }) => {
+export const load: PageServerLoad = async ({
+  locals: { supabase, getSession },
+}) => {
   const session = await getSession();
 
   if (!session) {
@@ -32,7 +34,7 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
   //? So hard to type the data from supabase db fetch. Need help tbh.
   let dbData: SongRow[] = [].concat(dbFetch);
   return { session, profile, dbData };
-}) satisfies PageServerLoad;
+};
 
 export const actions = {
   uploadSong: async ({ request, locals: { supabase, getSession } }) => {

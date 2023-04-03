@@ -29,8 +29,9 @@
 </svelte:head>
 
 <div>
-  <h1>Logged in. Continue here or on new tab.</h1>
-  {#if !data.session}
+  {#if data.session}
+    <h1>Logged in. Continue here or on new tab.</h1>
+  {:else}
     <div style="width: 15rem;" class="card">
       <div class="input-group">
         <input

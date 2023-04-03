@@ -88,6 +88,7 @@
 
   <div class="card">
     <h1>your music</h1>
+    <a href="/account/upload"> Upload more</a>
   </div>
 </div>
 

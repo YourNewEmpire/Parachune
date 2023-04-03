@@ -37,7 +37,6 @@ export const actions = {
     const songFile = formData.get("song") as File;
     const songName = formData.get("songName") as string;
     if (songName.length < 1) {
-      console.log("hello");
       return fail(400, {
         message: "Song name too short, at least 1 char please",
       });
@@ -50,28 +49,28 @@ export const actions = {
     const fileExt = songFile.name.split(".").pop();
     let url = `${songName}.${fileExt}`;
     // //? Upload and insert to supabase
-    // const { data, error } = await supabase.storage
-    //   .from("songs")
-    //   .upload(url, songFile);
-    // if (error) {
-    //   console.log(error);
-    //   return {
-    //     message: "Error when attempting upload to storage bucket, try again",
-    //   };
-    // }
-    // const { data: dbData, error: dbError } = await supabase
-    //   .from("songs")
-    //   .insert([
-    //     {
-    //       name: songName,
-    //       artist: profile?.username,
-    //       song_url: url,
-    //     },
-    //   ]);
-    // if (dbError) {
-    //   console.log(dbError);
-    //   return fail(400, { message: "Failed to set DB entry, try again." });
-    // }
+    const { data, error } = await supabase.storage
+      .from("songs")
+      .upload(url, songFile);
+    if (error) {
+      console.log(error);
+      return {
+        message: "Error when attempting upload to storage bucket, try again",
+      };
+    }
+    const { data: dbData, error: dbError } = await supabase
+      .from("songs")
+      .insert([
+        {
+          name: songName,
+          artist: profile?.username,
+          song_url: url,
+        },
+      ]);
+    if (dbError) {
+      console.log(dbError);
+      return fail(400, { message: "Failed to set DB entry, try again." });
+    }
     //? No errors were caught, so return good
     return {
       message: "Song complete, check Your Music",

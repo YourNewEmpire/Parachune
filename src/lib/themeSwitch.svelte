@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Icon, Moon, Sun } from "svelte-hero-icons";
-  import { theme } from "./stores";
+  import { theme } from "$lib/stores";
   function handleClick() {
     $theme === "dark" ? theme.set("light") : theme.set("dark");
   }
