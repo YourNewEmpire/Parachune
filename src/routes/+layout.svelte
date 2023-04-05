@@ -26,7 +26,7 @@
     <div class="desktop-header">
       <Header open={false} />
     </div>
-    <Player />
+    <Player sClient={supabase} />
     <div class="main-{$theme}">
       <div class="slot-wrapper">
         <slot />
@@ -84,6 +84,7 @@
       display: none;
     }
   }
+
   /* @media only screen and (min-width: 1440px) {
     .layout-grid {
       grid-template-columns: 2fr 12fr;

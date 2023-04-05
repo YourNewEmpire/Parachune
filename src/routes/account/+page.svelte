@@ -71,7 +71,7 @@
         <div>
           <input
             type="submit"
-            class="button block primary"
+            class="styled-button"
             value={loading ? "Loading..." : "Update"}
             disabled={loading}
           />
@@ -81,7 +81,12 @@
         <div>Profile Updated</div>
       {/if}
       <form method="post" action="?/signout&redirectTo=/">
-        <button type="submit" disabled={loading}>Sign Out</button>
+        <button
+          style="margin-left: auto;"
+          class="styled-button"
+          type="submit"
+          disabled={loading}>Sign Out</button
+        >
       </form>
     </div>
   </div>

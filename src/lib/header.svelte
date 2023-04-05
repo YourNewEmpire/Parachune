@@ -31,9 +31,9 @@
   <a on:click={closeMenu} class="styled-link" href="/account/music"
     ><Icon class="icon" src={CircleStack} />Your Music</a
   >
-  <a on:click={closeMenu} class="styled-link" href="/account/saved"
+  <!-- <a on:click={closeMenu} class="styled-link" href="/account/saved"
     ><Icon class="icon" src={Star} />Saved Music</a
-  >
+  > -->
   <!-- Perhaps causing the laggy 100vh  -->
   <div style="margin-top: auto;">
     <ThemeSwitch />
