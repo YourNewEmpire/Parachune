@@ -8,6 +8,7 @@
     MagnifyingGlass,
     Star,
     CircleStack,
+    Home,
   } from "svelte-hero-icons";
 
   const dispatch = createEventDispatcher();
@@ -22,15 +23,18 @@
 </script>
 
 <header class="layout-header-{$theme}">
+  <a on:click={closeMenu} class="styled-link" href="/"
+    ><Icon class="icon" src={Home} />Home
+  </a>
   <a on:click={closeMenu} class="styled-link" href="/account"
-    ><Icon class="icon" src={UserCircle} />Your Profile</a
-  >
+    ><Icon class="icon" src={UserCircle} />Your Profile
+  </a>
   <a on:click={closeMenu} class="styled-link" href="/discover"
-    ><Icon class="icon" src={MagnifyingGlass} />Find Music</a
-  >
+    ><Icon class="icon" src={MagnifyingGlass} />Find Music
+  </a>
   <a on:click={closeMenu} class="styled-link" href="/account/music"
-    ><Icon class="icon" src={CircleStack} />Your Music</a
-  >
+    ><Icon class="icon" src={CircleStack} />Your Music
+  </a>
   <!-- <a on:click={closeMenu} class="styled-link" href="/account/saved"
     ><Icon class="icon" src={Star} />Saved Music</a
   > -->
