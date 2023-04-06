@@ -25,82 +25,87 @@
 
 <div class="account-container">
   <div class="card">
-    <div>
-      <form
-        class="input-group"
-        method="post"
-        action="?/update"
-        use:enhance={handleSubmit}
-        bind:this={profileForm}
-      >
-        <div>
-          <label for="email">Email</label>
-          <input id="email" type="text" value={session?.user.email} disabled />
-        </div>
+    <form
+      class="input-group"
+      method="post"
+      action="?/update"
+      use:enhance={handleSubmit}
+      bind:this={profileForm}
+    >
+      <div class="input-item">
+        <label for="email">Email</label>
+        <input id="email" type="text" value={session?.user.email} disabled />
+      </div>
 
-        <div>
-          <label for="fullName">Full Name</label>
-          <input
-            id="fullName"
-            name="fullName"
-            type="text"
-            value={form?.fullName ?? fullName ?? ""}
-          />
-        </div>
+      <div class="input-item">
+        <label for="fullName">Full Name</label>
+        <input
+          id="fullName"
+          name="fullName"
+          type="text"
+          value={form?.fullName ?? fullName ?? ""}
+        />
+      </div>
 
-        <div>
-          <label for="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            value={form?.username ?? username ?? ""}
-          />
-        </div>
+      <div class="input-item">
+        <label for="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          value={form?.username ?? username ?? ""}
+        />
+      </div>
 
-        <div>
-          <label for="website">Website</label>
-          <input
-            id="website"
-            name="website"
-            type="website"
-            value={form?.website ?? website ?? ""}
-          />
-        </div>
+      <div class="input-item">
+        <label for="website">Website</label>
+        <input
+          id="website"
+          name="website"
+          type="website"
+          value={form?.website ?? website ?? ""}
+        />
+      </div>
 
-        <div>
-          <input
-            type="submit"
-            class="styled-button"
-            value={loading ? "Loading..." : "Update"}
-            disabled={loading}
-          />
-        </div>
-      </form>
-      {#if form?.success}
-        <div>Profile Updated</div>
-      {/if}
-      <form method="post" action="?/signout&redirectTo=/">
+      <div class="row-container">
+        <input
+          style="font-family: Sono, sans-serif;"
+          type="submit"
+          class="styled-button"
+          value={loading ? "Loading..." : "Update"}
+          disabled={loading}
+        />
         <button
-          style="margin-left: auto;"
+          formaction="?/signout&redirectTo=/"
+          style="margin-left: auto; font-family: Sono, sans-serif;"
           class="styled-button"
           type="submit"
-          disabled={loading}>Sign Out</button
+          disabled={loading}
         >
-      </form>
-    </div>
+          Sign Out
+        </button>
+      </div>
+    </form>
+    {#if form?.success}
+      <div>Profile Updated</div>
+    {/if}
   </div>
 
   <div class="card">
     <h1>your music</h1>
     <a href="/account/upload"> Upload more</a>
   </div>
+  <div class="card">
+    <h1>Songs you like</h1>
+    <a href="/account/upload"> Upload more</a>
+  </div>
 </div>
 
 <style>
   .account-container {
-    display: flex;
-    flex-direction: row;
-    column-gap: 2rem;
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+    width: 100%;
+    column-gap: 6px;
   }
 </style>
