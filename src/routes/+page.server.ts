@@ -7,7 +7,7 @@ export const load: PageServerLoad = async ({
   const session = await getSession();
   let message;
   if (!session) {
-    message = `Welcome newcomer. This project is a spotify clone, where you create an account, upload for free, and can donate to eachother. 
+    message = `Welcome newcomer. This project is a spotify clone. you can upload songs for free, and can donate to eachother. 
       Click the button below to begin your music journey`;
   }
   const { data: profile } = await supabase
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({
     .single();
   message = `Welcome ${
     profile?.username ?? session?.user.email ?? "Newcomer"
-  }. This project is a spotify clone, where you create an account, upload for free, and can donate to eachother. 
+  }. This project is a spotify clone, where you create an account, upload songs for free, and can donate to eachother. 
   Navigate to Account to start uploading music.`;
   return {
     message,

@@ -18,6 +18,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     return session;
   };
 
+  //todo - add event.locals.getProfile for user profile.
+
   return resolve(event, {
     /**
      * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`

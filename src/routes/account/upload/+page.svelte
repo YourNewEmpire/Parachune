@@ -60,7 +60,12 @@
     <input on:input={handleInput} type="text" name="songName" id="" />
     <label for="song">Song Name</label>
     <input type="file" name="song" />
-    <button disabled={loading} type="submit">Upload</button>
+    <button
+      class="styled-button"
+      style="font-family: Sono, sans-serif;"
+      disabled={loading}
+      type="submit">Upload</button
+    >
   </form>
   <p>{formMessage}</p>
   <h1>Songs for {profile?.username ?? session?.user.email}</h1>
