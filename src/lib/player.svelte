@@ -27,6 +27,7 @@
         audioData = URL.createObjectURL(songData);
       }
     } catch (e) {
+      // todo - push error toaster
       console.log(e);
     }
   };

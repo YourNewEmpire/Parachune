@@ -1,38 +1,25 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
-type SongRow = {
-  artist: string | null;
-  created_at: string | null;
-  id: number;
-  name: string | null;
-  song_url: string | null;
-};
-
-export const load = (async ({ locals: { supabase, getSession } }) => {
+export const load = (async ({
+  locals: { supabase, getSession, getProfile },
+}) => {
   const session = await getSession();
-
+  const profile = await getProfile();
   if (!session) {
     throw redirect(303, "/login");
   }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`username, full_name, website, avatar_url`)
-    .eq("id", session.user.id)
-    .single();
 
   return { session, profile };
 }) satisfies PageServerLoad;
 
 export const actions = {
-  uploadSong: async ({ request, locals: { supabase, getSession } }) => {
+  uploadSong: async ({
+    request,
+    locals: { supabase, getSession, getProfile },
+  }) => {
     const session = await getSession();
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select(`username`)
-      .eq("id", session?.user.id)
-      .single();
+    const profile = await getProfile();
     const formData = await request.formData();
     const songFile = formData.get("song") as File;
     const songName = formData.get("songName") as string;
@@ -54,9 +41,7 @@ export const actions = {
       .upload(url, songFile);
     if (error) {
       console.log(error);
-      return {
-        message: "Error when attempting upload to storage bucket, try again",
-      };
+      return fail(400, { message: "Failed to set DB entry, try again." });
     }
     const { data: dbData, error: dbError } = await supabase
       .from("songs")

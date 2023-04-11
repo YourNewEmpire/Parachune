@@ -17,7 +17,18 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession();
     return session;
   };
-
+  event.locals.getProfile = async () => {
+    const session = await event.locals.getSession();
+    if (!session) {
+      return null;
+    }
+    const { data: profile } = await event.locals.supabase
+      .from("profiles")
+      .select(`username, full_name, website, avatar_url`)
+      .eq("id", session?.user.id)
+      .single();
+    return profile;
+  };
   //todo - add event.locals.getProfile for user profile.
 
   return resolve(event, {

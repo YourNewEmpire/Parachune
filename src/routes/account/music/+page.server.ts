@@ -9,20 +9,13 @@ type SongRow = {
   song_url: string | null;
 };
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession },
+  locals: { supabase, getSession, getProfile },
 }) => {
   const session = await getSession();
-
+  const profile = await getProfile();
   if (!session) {
     throw redirect(303, "/login");
   }
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`username, full_name, website, avatar_url`)
-    .eq("id", session.user.id)
-    .single();
-
   if (!profile) {
     throw redirect(303, "/");
   }
@@ -50,7 +43,7 @@ export const actions = {
     const fileExt = songFile.name.split(".").pop();
     let url = `${songName}.${fileExt}`;
 
-    const { data, error } = await supabase.storage
+    const { error: storageError } = await supabase.storage
       .from("songs")
       .upload(url, songFile);
     const { data: dbData, error: dbError } = await supabase
@@ -63,12 +56,10 @@ export const actions = {
         },
       ]);
 
-    if (error || dbError) {
-      console.log(error);
+    if (storageError || dbError) {
+      console.log(storageError);
       console.log(dbError);
-      return {
-        success: false,
-      };
+      return fail(400, { message: "Error, try again" });
     }
     return {
       success: true,

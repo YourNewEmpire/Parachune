@@ -2,19 +2,16 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession },
+  locals: { supabase, getSession, getProfile },
 }) => {
   const session = await getSession();
+  const profile = await getProfile();
   let message;
   if (!session) {
     message = `Welcome newcomer. This project is a spotify clone. you can upload songs for free, and can donate to eachother. 
       Click the button below to begin your music journey`;
   }
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`username, full_name, website, avatar_url`)
-    .eq("id", session?.user.id)
-    .single();
+
   message = `Welcome ${
     profile?.username ?? session?.user.email ?? "Newcomer"
   }. This project is a spotify clone, where you create an account, upload songs for free, and can donate to eachother. 

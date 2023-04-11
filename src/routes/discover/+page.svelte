@@ -20,7 +20,7 @@
       <div class="row-container">
         <div class="row-container">
           <Playbutton songUrl={song.song_url ?? ""} />
-          <Savebutton songId={song.id ?? ""} />
+          <Savebutton songUrl={song.song_url ?? ""} songId={song.id ?? ""} />
         </div>
         <p>{song.name}</p>
       </div>
