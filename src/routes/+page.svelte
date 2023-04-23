@@ -7,7 +7,7 @@
   export let data: PageData;
   $: ({ message, session } = data);
 
-  const lines = ["Get Ready", "For", "Musify", "🎸"];
+  const lines = ["Get Ready", "For", "ParaTune", "🪂🎸"];
 
   let animate = false;
   onMount(() => {
@@ -22,9 +22,9 @@
 </svelte:head>
 <div class="col-container">
   {#if animate}
-    <div class="welcome-text">
+    <h1 class="welcome-text">
       {#each lines as line, i}
-        <h1
+        <p
           in:fly={{
             y: 100,
             delay: 500 * i,
@@ -32,9 +32,9 @@
           }}
         >
           {line}
-        </h1>
+        </p>
       {/each}
-    </div>
+    </h1>
     <div
       in:fly={{
         y: 300,

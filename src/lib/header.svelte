@@ -22,7 +22,7 @@
   }
 </script>
 
-<header class="layout-header-{$theme}">
+<nav class="layout-nav-{$theme}">
   <a on:click={closeMenu} class="styled-link" href="/"
     ><Icon class="icon" src={Home} />Home
   </a>
@@ -42,10 +42,10 @@
   <div style="margin-top: auto;">
     <ThemeSwitch />
   </div>
-</header>
+</nav>
 
 <style>
-  .layout-header-light {
+  .layout-nav-light {
     position: fixed;
     width: 250px;
     top: 0;
@@ -61,7 +61,7 @@
     display: flex;
     flex-direction: column;
   }
-  .layout-header-dark {
+  .layout-nav-dark {
     position: fixed;
     width: 250px;
     top: 0;

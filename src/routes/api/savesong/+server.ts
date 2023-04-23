@@ -17,17 +17,23 @@ export const POST: RequestHandler = async ({
     .select("*")
     .eq("song_id", songId);
   if (saveDataError) {
-    return json({ message: "error when syncing saved songs, try again" });
+    return json({
+      message: "error when syncing saved songs, try again",
+      toastType: "failure",
+    });
   }
   if (saveData.length > 0) {
-    return json({ message: "Song already liked" });
+    return json({ message: "Song already liked", toastType: "info" });
   }
   const { error: saveLikeError } = await supabase
     .from("liked songs")
     .insert([{ song_id: songId, user_id: session.user.id, song_url: songUrl }]);
 
   if (saveLikeError) {
-    return json({ message: "error when saving song, try again" });
+    return json({
+      message: "error when saving song, try again",
+      toastType: "failure",
+    });
   }
-  return json({ message: "song saved successfully" });
+  return json({ message: "song saved successfully", toastType: "success" });
 };

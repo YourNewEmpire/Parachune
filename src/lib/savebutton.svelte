@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Icon, Star } from "svelte-hero-icons";
+  import { addToast } from "$lib/stores";
 
   export let songId: number;
   export let songUrl: string;
@@ -13,6 +14,13 @@
     });
 
     let data = await response.json();
+
+    addToast({
+      type: data.toastType,
+      message: data.message,
+      dismissable: true,
+      timeout: 3000,
+    });
   }
 </script>
 

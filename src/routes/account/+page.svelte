@@ -1,7 +1,9 @@
 <!-- src/routes/account/+page.svelte -->
 <script lang="ts">
   import { enhance } from "$app/forms";
+  import type { ActionResult } from "@sveltejs/kit";
   import type { ActionData, PageData } from "./$types";
+  import { addToast } from "$lib/stores";
 
   export let data: PageData;
   export let form: ActionData;
@@ -13,12 +15,28 @@
   let fullName: string | null = profile?.full_name;
   let username: string | null = profile?.username;
   let website: string | null = profile?.website;
-  let avatarUrl: string | null = profile?.avatar_url;
+  // let avatarUrl: string | null = profile?.avatar_url;
 
   function handleSubmit() {
     loading = true;
-    return async () => {
+    return async ({ result }: { result: ActionResult }) => {
       loading = false;
+      if (result.type === "failure") {
+        addToast({
+          type: result.type,
+          message: "Failed to update account, try again",
+          timeout: 3000,
+          dismissable: true,
+        });
+      } else {
+        addToast({
+          type: result.type,
+          message: "Profile change successful!",
+          timeout: 3000,
+          dismissable: true,
+        });
+      }
+      console.log(result);
     };
   }
 </script>
@@ -26,7 +44,7 @@
 <div>
   <h1>Your Account</h1>
   <div class="account-container">
-    <div class="card">
+    <section class="card">
       <form
         class="input-group"
         method="post"
@@ -91,24 +109,32 @@
       {#if form?.success}
         <div>Profile Updated</div>
       {/if}
-    </div>
+    </section>
 
-    <div class="card">
+    <section class="card">
       <h1>your music</h1>
       <a href="/account/upload">Upload more</a>
-    </div>
-    <div class="card">
+    </section>
+    <section class="card">
       <h1>Songs you like</h1>
       <a href="/account/saved">See all</a>
-    </div>
+    </section>
   </div>
 </div>
 
 <style>
   .account-container {
     display: grid;
-    grid-template-columns: 60% 20% 20%;
+    grid-template-columns: 100%;
     width: 100%;
-    column-gap: 6px;
+    row-gap: 6px;
+  }
+  @media only screen and (min-width: 1024px) {
+    .account-container {
+      display: grid;
+      grid-template-columns: 60% 20% 20%;
+      width: 100%;
+      column-gap: 6px;
+    }
   }
 </style>

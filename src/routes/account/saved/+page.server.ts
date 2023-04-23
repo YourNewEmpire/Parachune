@@ -21,6 +21,5 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
     .select(`song_url, name, artist`)
     .in("id", songIds);
 
-  console.log(songs);
   return { session, likedSongs: songs };
 }) satisfies PageServerLoad;

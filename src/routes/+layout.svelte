@@ -1,4 +1,5 @@
 <script lang="ts">
+  import "../styles/app.css";
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
@@ -6,8 +7,11 @@
   import { theme } from "$lib/stores";
   import Player from "$lib/player.svelte";
   import Menu from "$lib/menu.svelte";
+  import ToastsParent from "$lib/ToastsParent.svelte";
+
   export let data: LayoutData;
   $: ({ supabase } = data);
+
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange(() => {
       invalidate("supabase:auth");
@@ -21,6 +25,7 @@
   <title>Connected Music</title>
 </svelte:head>
 <div>
+  <ToastsParent />
   <Menu />
   <div class="layout-grid">
     <div class="desktop-header">
@@ -28,9 +33,9 @@
     </div>
     <Player sClient={supabase} />
     <div class="main-{$theme}">
-      <div class="slot-wrapper">
+      <main class="slot-wrapper">
         <slot />
-      </div>
+      </main>
     </div>
     <!-- <div class="sidebar-wrapper">
       <Sidebar />
