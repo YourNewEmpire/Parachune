@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Playbutton from "$lib/playbutton.svelte";
+  import Playbutton from "$lib/Playbutton.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;
