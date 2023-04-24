@@ -29,7 +29,7 @@ button {
 .col-container {
   display: flex;
   flex-direction: column;
-  column-gap: 2rem;
+  row-gap: 2rem;
   align-items: center;
 }
 .card {
@@ -39,7 +39,11 @@ button {
   padding: 1rem 1rem;
   color: #1a1a26;
 }
-
+.card-col-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
 .input-group {
   display: flex;
   flex-direction: column;

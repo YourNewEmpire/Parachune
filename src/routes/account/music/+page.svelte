@@ -7,9 +7,11 @@
 
 <div>
   <h1>Songs for {profile?.username ?? session?.user.email}</h1>
-  {#each dbData as song}
-    <div class="card">
-      {song.name}
-    </div>
-  {/each}
+  <div class="card-col-container">
+    {#each dbData as song}
+      <div class="card">
+        {song.name}
+      </div>
+    {/each}
+  </div>
 </div>

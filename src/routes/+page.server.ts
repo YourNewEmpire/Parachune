@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({
       Click the button below to begin your music journey`;
   }
 
-  message = `Welcome ${
+  message = `Welcome back ${
     profile?.username ?? session?.user.email ?? "Newcomer"
   }. This project is a spotify clone, where you create an account, upload songs for free, and can donate to eachother. 
   Navigate to Account to start uploading music.`;
