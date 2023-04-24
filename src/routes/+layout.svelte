@@ -4,8 +4,8 @@
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
   import Header from "$lib/Header.svelte";
-  import Player from "$lib/Player.svelte";
-  import Menu from "$lib/Menu.svelte";
+  import Player from "$lib/player.svelte";
+  import Menu from "$lib/menu.svelte";
   import ToastsParent from "$lib/Toastsparent.svelte";
 
   export let data: LayoutData;

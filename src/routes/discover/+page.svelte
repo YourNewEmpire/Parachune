@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import { songsQueued } from "$lib/stores";
-  import Playbutton from "$lib/Playbutton.svelte";
-  import Savebutton from "$lib/Savebutton.svelte";
+  import Playbutton from "$lib/playbutton.svelte";
+  import Savebutton from "$lib/savebutton.svelte";
   export let data: PageData;
   let { dbData } = data;
 </script>
