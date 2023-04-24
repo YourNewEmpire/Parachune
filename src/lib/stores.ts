@@ -13,7 +13,7 @@ export type NewToast = {
   dismissable: true;
   timeout: number;
 };
-export const theme = writable("dark");
+
 export const songSelectedUrl = writable("");
 export const songsQueued = writable([""]);
 

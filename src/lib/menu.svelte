@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Header from "$lib/header.svelte";
+  import Header from "$lib/Header.svelte";
   import { Icon, Bars3 } from "svelte-hero-icons";
   import { fly } from "svelte/transition";
   //@ts-ignore

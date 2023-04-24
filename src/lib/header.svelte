@@ -1,6 +1,4 @@
 <script lang="ts">
-  import ThemeSwitch from "./themeSwitch.svelte";
-  import { theme } from "./stores";
   import { createEventDispatcher } from "svelte";
   import {
     Icon,
@@ -22,7 +20,7 @@
   }
 </script>
 
-<nav class="layout-nav-{$theme}">
+<nav class="layout-nav-dark">
   <a on:click={closeMenu} class="styled-link" href="/"
     ><Icon class="icon" src={Home} />Home
   </a>
@@ -38,34 +36,14 @@
   <a on:click={closeMenu} class="styled-link" href="/account/saved"
     ><Icon class="icon" src={Star} />Saved Music</a
   >
-  <!-- Perhaps causing the laggy 100vh  -->
-  <div style="margin-top: auto;">
-    <ThemeSwitch />
-  </div>
 </nav>
 
 <style>
-  .layout-nav-light {
-    position: fixed;
-    width: 250px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    min-height: 100svh;
-    background-color: rgba(210, 210, 210, 1);
-    color: #000;
-    font-size: 1rem;
-    font-weight: 600;
-    align-items: left;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-  }
   .layout-nav-dark {
     position: fixed;
     width: 250px;
     top: 0;
-    bottom: 0px;
+    bottom: 0;
     left: 0;
     min-height: 100svh;
     background-color: rgba(38, 30, 30, 1);

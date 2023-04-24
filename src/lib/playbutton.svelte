@@ -11,9 +11,9 @@
 </script>
 
 <div>
-  <button class="styled-button" on:click={() => playSong(songUrl)}
-    ><Icon style="width: 2rem;" src={PlayCircle} /></button
-  >
+  <button class="styled-button" on:click={() => playSong(songUrl)}>
+    <Icon style="width: 2rem;" src={PlayCircle} />
+  </button>
 </div>
 
 <style></style>

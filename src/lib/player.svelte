@@ -1,10 +1,11 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
   import { Icon, Play, Pause } from "svelte-hero-icons";
-
   import { songSelectedUrl } from "$lib/stores";
   import type { SupabaseClient } from "@supabase/supabase-js";
+
   export let sClient: SupabaseClient;
+
   let audioBind: HTMLAudioElement;
   let scrubBind: HTMLInputElement;
   let time = 0;
@@ -22,7 +23,7 @@
     try {
       const { data: songData, error: songError } = await sClient.storage
         .from("songs")
-        .download(songUrl);
+        .download(url);
       if (!songError) {
         audioData = URL.createObjectURL(songData);
       }

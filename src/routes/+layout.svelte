@@ -3,11 +3,10 @@
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
-  import Header from "$lib/header.svelte";
-  import { theme } from "$lib/stores";
-  import Player from "$lib/player.svelte";
-  import Menu from "$lib/menu.svelte";
-  import ToastsParent from "$lib/ToastsParent.svelte";
+  import Header from "$lib/Header.svelte";
+  import Player from "$lib/Player.svelte";
+  import Menu from "$lib/Menu.svelte";
+  import ToastsParent from "$lib/Toastsparent.svelte";
 
   export let data: LayoutData;
   $: ({ supabase } = data);
@@ -32,7 +31,7 @@
       <Header open={false} />
     </div>
     <Player sClient={supabase} />
-    <div class="main-{$theme}">
+    <div class="main">
       <main class="slot-wrapper">
         <slot />
       </main>
@@ -44,12 +43,7 @@
 </div>
 
 <style>
-  .main-light {
-    background-color: #fff;
-    color: #000;
-    min-height: 100vh;
-  }
-  .main-dark {
+  .main {
     background-color: #000;
     color: #fff;
     min-height: 100vh;
@@ -67,17 +61,6 @@
   .desktop-header {
     display: none;
   }
-  .menu-btn {
-    color: #856bdc;
-    display: block;
-    position: fixed;
-    height: 60px;
-    width: 60px;
-  }
-  .menu-wrapper {
-    display: none;
-  }
-
   @media only screen and (min-width: 1024px) {
     .layout-grid {
       grid-template-columns: 250px 1fr;
@@ -85,19 +68,5 @@
     .desktop-header {
       display: block;
     }
-    .menu-btn {
-      display: none;
-    }
   }
-
-  /* @media only screen and (min-width: 1440px) {
-    .layout-grid {
-      grid-template-columns: 2fr 12fr;
-    }
-  }
-  @media only screen and (min-width: 2160px) {
-    .layout-grid {
-      grid-template-columns: 1fr 8fr;
-    }
-  } */
 </style>
