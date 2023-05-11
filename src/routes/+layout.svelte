@@ -30,7 +30,6 @@
     <div class="desktop-header">
       <Header open={false} />
     </div>
-    <Player sClient={supabase} />
     <div class="main">
       <main class="slot-wrapper">
         <slot />
@@ -40,6 +39,7 @@
       <Sidebar />
     </div> -->
   </div>
+  <Player sClient={supabase} />
 </div>
 
 <style>

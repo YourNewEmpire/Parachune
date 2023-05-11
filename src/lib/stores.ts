@@ -15,7 +15,8 @@ export type NewToast = {
 };
 
 export const songSelectedUrl = writable("");
-export const songsQueued = writable([""]);
+export const songsQueued: Writable<string[]> = writable([]);
+export const songPlaying: Writable<boolean> = writable(false);
 
 export const toasts: Writable<Toast[]> = writable([]);
 

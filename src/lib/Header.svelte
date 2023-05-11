@@ -24,18 +24,18 @@
   <a on:click={closeMenu} class="styled-link" href="/"
     ><Icon class="icon" src={Home} />Home
   </a>
+  <a on:click={closeMenu} class="styled-link" href="/discover"
+    ><Icon class="icon" src={MagnifyingGlass} />Discover
+  </a>
   <a on:click={closeMenu} class="styled-link" href="/account"
     ><Icon class="icon" src={UserCircle} />Your Profile
-  </a>
-  <a on:click={closeMenu} class="styled-link" href="/discover"
-    ><Icon class="icon" src={MagnifyingGlass} />Find Music
   </a>
   <a on:click={closeMenu} class="styled-link" href="/account/music"
     ><Icon class="icon" src={CircleStack} />Your Music
   </a>
   <a on:click={closeMenu} class="styled-link" href="/account/saved"
-    ><Icon class="icon" src={Star} />Saved Music</a
-  >
+    ><Icon class="icon" src={Star} />Saved Music
+  </a>
 </nav>
 
 <style>
@@ -67,6 +67,10 @@
     transition: all 0.3s ease;
   }
   .styled-link:hover {
+    background-color: #856bdc;
+    box-shadow: 0px 0px 8px #856bdc;
+  }
+  .styled-link:focus {
     background-color: #856bdc;
     box-shadow: 0px 0px 8px #856bdc;
   }

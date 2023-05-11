@@ -1,41 +1,74 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
+  import { fly } from "svelte/transition";
   import { Icon, Play, Pause } from "svelte-hero-icons";
-  import { songSelectedUrl } from "$lib/stores";
+  import { songsQueued, songPlaying } from "$lib/stores";
   import type { SupabaseClient } from "@supabase/supabase-js";
 
   export let sClient: SupabaseClient;
-
   let audioBind: HTMLAudioElement;
   let scrubBind: HTMLInputElement;
   let time = 0;
   let paused = false;
   let duration: number;
-  let audioData: string;
-  let songUrl: string;
+  let isOpen: boolean;
+  let playing: boolean;
 
-  const unsubscribe = songSelectedUrl.subscribe((value) => {
-    songUrl = value;
-  });
-  onDestroy(unsubscribe);
+  const downloadSong = async (url: string | undefined) => {
+    console.log("start dl");
+    console.log($songsQueued);
+    if (!url) {
+      console.log("no url");
+      return;
+    }
+    if ($songPlaying) {
+      console.log("already playing");
+      return;
+    }
 
-  const downloadSong = async (url: string) => {
     try {
+      isOpen = true;
       const { data: songData, error: songError } = await sClient.storage
         .from("songs")
         .download(url);
       if (!songError) {
-        audioData = URL.createObjectURL(songData);
+        audioBind.src = URL.createObjectURL(songData);
+        audioBind.load();
+        audioBind.play();
+        $songPlaying = true;
       }
     } catch (e) {
       // todo - push error toaster
       console.log(e);
     }
   };
+  const reachedEnd = () => {
+    $songPlaying = false;
+    console.log("reachedEnd");
+
+    // if ($songsQueued.length === 1) {
+    //   console.log("nothing remaining in queue");
+    //   clearSong();
+    // }
+
+    $songsQueued = $songsQueued.slice(1);
+    if ($songsQueued.length === 0) {
+      console.log("nothing remaining in queue");
+      clearSong();
+    }
+  };
+  // const queueSong = () => {
+  //   console.log("Queued a song ");
+  //   songSelectedUrl.set($songsQueued[0]);
+  //   songsQueued.update((songs) => {
+  //     songs.slice(1);
+  //     return songs;
+  //   });
+  //   downloadSong($songSelectedUrl);
+  // };
   // click handlers
   function clearSong() {
-    songSelectedUrl.set("");
-    audioData = "";
+    isOpen = false;
+    playing = false;
   }
   function handlePause() {
     if (paused) {
@@ -55,14 +88,21 @@
 
   //   return `${minutes}:${seconds}`;
   // }
-  $: if (songUrl) downloadSong(songUrl);
   $: if (scrubBind)
     scrubBind.style.backgroundSize =
       ((time - 0) * 100) / (duration - 0) + "% 100%";
+  $: if (time === duration) reachedEnd();
+  $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
+  // when user presses queuebutton but nothing selected
+  // $: if (!isOpen && $songsQueued.length > 0) queueSong();
 </script>
 
-{#if audioData}
-  <div class="player-wrapper">
+{#if isOpen}
+  <div
+    in:fly={{ y: 200, duration: 1500 }}
+    out:fly={{ y: 400, duration: 1500 }}
+    class="player-wrapper"
+  >
     <div class="controls">
       <div>
         <input
@@ -88,7 +128,8 @@
     </div>
 
     <audio autoplay bind:this={audioBind} bind:currentTime={time} bind:duration>
-      <source src={audioData} type="audio/mp3" />
+      <source type="audio/mp3" />
+
       Your browser does not support the audio element.
     </audio>
   </div>
@@ -103,7 +144,8 @@
     left: 0;
     width: calc(100% - 250px);
     border-radius: 1rem 0px 0px 0px;
-    background-color: blueviolet;
+    background-color: #9898ac;
+    box-shadow: 0px 0px 6px #856bdc;
   }
   .controls {
     padding: 1rem 1rem;

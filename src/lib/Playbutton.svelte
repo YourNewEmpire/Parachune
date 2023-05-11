@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Icon, PlayCircle } from "svelte-hero-icons";
-  import { songsQueued, songSelectedUrl } from "$lib/stores";
+  import { songPlaying, songsQueued } from "$lib/stores";
+
   export let songUrl: string;
   const playSong = (newUrl: string) => {
-    songSelectedUrl.set(newUrl);
-  };
-  const addToQueue = (newUrl: string) => {
-    $songsQueued = [...$songsQueued, newUrl];
+    $songPlaying = false;
+
+    $songsQueued = [newUrl, ...$songsQueued.slice(1)];
   };
 </script>
 
@@ -15,5 +15,3 @@
     <Icon style="width: 2rem;" src={PlayCircle} />
   </button>
 </div>
-
-<style></style>

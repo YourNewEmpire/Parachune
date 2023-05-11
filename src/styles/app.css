@@ -2,6 +2,7 @@
   --primary-color: #856bdc;
   --border-color: #1a1a1a;
   --font-color: #000;
+  --fg-color: #9898ac;
   --bg-color: #fff;
   --general-padding: 1.2em;
 }
@@ -33,7 +34,7 @@ button {
   align-items: center;
 }
 .card {
-  background-color: #9898ac;
+  background-color: var(--fg-color);
   box-shadow: 0px 0px 8px var(--primary-color);
   border-radius: 0.5rem;
   padding: 1rem 1rem;
@@ -87,7 +88,7 @@ button {
   cursor: pointer;
   border-radius: 0.75rem;
   transition: all 0.3s ease;
-  border: 2px solid #856bdc;
+  border: 2px solid var(--primary-color);
 }
 .styled-button:hover {
   background-color: var(--primary-color);
@@ -123,19 +124,19 @@ input[type="range"] {
   margin-right: 15px;
   width: 100%;
   height: 7px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(85, 76, 114, 0.646);
   border-radius: 5px;
-  background-image: linear-gradient(#ff4500, #ff4500);
+  background-image: linear-gradient(#856bdc, black);
   background-size: 70% 100%;
   background-repeat: no-repeat;
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
-  background: #ff4500;
+  background: #856bdc;
   cursor: ew-resize;
   box-shadow: 0 0 2px 0 #555;
 }
