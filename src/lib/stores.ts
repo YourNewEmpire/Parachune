@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
+
+//? TYPES
 export type Toast = {
   message: string;
   type: string;
@@ -14,10 +16,11 @@ export type NewToast = {
   timeout: number;
 };
 
-export const songSelectedUrl = writable("");
+//? SONGS STORES
 export const songsQueued: Writable<string[]> = writable([]);
 export const songPlaying: Writable<boolean> = writable(false);
 
+//? TOAST STORES
 export const toasts: Writable<Toast[]> = writable([]);
 
 export const dismissToast = (id: number) => {

@@ -56,15 +56,7 @@
       clearSong();
     }
   };
-  // const queueSong = () => {
-  //   console.log("Queued a song ");
-  //   songSelectedUrl.set($songsQueued[0]);
-  //   songsQueued.update((songs) => {
-  //     songs.slice(1);
-  //     return songs;
-  //   });
-  //   downloadSong($songSelectedUrl);
-  // };
+
   // click handlers
   function clearSong() {
     isOpen = false;
