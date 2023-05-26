@@ -1,25 +1,26 @@
 <!-- src/routes/account/+page.svelte -->
 <script lang="ts">
-  import { enhance } from "$app/forms";
-  import type { ActionResult } from "@sveltejs/kit";
   import type { ActionData, PageData } from "./$types";
+  import type { ActionResult } from "@sveltejs/kit";
+  import { enhance, type SubmitFunction } from "$app/forms";
   import { addToast } from "$lib/stores";
+  import Avatar from "./Avatar.svelte";
 
   export let data: PageData;
   export let form: ActionData;
 
-  let { session, profile } = data;
+  let { session, supabase, profile } = data;
 
   let profileForm: any;
   let loading = false;
   let fullName: string | null = profile?.full_name;
   let username: string | null = profile?.username;
   let website: string | null = profile?.website;
-  // let avatarUrl: string | null = profile?.avatar_url;
+  let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
 
-  function handleSubmit() {
+  const handleSubmit: SubmitFunction = () => {
     loading = true;
-    return async ({ result }: { result: ActionResult }) => {
+    return async ({ result }) => {
       loading = false;
       if (result.type === "failure") {
         addToast({
@@ -38,7 +39,14 @@
       }
       console.log(result);
     };
-  }
+  };
+  const handleSignOut: SubmitFunction = () => {
+    loading = true;
+    return async ({ update }) => {
+      loading = false;
+      update();
+    };
+  };
 </script>
 
 <div>
@@ -86,7 +94,14 @@
             value={form?.website ?? website ?? ""}
           />
         </div>
-
+        <Avatar
+          {supabase}
+          bind:url={avatarUrl}
+          size={10}
+          on:upload={() => {
+            profileForm.requestSubmit();
+          }}
+        />
         <div class="row-container">
           <input
             style="font-family: Sono, sans-serif;"
@@ -106,6 +121,7 @@
           </button>
         </div>
       </form>
+
       {#if form?.success}
         <div>Profile Updated</div>
       {/if}

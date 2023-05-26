@@ -19,7 +19,7 @@ export const actions = {
     const fullName = formData.get("fullName") as string;
     const username = formData.get("username") as string;
     const website = formData.get("website") as string;
-    //const avatarUrl = formData.get("avatarUrl") as string;
+    const avatarUrl = formData.get("avatarUrl") as string;
 
     const session = await getSession();
 
@@ -28,7 +28,7 @@ export const actions = {
       full_name: fullName,
       username,
       website,
-      //avatar_url: avatarUrl,
+      avatar_url: avatarUrl,
       updated_at: new Date(),
     });
 
@@ -37,7 +37,7 @@ export const actions = {
         fullName,
         username,
         website,
-        //avatarUrl,
+        avatarUrl,
       });
     }
 
@@ -46,7 +46,7 @@ export const actions = {
       fullName,
       username,
       website,
-      // avatarUrl,
+      avatarUrl,
     };
   },
   signout: async ({ locals: { supabase, getSession } }) => {
