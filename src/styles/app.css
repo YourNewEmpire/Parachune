@@ -5,22 +5,36 @@
   --fg-color: #9898ac;
   --bg-color: #fff;
   --general-padding: 1.2em;
+  --primary-font: "League Spartan", sans-serif;
+  --secondary-font: "Sono", sans-serif;
 }
 html,
 body {
   margin: 0;
   padding: 0;
 }
+
 body {
-  font-family: "Sono", sans-serif;
+  font-family: var(--secondary-font);
 }
+
+h1 {
+  font-family: var(--primary-font);
+}
+
 * {
   box-sizing: border-box;
 }
+
 button {
   background: none;
   border: none;
 }
+
+button:hover {
+  cursor: pointer;
+}
+
 .row-container {
   display: flex;
   flex-direction: row;
@@ -40,21 +54,25 @@ button {
   padding: 1rem 1rem;
   color: #1a1a26;
 }
+
 .card-col-container {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
 }
+
 .input-group {
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
 }
+
 .input-item {
   display: flex;
   flex-direction: column;
   row-gap: 0.1rem;
 }
+
 .icon {
   width: 1.25rem;
   height: 1.25rem;
@@ -70,10 +88,12 @@ button {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
 .icon-button:hover {
   background-color: var(--primary-color);
   box-shadow: 0px 0px 8px var(--primary-color);
 }
+
 .styled-button {
   display: flex;
   flex-direction: row;
@@ -90,13 +110,53 @@ button {
   transition: all 0.3s ease;
   border: 2px solid var(--primary-color);
 }
+
 .styled-button:hover {
   background-color: var(--primary-color);
   box-shadow: 0px 0px 8px var(--primary-color);
 }
-button:hover {
+
+.tooltip {
+  position: relative;
+  display: inline-block;
   cursor: pointer;
 }
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 200;
+  bottom: 125%;
+  left: 0;
+  font-size: 12px;
+  font-family: "Sono", sans-serif;
+  width: 100%;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltiptext:hover {
+  display: none;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 ::-webkit-scrollbar {
   width: 20px;
   background-color: black;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { Icon, Play, Pause } from "svelte-hero-icons";
   import { songsQueued, songPlaying } from "$lib/stores";
+  import { Icon, Play, Pause } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
 
   export let sClient: SupabaseClient;
@@ -11,7 +11,6 @@
   let paused = false;
   let duration: number;
   let isOpen: boolean;
-  let playing: boolean;
 
   const downloadSong = async (url: string | undefined) => {
     console.log("start dl");
@@ -60,7 +59,7 @@
   // click handlers
   function clearSong() {
     isOpen = false;
-    playing = false;
+    $songPlaying = false;
   }
   function handlePause() {
     if (paused) {
