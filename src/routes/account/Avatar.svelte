@@ -10,10 +10,11 @@
   let avatarUrl: string | null = null;
   let uploading = false;
   let files: FileList;
-
+  let loadingImage: boolean;
   const dispatch = createEventDispatcher();
 
   const downloadImage = async (path: string) => {
+    loadingImage = true;
     console.log("Url changed, download image.");
     try {
       const { data, error } = await supabase.storage
@@ -26,10 +27,12 @@
 
       const url = URL.createObjectURL(data);
       avatarUrl = url;
+      loadingImage = false;
     } catch (error) {
       if (error instanceof Error) {
         console.log("Error downloading image: ", error.message);
       }
+      loadingImage = false;
     }
   };
 
@@ -61,7 +64,7 @@
     }
   };
 
-  $: if (url) downloadImage(url);
+  // $: if (url) downloadImage(url);
 </script>
 
 <div>
@@ -72,16 +75,25 @@
       class="avatar image"
       style="height: {size}em; width: {size}em;"
     />
+  {:else if loadingImage}
+    <div style="height: {size}em; width: {size}em">
+      <p>Loading avatar</p>
+    </div>
   {:else}
-    <div class="avatar no-image" style="height: {size}em; width: {size}em;">
-      No avatar
+    <div
+      class="avatar no-image"
+      style="height: {size}em; width: auto; display: flex; align-items: center;"
+    >
+      You have no avatar yet.
+      <br />
+      Why not upload one!?
     </div>
   {/if}
   <input type="hidden" name="avatarUrl" value={url} />
 
   <div style="width: {size}em;">
     <label class="styled-button" for="single">
-      {uploading ? "Uploading ..." : "Upload"}
+      {uploading ? "Uploading ..." : "Upload Avatar"}
     </label>
     <input
       style="visibility: hidden; position:absolute;"
