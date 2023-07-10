@@ -1,27 +1,48 @@
 <script lang="ts">
-  import { Icon, PaperAirplane } from "svelte-hero-icons";
+  import type { SubmitFunction } from "@sveltejs/kit";
   import type { PageData } from "./$types";
+  import { enhance } from "$app/forms";
+  import { addToast } from "$lib/stores";
+
   export let data: PageData;
-  let mailInput: string;
-  let formStatus: string;
-  function handleInput(e: any) {
-    mailInput = e.target.value;
-  }
-  async function signInWithEmail() {
-    const { error } = await data.supabase.auth.signInWithOtp({
-      email: mailInput,
-      options: {
-        emailRedirectTo: `${data.url}/logging-in?redirect=/account`,
-      },
-    });
-    if (error) {
-      formStatus = "There was an error, try again.";
-    } else {
-      //push to toast state
-      formStatus =
-        "Check mail, you can close this tab when the link in your mail works.";
-    }
-  }
+  export let form;
+  let loading = false;
+  /*
+<input
+placeholder="email"
+on:input={handleInput}
+type="text"
+name="email"
+/>
+<button class="styled-button" on:click={signInWithEmail}
+>Send Magic Link <Icon class="icon" src={PaperAirplane} /></button
+>
+{formStatus ?? ""}
+*/
+  const handleSignIn: SubmitFunction = () => {
+    loading = true;
+    return async ({ update, result }) => {
+      loading = false;
+      console.log(result);
+      if (result.type === "success") {
+        addToast({
+          type: result.type,
+          message:
+            "Please check your email for a magic link to log into the website.",
+          timeout: 3000,
+          dismissable: true,
+        });
+      } else {
+        addToast({
+          type: "failure",
+          message: "Log in failed. Try again",
+          timeout: 3000,
+          dismissable: true,
+        });
+      }
+      update();
+    };
+  };
 </script>
 
 <svelte:head>
@@ -33,18 +54,13 @@
     <h1>Logged in. Continue here or on new tab.</h1>
   {:else}
     <div style="width: 15rem;" class="card">
-      <div class="input-group">
-        <input
-          placeholder="email"
-          on:input={handleInput}
-          type="text"
-          name="email"
-        />
-        <button class="styled-button" on:click={signInWithEmail}
-          >Send Magic Link <Icon class="icon" src={PaperAirplane} /></button
-        >
-        {formStatus ?? ""}
-      </div>
+      <form method="post" use:enhance={handleSignIn}>
+        <div class="input-group">
+          <input name="email" placeholder="Email" value={form?.email ?? ""} />
+
+          <button class="styled-button">Sign up</button>
+        </div>
+      </form>
     </div>
   {/if}
 </div>

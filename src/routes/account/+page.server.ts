@@ -50,6 +50,7 @@ export const actions = {
     };
   },
   signout: async ({ locals: { supabase, getSession } }) => {
+    console.log("server signout action");
     const session = await getSession();
     if (session) {
       await supabase.auth.signOut();

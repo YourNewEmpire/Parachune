@@ -1,8 +1,7 @@
-<!-- src/routes/account/+page.svelte -->
 <script lang="ts">
   import type { ActionData, PageData } from "./$types";
-  import type { ActionResult } from "@sveltejs/kit";
-  import { enhance, type SubmitFunction } from "$app/forms";
+  import { enhance } from "$app/forms";
+  import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import Avatar from "./Avatar.svelte";
 
@@ -10,7 +9,7 @@
   export let form: ActionData;
 
   let { session, supabase, profile } = data;
-
+  $: ({ session, supabase, profile } = data);
   let profileForm: any;
   let loading = false;
   let fullName: string | null = profile?.full_name;
@@ -40,11 +39,19 @@
       console.log(result);
     };
   };
+
+  // Needs to be used
   const handleSignOut: SubmitFunction = () => {
     loading = true;
     return async ({ update }) => {
       loading = false;
       update();
+      addToast({
+        type: "info",
+        message: "Successfully logged out",
+        timeout: 3000,
+        dismissable: true,
+      });
     };
   };
 </script>
@@ -107,18 +114,18 @@
             style="font-family: Sono, sans-serif;"
             type="submit"
             class="styled-button"
-            value={loading ? "Loading..." : "Update"}
+            value={"Update"}
             disabled={loading}
           />
-          <button
-            formaction="?/signout&redirectTo=/"
-            style="margin-left: auto; font-family: Sono, sans-serif;"
-            class="styled-button"
-            type="submit"
-            disabled={loading}
-          >
-            Sign Out
-          </button>
+          <form method="post" action="?/signout" use:enhance={handleSignOut}>
+            <div>
+              <button
+                class="styled-button"
+                style="font-family: Sono, sans-serif;"
+                disabled={loading}>Sign Out</button
+              >
+            </div>
+          </form>
         </div>
       </form>
 

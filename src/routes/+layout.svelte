@@ -8,16 +8,20 @@
   import Menu from "$lib/Menu.svelte";
   import ToastsParent from "$lib/Toastsparent.svelte";
 
-  export let data: LayoutData;
-  $: ({ supabase } = data);
+	export let data: LayoutData;
 
-  onMount(() => {
-    const { data } = supabase.auth.onAuthStateChange(() => {
-      invalidate("supabase:auth");
-    });
+	let { supabase, session } = data
+	$: ({ supabase, session } = data)
 
-    return () => data.subscription.unsubscribe();
-  });
+	onMount(() => {
+		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+			if (_session?.expires_at !== session?.expires_at) {
+				invalidate('supabase:auth')
+			}
+		})
+
+		return () => data.subscription.unsubscribe()
+	})
 </script>
 
 <svelte:head>

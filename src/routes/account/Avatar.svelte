@@ -1,12 +1,12 @@
 <!-- src/routes/account/Avatar.svelte -->
 <script lang="ts">
   import type { SupabaseClient } from "@supabase/supabase-js";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount, tick } from "svelte";
 
   export let size = 10;
   export let url: string;
   export let supabase: SupabaseClient;
-
+  let imageBind: HTMLImageElement;
   let avatarUrl: string | null = null;
   let uploading = false;
   let files: FileList;
@@ -16,6 +16,7 @@
   const downloadImage = async (path: string) => {
     loadingImage = true;
     console.log("Url changed, download image.");
+    await tick();
     try {
       const { data, error } = await supabase.storage
         .from("avatars")
@@ -48,7 +49,9 @@
       const fileExt = file.name.split(".").pop();
       url = `${Math.random()}.${fileExt}`;
 
-      let { error } = await supabase.storage.from("avatars").upload(url, file);
+      let { error, data } = await supabase.storage
+        .from("avatars")
+        .upload(url, file);
 
       if (error) {
         throw error;
@@ -64,12 +67,13 @@
     }
   };
 
-  // $: if (url) downloadImage(url);
+  $: if (url) downloadImage(url);
 </script>
 
 <div>
   {#if avatarUrl}
     <img
+      bind:this={imageBind}
       src={avatarUrl}
       alt={avatarUrl ? "Avatar" : "No image"}
       class="avatar image"
