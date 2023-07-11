@@ -8,25 +8,22 @@
   import Menu from "$lib/Menu.svelte";
   import ToastsParent from "$lib/Toastsparent.svelte";
 
-	export let data: LayoutData;
+  export let data: LayoutData;
 
-	let { supabase, session } = data
-	$: ({ supabase, session } = data)
+  let { supabase, session } = data;
+  $: ({ supabase, session } = data);
 
-	onMount(() => {
-		const { data } = supabase.auth.onAuthStateChange((event, _session) => {
-			if (_session?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth')
-			}
-		})
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((event, _session) => {
+      if (_session?.expires_at !== session?.expires_at) {
+        invalidate("supabase:auth");
+      }
+    });
 
-		return () => data.subscription.unsubscribe()
-	})
+    return () => data.subscription.unsubscribe();
+  });
 </script>
 
-<svelte:head>
-  <title>Connected Music</title>
-</svelte:head>
 <div>
   <ToastsParent />
   <Menu />
