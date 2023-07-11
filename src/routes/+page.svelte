@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-  <title>Connected Music</title>
+  <title>Parachune</title>
 </svelte:head>
 <div class="col-container">
   {#if animate}

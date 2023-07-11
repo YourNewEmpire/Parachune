@@ -23,7 +23,6 @@ name="email"
     loading = true;
     return async ({ update, result }) => {
       loading = false;
-      console.log(result);
       if (result.type === "success") {
         addToast({
           type: result.type,
@@ -46,7 +45,7 @@ name="email"
 </script>
 
 <svelte:head>
-  <title>Login - Connected Music</title>
+  <title>Login - Parachune</title>
 </svelte:head>
 
 <div>
