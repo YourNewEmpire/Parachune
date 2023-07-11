@@ -29,12 +29,13 @@
   }
 
   let menuVisible = false;
-  function handleLinkClick(event) {
+  function handleLinkClick(event: CustomEvent) {
     menuVisible = event.detail.menu;
   }
 </script>
 
 <div
+  style="z-index: 20; display:block; opacity: 1;"
   use:clickOutside={{ enabled: menuVisible, cb: () => (menuVisible = false) }}
 >
   <div class="open-menu-btn">
@@ -87,6 +88,7 @@
   }
   .header-wrapper {
     display: none;
+
     display: block;
     width: 250px;
     position: fixed;
