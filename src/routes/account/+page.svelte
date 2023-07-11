@@ -36,7 +36,6 @@
           dismissable: true,
         });
       }
-      console.log(result);
     };
   };
 
