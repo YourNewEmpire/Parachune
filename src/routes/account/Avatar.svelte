@@ -1,41 +1,16 @@
 <!-- src/routes/account/Avatar.svelte -->
 <script lang="ts">
+  import AvatarIcon from "$lib/AvatarIcon.svelte";
   import type { SupabaseClient } from "@supabase/supabase-js";
-  import { createEventDispatcher, onMount, tick } from "svelte";
+  import { createEventDispatcher } from "svelte";
 
   export let size = 10;
   export let url: string;
   export let supabase: SupabaseClient;
-  let imageBind: HTMLImageElement;
-  let avatarUrl: string | null = null;
+
   let uploading = false;
   let files: FileList;
-  let loadingImage: boolean;
   const dispatch = createEventDispatcher();
-
-  const downloadImage = async (path: string) => {
-    loadingImage = true;
-    console.log("Url changed, download image.");
-    await tick();
-    try {
-      const { data, error } = await supabase.storage
-        .from("avatars")
-        .download(path);
-
-      if (error) {
-        throw error;
-      }
-
-      const url = URL.createObjectURL(data);
-      avatarUrl = url;
-      loadingImage = false;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log("Error downloading image: ", error.message);
-      }
-      loadingImage = false;
-    }
-  };
 
   const uploadAvatar = async () => {
     try {
@@ -49,9 +24,7 @@
       const fileExt = file.name.split(".").pop();
       url = `${Math.random()}.${fileExt}`;
 
-      let { error, data } = await supabase.storage
-        .from("avatars")
-        .upload(url, file);
+      let { error } = await supabase.storage.from("avatars").upload(url, file);
 
       if (error) {
         throw error;
@@ -66,23 +39,11 @@
       uploading = false;
     }
   };
-
-  $: if (url) downloadImage(url);
 </script>
 
-<div>
-  {#if avatarUrl}
-    <img
-      bind:this={imageBind}
-      src={avatarUrl}
-      alt={avatarUrl ? "Avatar" : "No image"}
-      class="avatar image"
-      style="height: {size}em; width: {size}em;"
-    />
-  {:else if loadingImage}
-    <div style="height: {size}em; width: {size}em">
-      <p>Loading avatar</p>
-    </div>
+<div style="display: flex; flex-direction: column; row-gap: 12px; ">
+  {#if url}
+    <AvatarIcon {supabase} size={10} bind:url />
   {:else}
     <div
       class="avatar no-image"
