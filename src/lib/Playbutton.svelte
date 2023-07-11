@@ -11,8 +11,7 @@
 </script>
 
 <div>
-  <button class="styled-button tooltip" on:click={() => playSong(songUrl)}>
+  <button class="styled-button" on:click={() => playSong(songUrl)}>
     <Icon style="width: 2rem;" src={PlayCircle} />
-    <span class="tooltiptext">Play Now</span>
   </button>
 </div>

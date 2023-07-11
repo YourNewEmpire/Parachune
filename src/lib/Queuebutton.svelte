@@ -9,14 +9,7 @@
 </script>
 
 <div>
-  <button class="styled-button tooltip" on:click={() => addToQueue(songUrl)}>
+  <button class="styled-button" on:click={() => addToQueue(songUrl)}>
     <Icon style="width: 2rem;" src={Bars3CenterLeft} />
-    <span class="tooltiptext">
-      {$songsQueued.length > 0
-        ? `Place after ${$songsQueued[0]} in queue`
-        : "Play now, as there's nothing in queue"}
-    </span>
   </button>
 </div>
-
-<style></style>
