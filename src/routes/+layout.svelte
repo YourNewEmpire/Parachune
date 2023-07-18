@@ -7,11 +7,12 @@
   import Player from "$lib/Player.svelte";
   import Menu from "$lib/Menu.svelte";
   import ToastsParent from "$lib/Toastsparent.svelte";
+  import PageTransition from "$lib/Transition.svelte";
 
   export let data: LayoutData;
 
-  let { supabase, session } = data;
-  $: ({ supabase, session } = data);
+  let { supabase, session, url } = data;
+  $: ({ supabase, session, url } = data);
 
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((event, _session) => {
@@ -32,9 +33,11 @@
       <Header open={false} />
     </div>
     <div class="main">
-      <main class="slot-wrapper">
-        <slot />
-      </main>
+      <PageTransition key={data.url} duration={600}>
+        <main class="slot-wrapper">
+          <slot />
+        </main>
+      </PageTransition>
     </div>
     <!-- <div class="sidebar-wrapper">
       <Sidebar />
