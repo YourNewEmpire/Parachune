@@ -109,13 +109,15 @@
           }}
         />
         <div class="row-container">
-          <input
+          <button
             style="font-family: Sono, sans-serif;"
             type="submit"
             class="styled-button"
-            value={"Update"}
             disabled={loading}
-          />
+          >
+            Update
+          </button>
+
           <form method="post" action="?/signout" use:enhance={handleSignOut}>
             <div>
               <button
