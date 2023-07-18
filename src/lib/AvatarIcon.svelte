@@ -11,7 +11,6 @@
   let loadingImage: boolean;
   const downloadImage = async (path: string) => {
     loadingImage = true;
-    console.log("Url changed, download image.");
     await tick();
     try {
       const { data, error } = await supabase.storage
@@ -46,7 +45,7 @@
     />
   {:else}
     <div
-      style="position: absolute; display: flex; flex-direction: row;  height: {size}em; width: {size}em"
+      style=" display: flex; flex-direction: row; align-items:center; justify-content: center;  height: {size}em; width: {size}em"
       in:fade
       out:fade
     >
