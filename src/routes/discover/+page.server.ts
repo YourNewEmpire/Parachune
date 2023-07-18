@@ -1,4 +1,4 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 type SongRow = {
   artist: string | null;
