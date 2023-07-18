@@ -3,6 +3,7 @@
   import { fly } from "svelte/transition";
   import { quintOut, elasticOut } from "svelte/easing";
   import { onMount } from "svelte";
+  // import Donation from "$lib/Donation.svelte";
 
   export let data: PageData;
   $: ({ message, session } = data);
@@ -51,6 +52,7 @@
           >Click to login and upload music</a
         >
       {/if}
+      <!-- <Donation /> -->
     </div>
   {/if}
 </div>
