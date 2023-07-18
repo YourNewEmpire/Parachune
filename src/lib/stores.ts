@@ -19,6 +19,7 @@ export type NewToast = {
 //? SONGS STORES
 export const songsQueued: Writable<string[]> = writable([]);
 export const songPlaying: Writable<boolean> = writable(false);
+export const songsPlayed: Writable<string[]> = writable([]);
 
 //? TOAST STORES
 export const toasts: Writable<Toast[]> = writable([]);

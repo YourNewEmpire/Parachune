@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { songsQueued, songPlaying } from "$lib/stores";
-  import { Icon, Play, Pause } from "svelte-hero-icons";
+  import { songsQueued, songPlaying, songsPlayed, addToast } from "$lib/stores";
+  import { Icon, Play, Pause, Backward, Forward } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
 
   export let sClient: SupabaseClient;
@@ -40,27 +40,26 @@
       console.log(e);
     }
   };
-  const reachedEnd = () => {
+  const reachedTrackEnd = () => {
     $songPlaying = false;
-    console.log("reachedEnd");
-
-    // if ($songsQueued.length === 1) {
-    //   console.log("nothing remaining in queue");
-    //   clearSong();
-    // }
-
+    console.log("reachedTrackEnd");
+    $songsPlayed = [...$songsPlayed, $songsQueued[0]];
     $songsQueued = $songsQueued.slice(1);
     if ($songsQueued.length === 0) {
       console.log("nothing remaining in queue");
-      clearSong();
+      endPlayer();
     }
   };
 
   // click handlers
-  function clearSong() {
+  function endPlayer() {
+    audioBind.pause();
     isOpen = false;
     $songPlaying = false;
+    $songsQueued = [];
+    $songsPlayed = [];
   }
+
   function handlePause() {
     if (paused) {
       audioBind.play();
@@ -69,23 +68,53 @@
     }
     paused = !paused;
   }
+  // todo - USING DOLLAR SYMBOL TO READ AND UPDATE STATE
+  function handleForward() {
+    $songPlaying = false;
+    //! This code is ran in 2 places here in this file. should be considered
+    $songsPlayed = [...$songsPlayed, $songsQueued[0]];
+    $songsQueued = $songsQueued.slice(1);
+  }
+  // Correct way of handling state
+  function handleBack() {
+    $songPlaying = false;
+    if ($songsPlayed.at(-1)) {
+      songsQueued.update((songs) => {
+        songs.shift();
+        // using OR gate here to stop TS lint.
+        songs.unshift($songsPlayed.at(-1) || "");
+        return songs;
+      });
+      songsPlayed.update((songs) => {
+        songs.pop();
+        return songs;
+      });
+    } else {
+      addToast({
+        type: "info",
+        dismissable: true,
+        message: "No songs behind in queue",
+        timeout: 3000,
+      });
+    }
+  }
 
-  // function format(seconds) {
-  //   if (isNaN(seconds)) return "...";
+  function formatTime(seconds: any) {
+    if (isNaN(seconds)) return "...";
 
-  //   const minutes = Math.floor(seconds / 60);
-  //   seconds = Math.floor(seconds % 60);
-  //   if (seconds < 10) seconds = "0" + seconds;
+    const minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    if (seconds < 10) seconds = "0" + seconds;
 
-  //   return `${minutes}:${seconds}`;
-  // }
-  $: if (scrubBind)
+    return `${minutes}:${seconds}`;
+  }
+
+  $: if (scrubBind && isOpen)
     scrubBind.style.backgroundSize =
       ((time - 0) * 100) / (duration - 0) + "% 100%";
-  $: if (time === duration) reachedEnd();
+
+  $: if (time === duration) reachedTrackEnd();
   $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
-  // when user presses queuebutton but nothing selected
-  // $: if (!isOpen && $songsQueued.length > 0) queueSong();
 </script>
 
 {#if isOpen}
@@ -105,6 +134,9 @@
         />
       </div>
       <div class="buttons">
+        <button class="styled-button" on:click={handleBack}>
+          <Icon style="width: 2rem;" src={Backward} />
+        </button>
         {#if paused}
           <button class="styled-button" on:click={handlePause}>
             <Icon style="width: 2rem;" src={Play} />
@@ -114,8 +146,14 @@
             <Icon style="width: 2rem;" src={Pause} />
           </button>
         {/if}
-        <button on:click={clearSong}>X Stop listening</button>
+        <button class="styled-button" on:click={handleForward}>
+          <Icon style="width: 2rem;" src={Forward} />
+        </button>
       </div>
+      <button
+        style="position: absolute; bottom: 30px; right: 0;"
+        on:click={endPlayer}>X Stop listening</button
+      >
     </div>
 
     <audio autoplay bind:this={audioBind} bind:currentTime={time} bind:duration>
@@ -141,6 +179,7 @@
   .controls {
     padding: 1rem 1rem;
     display: block;
+    position: relative;
   }
 
   .buttons {

@@ -11,5 +11,6 @@
 <div>
   <button class="styled-button" on:click={() => addToQueue(songUrl)}>
     <Icon style="width: 2rem;" src={Bars3CenterLeft} />
+    <p>Queue</p>
   </button>
 </div>
