@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({
 }) => {
   const session = await getSession();
   if (!session) {
-    return json({ message: "not logged in" });
+    return json({ message: "not logged in", toastType: "failure" });
   }
   const { songId, songUrl } = await request.json();
 
