@@ -15,7 +15,7 @@ declare global {
       } | null>;
     }
     interface PageData {
-      session: Sesasion | null;
+      session: Session | null;
     }
 
     // interface Error {}
