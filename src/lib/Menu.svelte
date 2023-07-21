@@ -88,7 +88,7 @@
   }
   .header-wrapper {
     display: none;
-
+    z-index: 1004;
     display: block;
     width: 250px;
     position: fixed;
