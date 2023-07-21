@@ -11,9 +11,11 @@
 </script>
 
 <div>
-  <button class="styled-button" on:click={() => playSong(songUrl)}>
+  <button
+    class="styled-button"
+    data-tooltip="Play Song"
+    on:click={() => playSong(songUrl)}
+  >
     <Icon style="width: 2rem;" src={PlayCircle} />
-
-    <p>Play</p>
   </button>
 </div>
