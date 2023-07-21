@@ -3,22 +3,12 @@
   import type { PageData } from "./$types";
   import { enhance } from "$app/forms";
   import { addToast } from "$lib/stores";
+  import { Icon, PaperAirplane } from "svelte-hero-icons";
 
   export let data: PageData;
   export let form;
   let loading = false;
-  /*
-<input
-placeholder="email"
-on:input={handleInput}
-type="text"
-name="email"
-/>
-<button class="styled-button" on:click={signInWithEmail}
->Send Magic Link <Icon class="icon" src={PaperAirplane} /></button
->
-{formStatus ?? ""}
-*/
+
   const handleSignIn: SubmitFunction = () => {
     loading = true;
     return async ({ update, result }) => {
@@ -56,8 +46,9 @@ name="email"
       <form method="post" use:enhance={handleSignIn}>
         <div class="input-group">
           <input name="email" placeholder="Email" value={form?.email ?? ""} />
-
-          <button class="styled-button">Sign up</button>
+          <button class="styled-button">
+            Sign In <Icon class="icon" src={PaperAirplane} />
+          </button>
         </div>
       </form>
     </div>
