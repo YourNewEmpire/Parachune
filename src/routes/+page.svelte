@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import { fly } from "svelte/transition";
-  import { quintOut, elasticOut } from "svelte/easing";
+  import { quintOut, elasticOut, quintIn } from "svelte/easing";
   import { onMount } from "svelte";
   // import Donation from "$lib/Donation.svelte";
 
@@ -22,34 +22,31 @@
   <title>Parachune</title>
 </svelte:head>
 <div class="col-container">
+  <h1 class="welcome-text">
+    {#each lines as line, i}
+      <p>
+        {line}
+      </p>
+    {/each}
+  </h1>
+
   {#if animate}
-    <h1 class="welcome-text">
-      {#each lines as line, i}
-        <p
-          in:fly={{
-            y: 100,
-            delay: 500 * i,
-            easing: elasticOut,
-          }}
-        >
-          {line}
-        </p>
-      {/each}
-    </h1>
     <div
       in:fly={{
         y: 300,
-        delay: 600 * lines.length,
-        easing: quintOut,
+        delay: 100,
+        easing: quintIn,
       }}
-      class="row-container"
+      class="col-container"
     >
-      <p>
+      <p style="line-height: 2em;">
         {message}
       </p>
       {#if !session}
-        <a class="styled-button" href="/login"
-          >Click to login and upload music</a
+        <a
+          in:fly={{ y: -300, delay: 300, easing: quintIn }}
+          class="styled-button"
+          href="/login">Click to login and upload music</a
         >
       {/if}
       <!-- <Donation /> -->
@@ -60,9 +57,11 @@
 <style>
   .welcome-text {
     text-align: center;
+
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    align-items: center;
+    align-items: start;
+    /* border: 1px solid red; */
     justify-content: center;
   }
 </style>

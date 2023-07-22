@@ -9,12 +9,12 @@ export const load: PageServerLoad = async ({
   let message;
 
   if (!session) {
-    message = `Welcome newcomer. This project is a spotify clone. you can upload songs for free, (donations coming soon). 
+    message = `Welcome newcomer. This project is a music app. You can listen to music right now, or create an account by email only and upload your own (donations coming soon). 
       Click the button below to begin your music journey`;
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
-    }. This project is a spotify clone, where you create an account, upload songs for free, (donations coming soon). 
+    }. This project is a music app. You can listen to music right now, or create an account by email only and upload your own (donations coming soon). 
   Navigate to Your Profile to start uploading music.`;
   }
   return {
