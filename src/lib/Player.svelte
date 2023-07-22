@@ -17,6 +17,7 @@
   let time = 0;
   let paused = false;
   let duration: number;
+  // Not sure if this is needed after songPlaying was added
   let isOpen: boolean;
 
   const downloadSong = async (url: string | undefined) => {
@@ -81,6 +82,18 @@
   }
   // todo - USING DOLLAR SYMBOL TO READ AND UPDATE STATE
   function handleForward() {
+    if ($songsQueued.length < 2) {
+      console.log("forward Failed");
+
+      return addToast({
+        type: "info",
+        dismissable: true,
+        message: "No songs remaining",
+        timeout: 3000,
+      });
+    }
+
+    console.log("forward Succeeded");
     $songPlaying = false;
     //! This code is ran in 2 places here in this file. should be considered
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
@@ -88,8 +101,8 @@
   }
   // Correct way of handling state
   function handleBack() {
-    $songPlaying = false;
     if ($songsPlayed.at(-1)) {
+      $songPlaying = false;
       songsQueued.update((songs) => {
         songs.shift();
         // using OR gate here to stop TS lint.
@@ -101,7 +114,7 @@
         return songs;
       });
     } else {
-      addToast({
+      return addToast({
         type: "info",
         dismissable: true,
         message: "No songs behind in queue",
