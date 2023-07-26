@@ -13,7 +13,7 @@
   <h1>Discover</h1>
   <div class="card-col-container">
     {#each dbData as song}
-      <SongCard {supabase} {song} />
+      <SongCard {song} />
     {/each}
   </div>
 </div>
