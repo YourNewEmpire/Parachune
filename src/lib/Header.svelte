@@ -28,7 +28,7 @@
     ><Icon class="icon" src={MagnifyingGlass} />Discover
   </a>
   <a on:click={closeMenu} class="styled-link" href="/account"
-    ><Icon class="icon" src={UserCircle} />Your Profile
+    ><Icon class="icon" src={UserCircle} />My Account
   </a>
   <a on:click={closeMenu} class="styled-link" href="/account/music"
     ><Icon class="icon" src={CircleStack} />Your Music
