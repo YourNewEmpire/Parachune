@@ -5,14 +5,14 @@ import type { Writable } from "svelte/store";
 export type Toast = {
   message: string;
   type: string;
-  dismissable: true;
+  dismissable: boolean;
   timeout: number;
   id: number;
 };
 export type NewToast = {
   message: string;
   type: string;
-  dismissable: true;
+  dismissable: boolean;
   timeout: number;
 };
 
