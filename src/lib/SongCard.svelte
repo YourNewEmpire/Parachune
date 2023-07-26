@@ -14,7 +14,6 @@
       avatar_url: string;
     };
   };
-  export let supabase: SupabaseClient;
   export let song: SongRow;
 </script>
 
@@ -30,7 +29,7 @@
         {song.name}
       </p>
       <div class="row-container">
-        <AvatarIcon size={5} {supabase} url={song.profiles.avatar_url} />
+        <AvatarIcon size={5} url={song.profiles.avatar_url} />
         <p>
           {song.artist}
         </p>
