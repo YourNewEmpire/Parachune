@@ -76,7 +76,7 @@ button:hover {
 .input-item {
   display: flex;
   flex-direction: column;
-  row-gap: 0.1rem;
+  row-gap: 6px;
 }
 
 .icon {
