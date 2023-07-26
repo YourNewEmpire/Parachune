@@ -1,13 +1,14 @@
 <script lang="ts">
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { Icon, UserCircle } from "svelte-hero-icons";
-  import { tick } from "svelte";
+  import { onMount, tick } from "svelte";
   import { fade, fly } from "svelte/transition";
-
+  import { page } from "$app/stores";
   export let url: string;
   export let size: number;
-  export let supabase: SupabaseClient;
+  let supabase: SupabaseClient;
   let avatarUrl: string | null = null;
+
   let loadingImage: boolean;
   const downloadImage = async (path: string) => {
     loadingImage = true;
@@ -32,6 +33,10 @@
     }
   };
   $: if (url) downloadImage(url);
+
+  page.subscribe((params) => {
+    supabase = params.data.supabase;
+  });
 </script>
 
 <div class="row-container">
@@ -41,7 +46,7 @@
       out:fade
       src={avatarUrl}
       alt=""
-      style="width: {size}em; height: {size}em; border-radius: 50%;"
+      style="box-shadow: 0 2px 8px #856bdc; width: {size}em; height: {size}em; border-radius: 50%;"
     />
   {:else}
     <div
