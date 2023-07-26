@@ -1,7 +1,6 @@
 // src/app.d.ts
 
 import { SupabaseClient, Session } from "@supabase/supabase-js";
-
 declare global {
   namespace App {
     interface Locals {
@@ -12,6 +11,7 @@ declare global {
         full_name: any;
         website: any;
         avatar_url: any;
+        paypal_id: any;
       } | null>;
     }
     interface PageData {
