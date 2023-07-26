@@ -20,7 +20,7 @@ export const actions = {
     const username = formData.get("username") as string;
     const website = formData.get("website") as string;
     const avatarUrl = formData.get("avatarUrl") as string;
-
+    const paypalId = formData.get("paypalId") as string;
     const session = await getSession();
 
     const { error } = await supabase.from("profiles").upsert({
@@ -28,16 +28,18 @@ export const actions = {
       full_name: fullName,
       username,
       website,
+      paypal_id: paypalId,
       avatar_url: avatarUrl,
       updated_at: new Date(),
     });
-
+    console.log(error);
     if (error) {
       return fail(500, {
         fullName,
         username,
         website,
         avatarUrl,
+        paypalId,
       });
     }
 
@@ -47,6 +49,7 @@ export const actions = {
       username,
       website,
       avatarUrl,
+      paypalId,
     };
   },
   signout: async ({ locals: { supabase, getSession } }) => {

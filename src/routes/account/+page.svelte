@@ -4,6 +4,7 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import Avatar from "./Avatar.svelte";
+  import { Icon, QuestionMarkCircle } from "svelte-hero-icons";
 
   export let data: PageData;
   export let form: ActionData;
@@ -15,6 +16,7 @@
   let fullName: string | null = profile?.full_name;
   let username: string | null = profile?.username;
   let website: string | null = profile?.website;
+  let paypalId: string | null = profile?.paypal_id;
   let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
 
   const handleSubmit: SubmitFunction = () => {
@@ -91,6 +93,24 @@
           />
         </div>
 
+        <div class="input-item">
+          <label
+            style="display: flex; align-items: center; column-gap: 6px;"
+            for="paypal-merchantid"
+            >Paypal Merchant ID (Required for donations)
+            <div
+              data-tooltip="You can find your merchant id on your paypal profile page"
+            >
+              <Icon src={QuestionMarkCircle} style="width: 1.5rem;" />
+            </div>
+          </label>
+          <input
+            id="paypalId"
+            name="paypalId"
+            type="text"
+            value={form?.paypalId ?? paypalId ?? ""}
+          />
+        </div>
         <div class="input-item">
           <label for="website">Website</label>
           <input
