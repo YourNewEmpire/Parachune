@@ -9,7 +9,7 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
   }
 
   const { data: likedData, error: likedDataError } = await supabase
-    .from("liked songs")
+    .from("saved songs")
     .select("song_id")
     .eq("user_id", session.user.id);
 

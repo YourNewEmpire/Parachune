@@ -13,7 +13,7 @@ export const POST: RequestHandler = async ({
 
   //? Search for song id in likes. If it already exists, quit
   const { data: saveData, error: saveDataError } = await supabase
-    .from("liked songs")
+    .from("saved songs")
     .select("*")
     .eq("song_id", songId);
   if (saveDataError) {
@@ -26,7 +26,7 @@ export const POST: RequestHandler = async ({
     return json({ message: "Song already liked", toastType: "info" });
   }
   const { error: saveLikeError } = await supabase
-    .from("liked songs")
+    .from("saved songs")
     .insert([{ song_id: songId, user_id: session.user.id, song_url: songUrl }]);
 
   if (saveLikeError) {
