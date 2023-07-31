@@ -46,7 +46,7 @@
       <form method="post" use:enhance={handleSignIn}>
         <div class="input-group">
           <input name="email" placeholder="Email" value={form?.email ?? ""} />
-          <button class="styled-button">
+          <button class="styled-button" disabled={loading}>
             Sign In <Icon class="icon" src={PaperAirplane} />
           </button>
         </div>
