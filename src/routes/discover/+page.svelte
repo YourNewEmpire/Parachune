@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   import SongCard from "$lib/SongCard.svelte";
   export let data: PageData;
-  let { dbData, supabase } = data;
+  let { dbData } = data;
 </script>
 
 <svelte:head>
@@ -15,5 +15,11 @@
     {#each dbData as song}
       <SongCard {song} />
     {/each}
+    <a
+      class="styled-button"
+      style="max-width: 25%; align-self: center;"
+      href="/songs"
+      >Find all songs
+    </a>
   </div>
 </div>

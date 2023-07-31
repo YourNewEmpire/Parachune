@@ -13,16 +13,17 @@ type SongRow = {
 export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   const { data: dbFetch, error: dbError } = await supabase
     .from("songs")
-    .select(`artist, name, song_url, created_at, id, profiles ( avatar_url)`);
+    .select(`artist, name, song_url, created_at, id, profiles ( avatar_url)`)
+    .range(0, 4);
 
-  //@ts-ignore
-  //? So hard to type the data from supabase db fetch. Need to generate types from db.
-  let dbData: SongRow[] = [].concat(dbFetch);
-
-  if (!dbError) {
+  if (dbError) {
     fail(500, {
       dbError,
     });
   }
+  //@ts-ignore
+  //? So hard to type the data from supabase db fetch. Need to generate types from db.
+  let dbData: SongRow[] = [].concat(dbFetch);
+
   return { dbData };
 };
