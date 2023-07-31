@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({
     message = `Welcome back ${
       profile?.username ?? session?.user.email
     }. This project is a music app. You can listen to music right now, or create an account by email only and upload your own (donations coming soon). 
-  Navigate to Your Profile to start uploading music.`;
+  Navigate to My Account to start uploading music.`;
   }
   return {
     message,
