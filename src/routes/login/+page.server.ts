@@ -1,4 +1,4 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { fail, redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
@@ -33,4 +33,4 @@ export const actions = {
       success: true,
     };
   },
-};
+} satisfies Actions;
