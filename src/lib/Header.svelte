@@ -7,10 +7,13 @@
     Star,
     CircleStack,
     Home,
+    Cog6Tooth,
   } from "svelte-hero-icons";
 
   const dispatch = createEventDispatcher();
   export let open: boolean;
+  export let profile: any;
+
   function closeMenu() {
     if (open) {
       dispatch("closemenu", {
@@ -21,21 +24,30 @@
 </script>
 
 <nav class="layout-nav-dark">
-  <a on:click={closeMenu} class="styled-link" href="/"
+  <a on:click={closeMenu} class="link" href="/"
     ><Icon class="icon" src={Home} />Home
   </a>
-  <a on:click={closeMenu} class="styled-link" href="/discover"
+  <a on:click={closeMenu} class="link" href="/discover"
     ><Icon class="icon" src={MagnifyingGlass} />Discover
   </a>
-  <a on:click={closeMenu} class="styled-link" href="/account"
-    ><Icon class="icon" src={UserCircle} />My Account
-  </a>
-  <a on:click={closeMenu} class="styled-link" href="/account/music"
-    ><Icon class="icon" src={CircleStack} />Your Music
-  </a>
-  <a on:click={closeMenu} class="styled-link" href="/account/saved"
-    ><Icon class="icon" src={Star} />Saved Music
-  </a>
+  {#if profile}
+    <a on:click={closeMenu} class="link" href="/account"
+      ><Icon class="icon" src={Cog6Tooth} />My Account
+    </a>
+    <a on:click={closeMenu} class="link" href="/profiles/{profile.username}"
+      ><Icon class="icon" src={UserCircle} />My Public Profile
+    </a>
+    <a on:click={closeMenu} class="link" href="/account/music"
+      ><Icon class="icon" src={CircleStack} />My Music
+    </a>
+    <a on:click={closeMenu} class="link" href="/account/saved"
+      ><Icon class="icon" src={Star} />My Saved Music
+    </a>
+  {:else}
+    <a on:click={closeMenu} class="link" href="/login"
+      ><Icon class="icon" src={UserCircle} />Login / Signup
+    </a>
+  {/if}
 </nav>
 
 <style>
@@ -55,7 +67,7 @@
     display: flex;
     flex-direction: column;
   }
-  .styled-link {
+  .link {
     display: flex;
     flex-direction: row;
     column-gap: 6px;
@@ -66,11 +78,11 @@
     border-radius: 0.5rem;
     transition: all 0.3s ease;
   }
-  .styled-link:hover {
+  .link:hover {
     background-color: #856bdc;
     box-shadow: 0px 0px 8px #856bdc;
   }
-  .styled-link:focus {
+  .link:focus {
     background-color: #856bdc;
     box-shadow: 0px 0px 8px #856bdc;
   }

@@ -11,8 +11,8 @@
 
   export let data: LayoutData;
 
-  let { supabase, session, url } = data;
-  $: ({ supabase, session, url } = data);
+  let { supabase, session, url, profile } = data;
+  $: ({ supabase, session, url, profile } = data);
 
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((event, _session) => {
@@ -27,10 +27,10 @@
 
 <div>
   <ToastsParent />
-  <Menu />
+  <Menu {profile} />
   <div class="layout-grid">
     <div class="desktop-header">
-      <Header open={false} />
+      <Header {profile} open={false} />
     </div>
     <div class="main">
       <PageTransition key={data.url} duration={600}>
@@ -40,7 +40,7 @@
       </PageTransition>
     </div>
     <!-- <div class="sidebar-wrapper">
-      <Sidebar />
+      <div class="sidebar" />
     </div> -->
   </div>
   <Player sClient={supabase} />
@@ -52,9 +52,7 @@
     color: #fff;
     min-height: 100vh;
   }
-  .slot-wrapper {
-    margin: 4rem 4rem;
-  }
+
   .layout-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -62,14 +60,50 @@
     grid-column-gap: 0px;
     grid-row-gap: 0px;
   }
+
+  .slot-wrapper {
+    margin: 4rem 2rem;
+  }
+
   .desktop-header {
     display: none;
   }
+  .sidebar-wrapper {
+    display: none;
+  }
+  .sidebar {
+    position: fixed;
+    width: 250px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    min-height: 100svh;
+    background-color: rgba(38, 30, 30, 1);
+    color: #ddd;
+    font-size: 1rem;
+    font-weight: 600;
+    align-items: left;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  /* @media only screen and (min-width: 600px) {
+    .slot-wrapper {
+      margin: 4rem 4rem;
+    }
+  } */
+
   @media only screen and (min-width: 1024px) {
+    .slot-wrapper {
+      margin: 4rem 4rem;
+    }
     .layout-grid {
       grid-template-columns: 250px 1fr;
     }
     .desktop-header {
+      display: block;
+    }
+    .sidebar-wrapper {
       display: block;
     }
   }

@@ -2,6 +2,9 @@
   import Header from "$lib/Header.svelte";
   import { Icon, Bars3 } from "svelte-hero-icons";
   import { fly } from "svelte/transition";
+
+  export let profile: any;
+
   //@ts-ignore
   function clickOutside(node, { enabled: initialEnabled, cb }) {
     //@ts-ignore
@@ -49,7 +52,7 @@
   </div>
   {#if menuVisible}
     <div transition:fly={{ x: -300, duration: 200 }} class="header-wrapper">
-      <Header on:closemenu={handleLinkClick} open={menuVisible} />
+      <Header {profile} on:closemenu={handleLinkClick} open={menuVisible} />
     </div>
     <div transition:fly={{ x: -300, duration: 200 }} class="close-menu-btn">
       <button
