@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { Icon, UserCircle } from "svelte-hero-icons";
-  import { onMount, tick } from "svelte";
+  import { tick } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { page } from "$app/stores";
   export let url: string;
