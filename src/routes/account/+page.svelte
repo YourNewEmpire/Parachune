@@ -97,7 +97,7 @@
           <label
             style="display: flex; align-items: center; column-gap: 6px;"
             for="paypal-merchantid"
-            >Paypal Merchant ID (Required for donations)
+            >Paypal Merchant ID (Required for donations which are coming soon)
             <div
               data-tooltip="You can find your merchant id on your paypal profile page"
             >
