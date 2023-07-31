@@ -2,7 +2,6 @@
   import AvatarIcon from "$lib/AvatarIcon.svelte";
   import Playbutton from "$lib/Playbutton.svelte";
   import Queuebutton from "$lib/Queuebutton.svelte";
-  import { addToast } from "$lib/stores";
   import type { PageData } from "./$types";
 
   export let data: PageData;
@@ -10,7 +9,7 @@
 </script>
 
 <div>
-  <h1>{artistProfile.username}'s artistProfile</h1>
+  <h1>{artistProfile.username}'s profile</h1>
   <div class="card">
     <div class="artistProfile-heading">
       <AvatarIcon url={artistProfile.avatar_url} size={15} />
