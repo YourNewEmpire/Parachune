@@ -25,7 +25,7 @@
 </script>
 
 <div>
-  <button class="styled-button" on:click={saveSong}>
+  <button data-tooltip="Add to Saved" class="styled-button" on:click={saveSong}>
     <Icon style="width: 2rem;" src={Star} />
   </button>
 </div>
