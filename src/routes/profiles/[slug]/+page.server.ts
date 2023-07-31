@@ -14,10 +14,6 @@ export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
   params,
 }) => {
-  const session = await getSession();
-  if (!session) {
-    redirect(301, "/login");
-  }
   const { data: profileData, error: profileError } = await supabase
     .from("profiles")
     .select()
