@@ -3,7 +3,6 @@
   import { fly } from "svelte/transition";
   import { quintOut, elasticOut, quintIn } from "svelte/easing";
   import { onMount } from "svelte";
-  // import Donation from "$lib/Donation.svelte";
 
   export let data: PageData;
   $: ({ message, session } = data);
@@ -43,13 +42,10 @@
         {message}
       </p>
       {#if !session}
-        <a
-          in:fly={{ y: -300, delay: 300, easing: quintIn }}
-          class="styled-button"
-          href="/login">Click to login and upload music</a
+        <a class="styled-button" href="/login"
+          >Click to login and upload music</a
         >
       {/if}
-      <!-- <Donation /> -->
     </div>
   {/if}
 </div>
