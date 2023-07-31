@@ -38,8 +38,18 @@ button:hover {
 .row-container {
   display: flex;
   flex-direction: row;
-  column-gap: 2rem;
+  column-gap: 0.5rem;
   align-items: center;
+}
+@media only screen and (min-width: 768px) {
+  .row-container {
+    column-gap: 1rem;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .row-container {
+    column-gap: 2rem;
+  }
 }
 .col-container {
   display: flex;
@@ -123,8 +133,18 @@ button:hover {
   box-shadow: 0px 0px 8px var(--primary-color);
 }
 
+.styled-link {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+.styled-link:hover {
+  text-decoration: underline;
+  color: var(--primary-color);
+}
+/* SCROLLBAR STYLES */
 ::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
   background-color: black;
 }
 
