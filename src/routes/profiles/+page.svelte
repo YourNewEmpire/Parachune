@@ -3,7 +3,7 @@
   import AvatarIcon from "$lib/AvatarIcon.svelte";
 
   export let data: PageData;
-  let { profileList, supabase } = data;
+  let { profileList } = data;
 </script>
 
 <div>
