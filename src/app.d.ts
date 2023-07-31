@@ -16,6 +16,13 @@ declare global {
     }
     interface PageData {
       session: Session | null;
+      profile: {
+        username: any;
+        full_name: any;
+        website: any;
+        avatar_url: any;
+        paypal_id: any;
+      } | null;
     }
 
     // interface Error {}
