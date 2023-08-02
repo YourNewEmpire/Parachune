@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import SongCard from "$lib/SongCard.svelte";
+  import SongCard from "$lib/songcard.svelte";
   export let data: PageData;
   let { dbData } = data;
 </script>
