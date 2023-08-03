@@ -19,7 +19,6 @@
 <style>
   section {
     position: fixed;
-
     top: 0;
     left: 25%;
     right: 0;
