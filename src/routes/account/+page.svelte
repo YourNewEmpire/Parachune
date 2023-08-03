@@ -14,7 +14,7 @@
   let profileForm: any;
   let loading = false;
   let fullName: string | null = profile?.full_name;
-  let username: string | null = profile?.username;
+  let username: string | null = profile?.username ?? "no username yet";
   let website: string | null = profile?.website;
   let paypalId: string | null = profile?.paypal_id;
   let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
@@ -27,14 +27,14 @@
         addToast({
           type: result.type,
           message: "Failed to update account, try again",
-          timeout: 3000,
+          timeout: 5000,
           dismissable: true,
         });
       } else {
         addToast({
           type: result.type,
           message: "Profile change successful!",
-          timeout: 3000,
+          timeout: 5000,
           dismissable: true,
         });
       }
@@ -50,7 +50,7 @@
       addToast({
         type: "info",
         message: "Successfully logged out",
-        timeout: 3000,
+        timeout: 5000,
         dismissable: true,
       });
     };
