@@ -9,7 +9,7 @@
     Home,
     Cog6Tooth,
   } from "svelte-hero-icons";
-
+  import { page } from "$app/stores";
   const dispatch = createEventDispatcher();
   export let open: boolean;
   export let profile: any;
@@ -21,6 +21,10 @@
       });
     }
   }
+
+  page.subscribe((page) => {
+    profile = page.data.profile;
+  });
 </script>
 
 <nav class="layout-nav-dark">
