@@ -4,6 +4,7 @@
   import { enhance } from "$app/forms";
   import { addToast } from "$lib/stores";
   import { Icon, PaperAirplane } from "svelte-hero-icons";
+  import Googleicon from "$lib/googleicon.svelte";
 
   export let data: PageData;
   export let form;
@@ -13,19 +14,19 @@
     loading = true;
     return async ({ update, result }) => {
       loading = false;
-      if (result.type === "success") {
+      if (result.type === "success" || result.status === 303) {
         addToast({
           type: "info",
           message:
             "Please check your email for a magic link to log into the website.",
-          timeout: 3000,
+          timeout: 5000,
           dismissable: true,
         });
       } else {
         addToast({
           type: "failure",
           message: "Log in failed. Try again",
-          timeout: 3000,
+          timeout: 5000,
           dismissable: true,
         });
       }
@@ -46,9 +47,19 @@
       <form method="post" use:enhance={handleSignIn}>
         <div class="input-group">
           <input name="email" placeholder="Email" value={form?.email ?? ""} />
-          <button class="styled-button" disabled={loading}>
+          <button
+            formaction="?/withEmail"
+            class="styled-button"
+            disabled={loading}
+          >
             Sign In <Icon class="icon" src={PaperAirplane} />
           </button>
+          <button class="styled-button" formaction="?/withGoogle"
+            ><div style="width: 20px; height: 20px;">
+              <Googleicon />
+            </div>
+            Sign in with Google</button
+          >
         </div>
       </form>
     </div>

@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
 };
 // src/routes/login/+page.server.js
 export const actions = {
-  default: async ({ request, url, locals: { supabase } }) => {
+  withEmail: async ({ request, url, locals: { supabase } }) => {
     const formData = await request.formData();
     const emailInput = formData.get("email") as string;
 
@@ -32,5 +32,23 @@ export const actions = {
     return {
       success: true,
     };
+  },
+  withGoogle: async ({ request, url, locals: { supabase } }) => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${url.origin}/auth/callback`,
+        scopes:
+          "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+      },
+    });
+    if (error) {
+      console.log("how is there an error");
+      return fail(500, {
+        message: error.message,
+      });
+    } else {
+      throw redirect(303, data.url);
+    }
   },
 } satisfies Actions;
