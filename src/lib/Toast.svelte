@@ -23,9 +23,9 @@
     <Icon src={InformationCircle} style="width: 2rem; " />
   {/if}
 
-  <div class="text">
+  <article class="text">
     <slot />
-  </div>
+  </article>
 
   {#if dismissable}
     <button style="width: 3rem;" on:click={() => dispatch("dismiss")}>
