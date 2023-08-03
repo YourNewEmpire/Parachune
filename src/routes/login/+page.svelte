@@ -15,7 +15,7 @@
       loading = false;
       if (result.type === "success") {
         addToast({
-          type: result.type,
+          type: "info",
           message:
             "Please check your email for a magic link to log into the website.",
           timeout: 3000,
