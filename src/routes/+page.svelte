@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { fly } from "svelte/transition";
+  import { fly, fade } from "svelte/transition";
   import { quintOut, elasticOut, quintIn } from "svelte/easing";
   import { onMount } from "svelte";
+  import { Icon, WrenchScrewdriver } from "svelte-hero-icons";
 
   export let data: PageData;
   $: ({ message, session } = data);
@@ -20,7 +21,7 @@
 <svelte:head>
   <title>Parachune</title>
 </svelte:head>
-<div class="col-container">
+<section class="col-container">
   <h1 class="welcome-text">
     {#each lines as line, i}
       <p>
@@ -30,7 +31,7 @@
   </h1>
 
   {#if animate}
-    <div
+    <article
       in:fly={{
         y: 300,
         delay: 100,
@@ -42,13 +43,17 @@
         {message}
       </p>
       {#if !session}
-        <a class="styled-button" href="/login"
-          >Click to login and upload music</a
-        >
+        <a class="styled-button" href="/login">Login and Upload music</a>
       {/if}
-    </div>
+    </article>
+    <article
+      style="display:flex; align-items:center; max-width:fit-content; column-gap: 6px; color: orange; "
+      in:fade={{ delay: 500, easing: quintIn }}
+    >
+      <Icon class="icon" src={WrenchScrewdriver} /> In Early Development
+    </article>
   {/if}
-</div>
+</section>
 
 <style>
   .welcome-text {
