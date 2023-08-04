@@ -1,21 +1,21 @@
 import { fail, redirect, type Actions } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-
 export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {
   const session = await getSession();
-
+  const authProviders = ["google"];
   // if the user is already logged in return them to the account page
   if (session) {
     throw redirect(303, "/account");
   }
 
-  return { url: url.origin };
+  return { url: url.origin, authProviders };
 };
 // src/routes/login/+page.server.js
-export const actions = {
+export const actions: Actions = {
   withEmail: async ({ request, url, locals: { supabase } }) => {
     const formData = await request.formData();
     const emailInput = formData.get("email") as string;
+    console.log(emailInput);
 
     const { error } = await supabase.auth.signInWithOtp({
       email: emailInput,
@@ -33,22 +33,4 @@ export const actions = {
       success: true,
     };
   },
-  withGoogle: async ({ request, url, locals: { supabase } }) => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${url.origin}/auth/callback`,
-        scopes:
-          "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
-      },
-    });
-    if (error) {
-      console.log("how is there an error");
-      return fail(500, {
-        message: error.message,
-      });
-    } else {
-      throw redirect(303, data.url);
-    }
-  },
-} satisfies Actions;
+};
