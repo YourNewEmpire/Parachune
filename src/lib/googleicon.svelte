@@ -1,8 +1,12 @@
+<script lang="ts">
+  export let size: number;
+</script>
+
 <div>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
+    width={size}
+    height={size}
     viewBox="0 0 186.69 190.5"
     ><g transform="translate(1184.583 765.171)"
       ><path
