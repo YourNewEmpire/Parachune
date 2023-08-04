@@ -1,4 +1,3 @@
-import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({
@@ -9,12 +8,12 @@ export const load: PageServerLoad = async ({
   let message;
 
   if (!session) {
-    message = `Welcome newcomer. This project is a music app. You can listen to music right now, or create an account by email only and upload your own (donations coming soon). 
-      Click the button below to begin your music journey`;
+    message = `Welcome newcomer. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
+      Click the button below to begin your artist journey`;
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
-    }. This project is a music app. You can listen to music right now, or create an account by email only and upload your own (donations coming soon). 
+    }. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
   Navigate to My Account to start uploading music.`;
   }
   return {
