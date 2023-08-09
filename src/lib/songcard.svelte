@@ -66,7 +66,7 @@
     column-gap: 12px;
     border: none;
     background: none;
-    color: #555;
+    color: #443;
     text-decoration: none;
     cursor: pointer;
     border-radius: 0.75rem;
