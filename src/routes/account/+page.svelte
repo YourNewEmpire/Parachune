@@ -129,22 +129,13 @@
           }}
         />
         <div class="row-container">
-          <button
-            style="font-family: Sono, sans-serif;"
-            type="submit"
-            class="styled-button"
-            disabled={loading}
-          >
+          <button type="submit" class="styled-button" disabled={loading}>
             Update
           </button>
 
           <form method="post" action="?/signout" use:enhance={handleSignOut}>
             <div>
-              <button
-                class="styled-button"
-                style="font-family: Sono, sans-serif;"
-                disabled={loading}>Sign Out</button
-              >
+              <button class="styled-button" disabled={loading}>Sign Out</button>
             </div>
           </form>
         </div>
