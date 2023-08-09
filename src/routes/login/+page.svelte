@@ -98,7 +98,7 @@
           </div>
         </form>
       </div>
-      <article style="line-height: 2;">
+      <article>
         <h1>Important</h1>
         <p>
           Logging in with a provider such as Google is recommended. Logging in
