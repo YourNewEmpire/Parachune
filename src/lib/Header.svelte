@@ -56,6 +56,7 @@
 
 <style>
   .layout-nav-dark {
+    font-family: "Sono", sans-serif;
     position: fixed;
     width: 250px;
     top: 0;
