@@ -15,11 +15,11 @@ body {
 }
 
 body {
-  font-family: var(--secondary-font);
+  font-family: var(--primary-font);
 }
 
 h1 {
-  font-family: var(--primary-font);
+  font-family: var(--secondary-font);
 }
 
 * {
@@ -127,6 +127,7 @@ button:hover {
   transition: all 0.3s ease;
   border: 2px solid var(--primary-color);
   opacity: 1;
+  font-weight: 700;
 }
 
 .styled-button:hover {
