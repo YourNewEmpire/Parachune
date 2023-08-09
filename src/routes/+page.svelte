@@ -22,13 +22,15 @@
   <title>Parachune</title>
 </svelte:head>
 <section class="col-container">
-  <h1 class="welcome-text">
+  <section class="welcome-text">
     {#each lines as line, i}
-      <p>
-        {line}
-      </p>
+      <article>
+        <h1>
+          {line}
+        </h1>
+      </article>
     {/each}
-  </h1>
+  </section>
 
   {#if animate}
     <article
@@ -39,7 +41,7 @@
       }}
       class="col-container"
     >
-      <p style="line-height: 2em;">
+      <p style="line-height: 2em; font-size: 1.25rem;">
         {message}
       </p>
       {#if !session}
@@ -57,12 +59,13 @@
 
 <style>
   .welcome-text {
-    text-align: center;
-
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    justify-content: center;
     align-items: start;
     /* border: 1px solid red; */
-    justify-content: center;
+    text-align: center;
+    font-size: 2rem;
   }
 </style>
