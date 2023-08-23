@@ -1,14 +1,17 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-type Profile = {
-  username: string;
-  avatar_url: string;
-  paypal_id: string;
-};
 type SongRow = {
+  artist: string | null;
+  created_at: string | null;
+  id: number;
   name: string | null;
   song_url: string | null;
+  description: string | null;
+  lyrics: string | null;
+  profiles: {
+    avatar_url: string;
+  };
 };
 export const load: PageServerLoad = async ({
   locals: { supabase },
@@ -16,9 +19,11 @@ export const load: PageServerLoad = async ({
 }) => {
   const { data: songData, error: songError } = await supabase
     .from("songs")
-    .select(`artist, name, song_url, created_at, id, profiles ( avatar_url)`)
+    .select(
+      `artist, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username)`
+    )
     .eq("name", params.slug)
     .single();
-
-  return { songData };
+  let song: SongRow | any = songData;
+  return { song };
 };
