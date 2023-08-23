@@ -29,16 +29,16 @@
   <ToastsParent />
   <Menu {profile} />
   <div class="layout-grid">
-    <div class="desktop-header">
+    <header class="desktop-header">
       <Header {profile} open={false} />
-    </div>
-    <div class="main">
+    </header>
+    <main class="main">
       <PageTransition key={data.url} duration={600}>
-        <main class="slot-wrapper">
+        <section class="slot-wrapper">
           <slot />
-        </main>
+        </section>
       </PageTransition>
-    </div>
+    </main>
     <!-- <div class="sidebar-wrapper">
       <div class="sidebar" />
     </div> -->
@@ -68,7 +68,7 @@
   .desktop-header {
     display: none;
   }
-  .sidebar-wrapper {
+  /* .sidebar-wrapper {
     display: none;
   }
   .sidebar {
@@ -86,11 +86,6 @@
     padding: 10px;
     display: flex;
     flex-direction: column;
-  }
-  /* @media only screen and (min-width: 600px) {
-    .slot-wrapper {
-      margin: 4rem 4rem;
-    }
   } */
 
   @media only screen and (min-width: 1024px) {
@@ -103,8 +98,8 @@
     .desktop-header {
       display: block;
     }
-    .sidebar-wrapper {
+    /* .sidebar-wrapper {
       display: block;
-    }
+    } */
   }
 </style>

@@ -142,7 +142,7 @@
 </script>
 
 {#if isOpen}
-  <div
+  <section
     in:fly={{ y: 200, duration: 1500 }}
     out:fly={{ y: 400, duration: 1500 }}
     class="player-wrapper"
@@ -206,7 +206,7 @@
       <source type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
-  </div>
+  </section>
 {/if}
 
 <style>

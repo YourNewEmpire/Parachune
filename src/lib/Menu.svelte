@@ -37,7 +37,7 @@
   }
 </script>
 
-<div
+<header
   style="z-index: 20; display:block; opacity: 1;"
   use:clickOutside={{ enabled: menuVisible, cb: () => (menuVisible = false) }}
 >
@@ -64,7 +64,7 @@
       </button>
     </div>
   {/if}
-</div>
+</header>
 
 <style>
   button {
