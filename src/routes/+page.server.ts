@@ -9,12 +9,12 @@ export const load: PageServerLoad = async ({
 
   if (!session) {
     message = `Welcome newcomer. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
-      Click the button below to begin your artist journey`;
+      Click the button below to begin your artist journey and start parachuting tunes in.`;
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
     }. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
-  Navigate to My Account to start uploading music.`;
+  Navigate to My Account to start parachuting in some fresh music.`;
   }
   return {
     message,

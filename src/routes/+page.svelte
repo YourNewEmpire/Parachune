@@ -8,7 +8,7 @@
   export let data: PageData;
   $: ({ message, session } = data);
 
-  const lines = ["Get Ready", "For", "ParaTune", "🪂🎸"];
+  const lines = ["Get Ready", "For", "Parachune", "🪂🎸"];
 
   let animate = false;
   onMount(() => {
