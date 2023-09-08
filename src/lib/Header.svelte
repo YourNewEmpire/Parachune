@@ -21,10 +21,6 @@
       });
     }
   }
-
-  page.subscribe((page) => {
-    profile = page.data.profile;
-  });
 </script>
 
 <nav class="layout-nav-dark">
