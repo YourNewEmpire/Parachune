@@ -35,17 +35,3 @@
     </nav>
   {/if}
 </div>
-
-<style>
-  .card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 250px);
-    grid-gap: 12px;
-    justify-content: center;
-  }
-  @media only screen and (min-width: 1024px) {
-    .card-container {
-      justify-content: start;
-    }
-  }
-</style>
