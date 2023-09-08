@@ -6,6 +6,7 @@
   import { page } from "$app/stores";
   export let url: string;
   export let size: number;
+  export let altText: string;
   let supabase: SupabaseClient;
   let avatarUrl: string | null = null;
 
@@ -45,7 +46,7 @@
       in:fly
       out:fade
       src={avatarUrl}
-      alt=""
+      alt={altText}
       style="box-shadow: 0 2px 8px #856bdc; width: {size}em; height: {size}em; border-radius: 50%;"
     />
   {:else}
