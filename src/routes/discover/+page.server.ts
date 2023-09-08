@@ -10,20 +10,32 @@ type SongRow = {
     avatar_url: string;
   };
 };
+type Artist = {
+  username: string;
+  avatar_url: string;
+};
 export const load: PageServerLoad = async ({ locals: { supabase } }) => {
-  const { data: dbFetch, error: dbError } = await supabase
+  const { data: songFetch, error: songError } = await supabase
     .from("songs")
-    .select(`artist, name, song_url, created_at, id, profiles ( avatar_url)`)
+    .select(
+      `artist, name, song_url, created_at, id, profiles (avatar_url, username)`
+    )
     .range(0, 4);
 
-  if (dbError) {
+  const { data: profileFetch, error: profileError } = await supabase
+    .from("profiles")
+    .select(`username, avatar_url`)
+    .range(0, 4);
+
+  if (songError || profileError) {
     fail(500, {
-      dbError,
+      songError,
+      profileError,
     });
   }
   //@ts-ignore
   //? So hard to type the data from supabase db fetch. Need to generate types from db.
-  let dbData: SongRow[] = [].concat(dbFetch);
+  let songData: SongRow[] = [].concat(songFetch);
 
-  return { dbData };
+  return { songData, profileFetch };
 };

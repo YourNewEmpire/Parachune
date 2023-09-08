@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   import SongCard from "$lib/songcard.svelte";
   export let data: PageData;
-  let { dbData } = data;
+  let { songData, profileFetch } = data;
 </script>
 
 <svelte:head>
@@ -11,15 +11,14 @@
 
 <div>
   <h1>Discover</h1>
-  <div class="card-col-container">
-    {#each dbData as song}
+  <section class="card-container">
+    {#each songData as song}
       <SongCard {song} />
     {/each}
-    <a
-      class="styled-button"
-      style="max-width: 25%; align-self: center;"
-      href="/songs"
+  </section>
+  <section style="justify-content: center; display: flex; margin-top: 1rem;">
+    <a class="styled-button" style="width:fit-content" href="/songs"
       >Find all songs
     </a>
-  </div>
+  </section>
 </div>
