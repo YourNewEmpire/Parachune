@@ -43,7 +43,7 @@
 
 <div style="display: flex; flex-direction: column; row-gap: 12px; ">
   {#if url}
-    <AvatarIcon size={10} bind:url />
+    <AvatarIcon altText="Your Avatar" size={10} bind:url />
   {:else}
     <div
       class="avatar no-image"

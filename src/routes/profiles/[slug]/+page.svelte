@@ -12,7 +12,11 @@
   <h1>{artistProfile.username}'s profile</h1>
   <div class="card">
     <div class="artistProfile-heading">
-      <AvatarIcon url={artistProfile.avatar_url} size={15} />
+      <AvatarIcon
+        altText={artistProfile.username}
+        url={artistProfile.avatar_url}
+        size={15}
+      />
       <h1>{artistProfile.username}</h1>
     </div>
     <div class="row-container">

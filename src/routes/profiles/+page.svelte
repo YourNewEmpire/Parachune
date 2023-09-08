@@ -11,7 +11,11 @@
   <div class="row-container">
     {#each profileList ?? [] as profile}
       <div class="col-container card">
-        <AvatarIcon size={10} url={profile.avatar_url} />
+        <AvatarIcon
+          altText={profile.username}
+          size={10}
+          url={profile.avatar_url}
+        />
         <p>{profile.username}</p>
       </div>
     {/each}
