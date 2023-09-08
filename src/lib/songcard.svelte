@@ -11,6 +11,7 @@
     song_url: string | null;
     profiles: {
       avatar_url: string;
+      username: string;
     };
   };
   export let song: SongRow | any;
@@ -26,7 +27,11 @@
       {song.name}
     </a>
     <a class="song-profile-link" href="/profiles/{song.artist}">
-      <AvatarIcon size={2} url={song.profiles.avatar_url} />
+      <AvatarIcon
+        altText={song.profiles.username}
+        size={2}
+        url={song.profiles.avatar_url}
+      />
 
       <p class="text-ellipsis">
         {song.artist}
