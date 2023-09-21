@@ -8,13 +8,11 @@ export const load: PageServerLoad = async ({
   let message;
 
   if (!session) {
-    message = `Welcome newcomer. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
-      Click the button below to begin your artist journey and start parachuting tunes in.`;
+    message = `Welcome newcomer, to Parachune. Parachute your tunes here, for free. Click below to login,  or scroll to learn more about Parachune.`;
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
-    }. This project is a music app. You can listen to music right now, or create an account and upload your own (donations coming soon). 
-  Navigate to My Account to start parachuting in some fresh music.`;
+    }. We are happy you're back here.`;
   }
   return {
     message,
