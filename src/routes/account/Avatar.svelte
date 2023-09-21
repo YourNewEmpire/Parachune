@@ -41,7 +41,9 @@
   };
 </script>
 
-<div style="display: flex; flex-direction: column; row-gap: 12px; ">
+<div
+  style="display: flex; flex-direction: column; row-gap: 12px; align-items: center; "
+>
   {#if url}
     <AvatarIcon altText="Your Avatar" size={10} bind:url />
   {:else}
