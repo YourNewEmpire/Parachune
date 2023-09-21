@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
   import {
     Icon,
     UserCircle,
@@ -21,6 +21,11 @@
       });
     }
   }
+  page.subscribe((page) => {
+    if (page.data.profile) {
+      profile = page.data.profile;
+    }
+  });
 </script>
 
 <nav class="layout-nav-dark">
