@@ -2,38 +2,12 @@
   import Header from "$lib/Header.svelte";
   import { Icon, Bars3 } from "svelte-hero-icons";
   import { fly } from "svelte/transition";
-
+  import clickOutside from "$lib/utils/clickOutside";
   export let profile: any;
 
-  //@ts-ignore
-  function clickOutside(node, { enabled: initialEnabled, cb }) {
-    //@ts-ignore
-    const handleOutsideClick = ({ target }) => {
-      if (!node.contains(target)) {
-        cb();
-      }
-    };
-    //@ts-ignore
-    function update({ enabled }) {
-      if (enabled) {
-        window.addEventListener("click", handleOutsideClick);
-      } else {
-        window.removeEventListener("click", handleOutsideClick);
-      }
-    }
-
-    update({ enabled: initialEnabled });
-    return {
-      update,
-      destroy() {
-        window.removeEventListener("click", handleOutsideClick);
-      },
-    };
-  }
-
   let menuVisible = false;
-  function handleLinkClick(event: CustomEvent) {
-    menuVisible = event.detail.menu;
+  function handleClose() {
+    menuVisible = false;
   }
 </script>
 
@@ -52,7 +26,7 @@
   </div>
   {#if menuVisible}
     <div transition:fly={{ x: -300, duration: 200 }} class="header-wrapper">
-      <Header {profile} on:closemenu={handleLinkClick} open={menuVisible} />
+      <Header {profile} on:closemenu={handleClose} open={menuVisible} />
     </div>
     <div transition:fly={{ x: -300, duration: 200 }} class="close-menu-btn">
       <button
