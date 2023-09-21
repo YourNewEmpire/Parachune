@@ -33,8 +33,8 @@
       <Header {profile} open={false} />
     </header>
     <main class="main">
-      <PageTransition key={data.url} duration={600}>
-        <section class="slot-wrapper">
+      <PageTransition key={url} duration={600}>
+        <section class={url === "/" ? "slot-wrapper-home" : "slot-wrapper"}>
           <slot />
         </section>
       </PageTransition>
@@ -64,7 +64,9 @@
   .slot-wrapper {
     margin: 4rem 2rem;
   }
-
+  .slot-wrapper-home {
+    margin: 0 4rem 2rem;
+  }
   .desktop-header {
     display: none;
   }
@@ -91,6 +93,9 @@
   @media only screen and (min-width: 1024px) {
     .slot-wrapper {
       margin: 4rem 4rem;
+    }
+    .slot-wrapper-home {
+      margin: 0 4rem 4rem;
     }
     .layout-grid {
       grid-template-columns: 250px 1fr;
