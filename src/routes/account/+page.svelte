@@ -41,7 +41,6 @@
     };
   };
 
-  // Needs to be used
   const handleSignOut: SubmitFunction = () => {
     loading = true;
     return async ({ update }) => {
@@ -62,63 +61,70 @@
   <div class="account-container">
     <section class="card">
       <form
-        class="input-group"
+        class="account-form"
         method="post"
         action="?/update"
         use:enhance={handleSubmit}
         bind:this={profileForm}
       >
-        <div class="input-item">
-          <label for="email">Email</label>
-          <input id="email" type="text" value={session?.user.email} disabled />
-        </div>
+        <div class="input-group" style="row-gap: 1rem;">
+          <div class="input-item">
+            <label for="email">Email</label>
+            <input
+              id="email"
+              type="text"
+              value={session?.user.email}
+              disabled
+            />
+          </div>
 
-        <div class="input-item">
-          <label for="fullName">Full Name</label>
-          <input
-            id="fullName"
-            name="fullName"
-            type="text"
-            value={form?.fullName ?? fullName ?? ""}
-          />
-        </div>
+          <div class="input-item">
+            <label for="fullName">Full Name</label>
+            <input
+              id="fullName"
+              name="fullName"
+              type="text"
+              value={form?.fullName ?? fullName ?? ""}
+            />
+          </div>
 
-        <div class="input-item">
-          <label for="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            value={form?.username ?? username ?? ""}
-          />
-        </div>
+          <div class="input-item">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value={form?.username ?? username ?? ""}
+            />
+          </div>
 
-        <div class="input-item">
-          <label
-            style="display: flex; align-items: center; column-gap: 6px;"
-            for="paypal-merchantid"
-            >Paypal Merchant ID (Required for donations which are coming soon)
-            <div
-              data-tooltip="You can find your merchant id on your paypal profile page"
-            >
-              <Icon src={QuestionMarkCircle} style="width: 1.5rem;" />
-            </div>
-          </label>
-          <input
-            id="paypalId"
-            name="paypalId"
-            type="text"
-            value={form?.paypalId ?? paypalId ?? ""}
-          />
-        </div>
-        <div class="input-item">
-          <label for="website">Website</label>
-          <input
-            id="website"
-            name="website"
-            type="website"
-            value={form?.website ?? website ?? ""}
-          />
+          <div class="input-item">
+            <label
+              style="display: flex; align-items: center; column-gap: 6px;"
+              for="paypal-merchantid"
+              >Paypal Merchant ID (donations which are coming soon)
+              <div
+                data-tooltip="You can find your merchant id on your paypal profile page"
+              >
+                <Icon src={QuestionMarkCircle} style="width: 1.5rem;" />
+              </div>
+            </label>
+            <input
+              id="paypalId"
+              name="paypalId"
+              type="text"
+              value={form?.paypalId ?? paypalId ?? ""}
+            />
+          </div>
+          <div class="input-item">
+            <label for="website">Website</label>
+            <input
+              id="website"
+              name="website"
+              type="website"
+              value={form?.website ?? website ?? ""}
+            />
+          </div>
         </div>
         <Avatar
           {supabase}
@@ -163,6 +169,24 @@
     grid-template-columns: 100%;
     width: 100%;
     row-gap: 6px;
+  }
+  .account-form {
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 1fr;
+  }
+  .account-form input {
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5em;
+    font-size: 1em;
+    font-family: "League Spartan";
+  }
+  @media only screen and (min-width: 768px) {
+    .account-form {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+    }
   }
   @media only screen and (min-width: 1024px) {
     .account-container {
