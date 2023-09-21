@@ -4,7 +4,7 @@ export const load: LayoutServerLoad = async ({
   locals: { getSession, getProfile },
 }) => {
   return {
-    session: await getSession(),
-    profile: await getProfile(),
+    session: getSession(),
+    profile: getProfile(),
   };
 };
