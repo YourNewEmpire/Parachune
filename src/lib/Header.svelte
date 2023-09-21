@@ -16,9 +16,7 @@
 
   function closeMenu() {
     if (open) {
-      dispatch("closemenu", {
-        menu: false,
-      });
+      dispatch("closemenu");
     }
   }
   page.subscribe((page) => {
