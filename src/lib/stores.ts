@@ -1,6 +1,7 @@
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 
+// TODO - use union type for type field
 //? TYPES
 export type Toast = {
   message: string;
