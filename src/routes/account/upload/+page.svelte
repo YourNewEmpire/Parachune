@@ -47,29 +47,30 @@
   // });
 </script>
 
-<div>
-  <h1>Upload a song</h1>
-  <form
-    class="input-group"
-    method="post"
-    action="?/uploadSong"
-    use:enhance={handleSubmit}
-    bind:this={uploadForm}
-  >
-    <label for="songName">Song Name</label>
-    <input on:input={handleInput} type="text" name="songName" id="" />
-    <label for="song">Song Name</label>
-    <input type="file" name="song" />
-    <button
-      class="styled-button"
-      style="font-family: Sono, sans-serif;"
-      disabled={loading}
-      type="submit">Upload</button
+<h1>Upload a song</h1>
+<div style="display: flex; justify-content: center; ">
+  <section class="card">
+    <form
+      class="input-group"
+      method="post"
+      action="?/uploadSong"
+      use:enhance={handleSubmit}
+      bind:this={uploadForm}
     >
-  </form>
-  <p>{formMessage}</p>
-  <h1>Songs for {profile?.username ?? session?.user.email}</h1>
-  {#if !profile?.username}
-    <a href="/account">Update username</a>
-  {/if}
+      <div class="input-item">
+        <label for="songName">Song Name</label>
+        <input on:input={handleInput} type="text" name="songName" id="" />
+      </div>
+      <div class="input-item">
+        <label for="song">Song File</label>
+        <input type="file" name="song" />
+      </div>
+      <button
+        class="styled-button"
+        style="font-family: Sono, sans-serif;"
+        disabled={loading}
+        type="submit">Upload</button
+      >
+    </form>
+  </section>
 </div>

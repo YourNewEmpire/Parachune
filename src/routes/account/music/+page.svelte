@@ -1,17 +1,17 @@
 <script lang="ts">
+  import Songcard from "$lib/songcard.svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
 
   let { session, profile, dbData } = data;
 </script>
 
-<div>
-  <h1>Songs for {profile?.username ?? session?.user.email}</h1>
-  <div class="card-col-container">
-    {#each dbData as song}
-      <div class="card">
-        {song.name}
-      </div>
-    {/each}
-  </div>
-</div>
+<h1>Your music</h1>
+<section class="card-container">
+  {#each dbData as song}
+    <a href="/songs/{song.id}" class="link-card">
+      <p>{song.name}</p>
+      <p>{song.created_at}</p>
+    </a>
+  {/each}
+</section>

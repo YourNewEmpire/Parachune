@@ -12,36 +12,39 @@
 
   export let type = "failure";
   export let dismissable = true;
+  const handleDismiss = () => {
+    if (dismissable) dispatch("dismiss");
+    return;
+  };
 </script>
 
-<div class={type} role="alert" transition:fade>
-  {#if type === "success"}
-    <Icon src={CheckCircle} style="width: 2rem;" />
-  {:else if type === "failure"}
-    <Icon src={ExclamationCircle} style="width: 2rem;" />
-  {:else}
-    <Icon src={InformationCircle} style="width: 2rem; " />
-  {/if}
+<div role="alert" transition:fade>
+  <button class={type} on:click={() => handleDismiss()}>
+    {#if type === "success"}
+      <Icon src={CheckCircle} class="icon" />
+    {:else if type === "failure"}
+      <Icon src={ExclamationCircle} class="icon" />
+    {:else}
+      <Icon src={InformationCircle} class="icon" />
+    {/if}
 
-  <article class="text">
-    <slot />
-  </article>
-
-  {#if dismissable}
-    <button style="width: 3rem;" on:click={() => dispatch("dismiss")}>
-      <Icon src={XCircle} />
-    </button>
-  {/if}
+    <article class="text">
+      <slot />
+    </article>
+  </button>
 </div>
 
 <style>
-  div {
+  button {
     display: flex;
     align-items: center;
     width: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     color: white;
+  }
+  button:focus {
+    outline: none;
   }
   .failure {
     background-color: rgba(255, 0, 0, 0.7);
@@ -53,13 +56,12 @@
     background-color: rgba(0, 0, 255, 0.7);
   }
   .text {
+    font-size: 24px;
+    overflow-wrap: break-word;
+    flex: 3;
   }
-
-  button {
-    color: inherit;
-    transition: all 0.2s ease-in-out;
-  }
-  button:hover {
-    scale: 1.2;
+  .icon {
+    width: 24px;
+    flex: 1;
   }
 </style>

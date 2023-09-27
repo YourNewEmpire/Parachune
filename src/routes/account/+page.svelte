@@ -4,7 +4,7 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import Avatar from "./Avatar.svelte";
-  import { Icon, QuestionMarkCircle } from "svelte-hero-icons";
+  import { Icon, QuestionMarkCircle, Star } from "svelte-hero-icons";
 
   export let data: PageData;
   export let form: ActionData;
@@ -56,10 +56,13 @@
   };
 </script>
 
+<svelte:head>
+  <title>Your Account - Parachune</title>
+</svelte:head>
 <div>
   <h1>Your Account</h1>
   <div class="account-container">
-    <section class="card">
+    <section class="card form-wrapper">
       <form
         class="account-form"
         method="post"
@@ -154,11 +157,20 @@
 
     <section class="card">
       <h1>your music</h1>
-      <a href="/account/upload">Upload more</a>
+      <div class="row-container">
+        <a class="styled-button" style="width: 50%" href="/account/upload">
+          🪂 Upload</a
+        >
+        <a class="styled-button" style="width: 50%" href="/account/music">
+          💿 View your songs</a
+        >
+      </div>
     </section>
     <section class="card">
       <h1>Songs you like</h1>
-      <a href="/account/saved">See all</a>
+      <a class="styled-button" style="width: 50%" href="/account/saved">
+        ⭐ View your saved songs</a
+      >
     </section>
   </div>
 </div>
@@ -166,9 +178,13 @@
 <style>
   .account-container {
     display: grid;
-    grid-template-columns: 100%;
+    grid-template-columns: 50% 50%;
     width: 100%;
-    row-gap: 6px;
+    gap: 8px;
+  }
+  .form-wrapper {
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
   .account-form {
     display: grid;
@@ -185,15 +201,7 @@
   @media only screen and (min-width: 768px) {
     .account-form {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-    }
-  }
-  @media only screen and (min-width: 1024px) {
-    .account-container {
-      display: grid;
-      grid-template-columns: 60% 20% 20%;
-      width: 100%;
-      column-gap: 6px;
+      grid-template-columns: 1fr 2fr;
     }
   }
 </style>

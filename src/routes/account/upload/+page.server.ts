@@ -1,9 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
+import { v4 as uuidv4 } from "uuid";
 import type { Actions, PageServerLoad } from "./$types";
-
-export const load = (async ({
-  locals: { supabase, getSession, getProfile },
-}) => {
+export const load = (async ({ locals: { getSession, getProfile } }) => {
   const session = await getSession();
   const profile = await getProfile();
   if (!session) {
@@ -14,15 +12,18 @@ export const load = (async ({
 }) satisfies PageServerLoad;
 
 export const actions = {
-  uploadSong: async ({
-    request,
-    locals: { supabase, getSession, getProfile },
-  }) => {
-    const session = await getSession();
+  uploadSong: async ({ request, locals: { supabase, getProfile } }) => {
     const profile = await getProfile();
+    if (!profile) {
+      return fail(400, {
+        message: "Please login",
+      });
+    }
     const formData = await request.formData();
     const songFile = formData.get("song") as File;
     const songName = formData.get("songName") as string;
+
+    // Validate form
     if (songName.length < 1) {
       return fail(400, {
         message: "Song name too short, at least 1 char please",
@@ -33,8 +34,12 @@ export const actions = {
         message: "Please atttach a file",
       });
     }
+
+    // Prepare song file
     const fileExt = songFile.name.split(".").pop();
-    let url = `${songName}.${fileExt}`;
+    let uId = uuidv4();
+    let url = `${songName.split(" ").join("") + uId}.${fileExt}`;
+
     // //? Upload and insert to supabase
     const { data, error } = await supabase.storage
       .from("songs")

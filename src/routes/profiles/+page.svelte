@@ -8,16 +8,16 @@
 
 <div>
   <h1>Find artists</h1>
-  <div class="row-container">
+  <section class="card-container">
     {#each profileList ?? [] as profile}
-      <div class="col-container card">
+      <a href="/profiles/{profile.username}" class="link-card col-container">
         <AvatarIcon
           altText={profile.username}
           size={10}
           url={profile.avatar_url}
         />
-        <p>{profile.username}</p>
-      </div>
+        <h1>{profile.username}</h1>
+      </a>
     {/each}
-  </div>
+  </section>
 </div>

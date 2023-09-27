@@ -16,6 +16,7 @@ type SongRow = {
   likes: number;
   isLiked: boolean | "unset";
 };
+
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
   params,
@@ -28,7 +29,7 @@ export const load: PageServerLoad = async ({
     .select(
       `artist, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username)`
     )
-    .eq("name", params.slug)
+    .eq("id", params.slug)
     .single();
 
   if (songDataErr) {
@@ -52,7 +53,7 @@ export const load: PageServerLoad = async ({
       message: "Server error when getting song data",
     });
   }
-  // this will block unauthed !!!!!!!!!
+
   if (!session) {
     let song: SongRow | any = { ...songData, likes: count ?? 0, liked: null };
 

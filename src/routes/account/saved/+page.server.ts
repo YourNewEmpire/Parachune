@@ -1,9 +1,12 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load = (async ({ locals: { supabase, getSession } }) => {
+export const load: PageServerLoad = async ({
+  locals: { supabase, getSession },
+}) => {
   const session = await getSession();
   let songIds: number[] = [];
+
   if (!session) {
     throw redirect(303, "/login");
   }
@@ -16,10 +19,16 @@ export const load = (async ({ locals: { supabase, getSession } }) => {
   likedData?.forEach((obj, ind) => {
     songIds.push(obj.song_id);
   });
-  const { data: songs } = await supabase
+
+  const { data: songs, error: songsError } = await supabase
     .from("songs")
-    .select(`song_url, name, artist`)
+    .select(
+      `song_url, name, artist, id, created_at, profiles (avatar_url, username)`
+    )
     .in("id", songIds);
 
-  return { likedSongs: songs };
-}) satisfies PageServerLoad;
+  if (songsError) {
+    throw error(404, "Error getting data about songs you like");
+  }
+  return { savedSongs: songs };
+};

@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
     )
     .range(0, 4);
 
-  const { data: profileFetch, error: profileError } = await supabase
+  const { data: profileData, error: profileError } = await supabase
     .from("profiles")
     .select(`username, avatar_url`)
     .range(0, 4);
@@ -37,5 +37,5 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   //? So hard to type the data from supabase db fetch. Need to generate types from db.
   let songData: SongRow[] = [].concat(songFetch);
 
-  return { songData, profileFetch };
+  return { songData, profileData };
 };

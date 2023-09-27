@@ -19,28 +19,19 @@
 <style>
   section {
     position: fixed;
-    top: 0;
-    left: 25%;
-    right: 0;
-    width: 50%;
+    width: 40%;
+    left: 60%;
     display: flex;
-    margin-top: 1rem;
+    padding-top: 1rem;
     row-gap: 12px;
     flex-direction: column;
     z-index: 10;
+    padding-right: 1rem;
   }
   @media only screen and (min-width: 1024px) {
     section {
-      position: fixed;
-      top: 0;
-      left: 75%;
-      right: 0;
-      width: 25%;
-      display: flex;
-      margin-top: 1rem;
-      row-gap: 12px;
-      flex-direction: column;
-      z-index: 10;
+      width: 30%;
+      left: 70%;
     }
   }
 </style>

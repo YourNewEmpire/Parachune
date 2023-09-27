@@ -6,10 +6,7 @@ type Profile = {
   avatar_url: string;
   paypal_id: string;
 };
-type SongRow = {
-  name: string | null;
-  song_url: string | null;
-};
+
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
   params,
@@ -22,7 +19,7 @@ export const load: PageServerLoad = async ({
 
   const { data: artistSongs, error: songsError } = await supabase
     .from("songs")
-    .select(`name, song_url`)
+    .select(`name, song_url, id`)
     .eq("artist", profileData.username);
   const artistProfile: Profile = { ...profileData };
 

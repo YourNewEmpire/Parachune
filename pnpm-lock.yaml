@@ -17,12 +17,6 @@ importers:
       '@supabase/auth-helpers-sveltekit':
         specifier: ^0.9.4
         version: 0.9.4(@supabase/supabase-js@2.31.0)(@sveltejs/kit@1.22.3)
-      '@supabase/auth-ui-shared':
-        specifier: ^0.1.6
-        version: 0.1.6(@supabase/supabase-js@2.31.0)
-      '@supabase/auth-ui-svelte':
-        specifier: ^0.1.6
-        version: 0.1.6(@supabase/supabase-js@2.31.0)
       '@supabase/supabase-js':
         specifier: ^2.31.0
         version: 2.31.0
@@ -36,6 +30,9 @@ importers:
       '@sveltejs/kit':
         specifier: ^1.22.3
         version: 1.22.3(svelte@4.1.1)(vite@4.4.7)
+      '@types/uuid':
+        specifier: ^9.0.4
+        version: 9.0.4
       supabase:
         specifier: ^1.82.2
         version: 1.82.2
@@ -54,6 +51,9 @@ importers:
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
       vite:
         specifier: ^4.4.7
         version: 4.4.7
@@ -374,10 +374,6 @@ packages:
     resolution: {integrity: sha512-bv4YK375U9TDS50SmJ5VdFy2UmMhgKbJCCbo6IUU3qs2luEj2VX6sQoDy96j8AIKttxMd62ih1j0lZj7CTjIfA==}
     dev: true
 
-  /@stitches/core@1.2.8:
-    resolution: {integrity: sha512-Gfkvwk9o9kE9r9XNBmJRfV8zONvXThnm1tcuojL04Uy5uRyqg93DC83lDebl0rocZCfKSjUv+fWYtMQmEDJldg==}
-    dev: false
-
   /@supabase/auth-helpers-shared@0.3.4(@supabase/supabase-js@2.31.0):
     resolution: {integrity: sha512-8I3D0SPHHexkFTSfPg0nZgJSVazWoB3tZDpT6IjRv6w89vDMUzO99Lit4H9anVLF4teW8c/nJJxawDNbDlgbgg==}
     peerDependencies:
@@ -396,33 +392,6 @@ packages:
       '@supabase/auth-helpers-shared': 0.3.4(@supabase/supabase-js@2.31.0)
       '@supabase/supabase-js': 2.31.0
       '@sveltejs/kit': 1.22.3(svelte@4.1.1)(vite@4.4.7)
-    dev: false
-
-  /@supabase/auth-ui-shared@0.1.4(@supabase/supabase-js@2.31.0):
-    resolution: {integrity: sha512-1kSo4JNLyVsTdHhuHSG0WQ7VotKbeMmoQjzIwbE/heALm9xlDu+0AgTPCx1uae1umOALa1CCQuEdfvz6P02RLA==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.8.0
-    dependencies:
-      '@supabase/supabase-js': 2.31.0
-    dev: false
-
-  /@supabase/auth-ui-shared@0.1.6(@supabase/supabase-js@2.31.0):
-    resolution: {integrity: sha512-dBlP2XR5KSSCBMgkWJMkc2UVA21V5AobKmekwIiHVvyVtzAiFqE5XWJiPV+kMlnRLzFXDeA0Z/CqdKTL/Kbs4A==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.21.0
-    dependencies:
-      '@supabase/supabase-js': 2.31.0
-    dev: false
-
-  /@supabase/auth-ui-svelte@0.1.6(@supabase/supabase-js@2.31.0):
-    resolution: {integrity: sha512-c+lbeAebljBMuf6w0X831gnwRTEUSx3eJHpCMCSC5CR5XaoS/BCpRveXu6QeeJcd3C3L8OcpuCuzW+qiWPe4Zw==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.8.0
-    dependencies:
-      '@stitches/core': 1.2.8
-      '@supabase/auth-ui-shared': 0.1.4(@supabase/supabase-js@2.31.0)
-      '@supabase/supabase-js': 2.31.0
-      svelte: 3.59.2
     dev: false
 
   /@supabase/functions-js@2.1.2:
@@ -579,6 +548,10 @@ packages:
 
   /@types/pug@2.0.6:
     resolution: {integrity: sha512-SnHmG9wN1UVmagJOnyo/qkk0Z7gejYxOYYmaAwr5u2yFYfsupN3sg10kyzN8Hep/2zbHxCnsumxOoRIRMBwKCg==}
+    dev: true
+
+  /@types/uuid@9.0.4:
+    resolution: {integrity: sha512-zAuJWQflfx6dYJM62vna+Sn5aeSWhh3OB+wfUEACNcqUSc0AGc5JKl+ycL1vrH7frGTXhJchYjE1Hak8L819dA==}
     dev: true
 
   /@types/websocket@1.0.5:
@@ -1634,11 +1607,6 @@ packages:
       typescript: 5.1.6
     dev: true
 
-  /svelte@3.59.2:
-    resolution: {integrity: sha512-vzSyuGr3eEoAtT/A6bmajosJZIUWySzY2CzB3w2pgPvnkUjGqlDnsNnA0PMO+mMAhuyMul6C2uuZzY6ELSkzyA==}
-    engines: {node: '>= 8'}
-    dev: false
-
   /svelte@4.1.1:
     resolution: {integrity: sha512-Enick5fPFISLoVy0MFK45cG+YlQt6upw8skEK9zzTpJnH1DqEv8xOZwizCGSo3Q6HZ7KrZTM0J18poF7aQg5zw==}
     engines: {node: '>=16'}
@@ -1729,6 +1697,11 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: true
+
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    hasBin: true
     dev: true
 
   /vite@4.4.7:

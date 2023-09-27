@@ -6,6 +6,7 @@
   import { Icon, WrenchScrewdriver } from "svelte-hero-icons";
   import FlyInView from "$lib/transitions-inview/fly.svelte";
   import FadeInView from "$lib/transitions-inview/fade.svelte";
+  import { addToast } from "$lib/stores";
   export let data: PageData;
   $: ({ message, session } = data);
 
@@ -27,7 +28,7 @@
   {#if animate}
     <div class="welcome-text">
       {#each lines as line, i}
-        <div class="overflow">
+        <div class="">
           <h1
             style="display: inline-block;"
             in:fly|global={{
@@ -66,7 +67,6 @@
     </article>
   {/if}
 </section>
-
 <section class="tutorial-section">
   <article class="overflow">
     <FlyInView
@@ -95,6 +95,36 @@
           * Create an account with Google (recommended) or with email
         </p>
       </div>
+      <img src="create_acc.png" alt="create account" class="tutorial-image" />
+    </FadeInView>
+  </a>
+</section>
+
+<section class="tutorial-section">
+  <article class="overflow">
+    <FlyInView
+      options={{
+        x: -200,
+        delay: 500,
+        easing: quintIn,
+        duration: 800,
+      }}
+    >
+      <h1 class="heading">Create your account</h1>
+    </FlyInView>
+  </article>
+
+  <a href="/login" class="tutorial-image-container">
+    <FadeInView
+      options={{
+        delay: 2000,
+        duration: 1000,
+      }}
+    >
+      <p class="tutorial-text">
+        * Create an account with Google (recommended) or with email
+      </p>
+
       <img src="create_acc.png" alt="create account" class="tutorial-image" />
     </FadeInView>
   </a>
@@ -143,7 +173,7 @@
     vertical-align: bottom;
   }
   .landing-section {
-    min-height: 100vh;
+    height: 100svh;
     /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
@@ -154,12 +184,12 @@
   .welcome-text {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 1fr;
+    grid-template-rows: 2fr;
     justify-content: center;
     align-items: center;
     /* border: 1px solid red; */
     text-align: center;
-    font-size: 2rem;
+    font-size: 0.75rem;
   }
   .tutorial-section {
     min-height: 100vh;
@@ -182,6 +212,22 @@
     transition-duration: 350ms;
     border-radius: 0.5rem;
     object-fit: cover;
+    max-width: 100%;
+    height: auto;
     /* border: 1px solid red; */
+  }
+  .tutorial-text {
+    margin-left: 5px;
+    font-size: 9px;
+    color: black;
+  }
+  @media only screen and (min-width: 1024px) {
+    .welcome-text {
+      /* border: 1px solid red; */
+      font-size: 1.5rem;
+    }
+    .tutorial-text {
+      font-size: 16px;
+    }
   }
 </style>

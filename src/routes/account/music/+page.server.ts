@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({
   }
   const { data: dbFetch, error: dbError } = await supabase
     .from("songs")
-    .select(`artist, name, song_url, created_at`)
+    .select(`artist, name, song_url, created_at, id`)
     .eq("artist", profile?.username);
   //@ts-ignore
   //? So hard to type the data from supabase db fetch. Need help tbh.

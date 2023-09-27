@@ -2,7 +2,7 @@
   import { Icon, Star } from "svelte-hero-icons";
   import { addToast } from "$lib/stores";
 
-  export let songId: number;
+  export let songId: string;
   export let songUrl: string;
   async function saveSong() {
     const response = await fetch("/api/savesong", {

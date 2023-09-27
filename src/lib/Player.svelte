@@ -21,14 +21,14 @@
   let isOpen: boolean;
 
   const downloadSong = async (url: string | undefined) => {
-    console.log("start dl");
-    console.log($songsQueued);
+    // console.log("start dl");
+    // console.log($songsQueued);
     if (!url) {
-      console.log("no url");
+      // console.log("no url");
       return;
     }
     if ($songPlaying) {
-      console.log("already playing");
+      // console.log("already playing");
       return;
     }
 
@@ -51,11 +51,11 @@
   };
   const reachedTrackEnd = () => {
     $songPlaying = false;
-    console.log("reachedTrackEnd");
+    // console.log("reachedTrackEnd");
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
     $songsQueued = $songsQueued.slice(1);
     if ($songsQueued.length === 0) {
-      console.log("nothing remaining in queue");
+      // console.log("nothing remaining in queue");
       endPlayer();
     }
   };
@@ -83,7 +83,7 @@
   // todo - USING DOLLAR SYMBOL TO READ AND UPDATE STATE
   function handleForward() {
     if ($songsQueued.length < 2) {
-      console.log("forward Failed");
+      // console.log("forward Failed");
 
       return addToast({
         type: "info",
@@ -93,7 +93,7 @@
       });
     }
 
-    console.log("forward Succeeded");
+    // console.log("forward Succeeded");
     $songPlaying = false;
     //! This code is ran in 2 places here in this file. should be considered
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
