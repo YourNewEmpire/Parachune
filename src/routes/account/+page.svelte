@@ -104,7 +104,7 @@
           <div class="input-item">
             <label
               style="display: flex; align-items: center; column-gap: 6px;"
-              for="paypal-merchantid"
+              for="paypalId"
               >Paypal Merchant ID (donations which are coming soon)
               <div
                 data-tooltip="You can find your merchant id on your paypal profile page"

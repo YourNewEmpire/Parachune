@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher } from "svelte";
   import {
     Icon,
     UserCircle,
@@ -9,21 +9,14 @@
     Home,
     Cog6Tooth,
   } from "svelte-hero-icons";
-  import { page } from "$app/stores";
   const dispatch = createEventDispatcher();
   export let open: boolean;
-  export let profile: any;
-
+  export let profile: App.PageData["profile"];
   function closeMenu() {
     if (open) {
       dispatch("closemenu");
     }
   }
-  page.subscribe((page) => {
-    if (page.data.profile) {
-      profile = page.data.profile;
-    }
-  });
 </script>
 
 <nav class="layout-nav-dark">
