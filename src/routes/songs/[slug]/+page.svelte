@@ -11,7 +11,6 @@
   let { song, supabase, session } = data;
 
   async function setLike(payload: boolean) {
-    // TODO - fetch if the user has already liked this. using the isLiked state from song data
     if (!session) {
       addToast({
         dismissable: true,
@@ -48,23 +47,37 @@
       });
       return;
     }
-    const { data: likedUpdated, error: likeError } = await supabase
+
+    const { data: likeUpserted, error: likeUpsertError } = await supabase
       .from("song_likes")
       .upsert(
         { song_id: song.id, user_id: session?.user.id, liked: payload },
         { onConflict: "song_id, user_id" }
-      )
-      .select();
-    if (likeError) {
-      addToast({
-        dismissable: true,
-        message: "error updating like",
-        timeout: 5000,
-        type: "failure",
-      });
+      );
+
+    if (likeUpsertError) {
+      const { data: likeInserted, error: likeInsertError } = await supabase
+        .from("song_likes")
+        .insert({
+          song_id: song.id,
+          user_id: session?.user.id,
+          liked: payload,
+        });
+
+      if (!likeInsertError) song.liked = payload;
+      else {
+        addToast({
+          dismissable: true,
+          message:
+            "Error setting like. Try again or contact archiesmyth26 on linkedin.",
+          timeout: 5000,
+          type: "failure",
+        });
+      }
       return;
+    } else {
+      song.liked = payload;
     }
-    song.liked = likedUpdated[0].liked;
   }
 </script>
 

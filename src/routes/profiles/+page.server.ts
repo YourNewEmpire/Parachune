@@ -3,7 +3,8 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   const { data: profileList, error: dbError } = await supabase
     .from("profiles")
-    .select(`username, avatar_url`);
+    .select(`username, avatar_url`)
+    .filter("username", "is.not", null);
 
   return { profileList };
 };

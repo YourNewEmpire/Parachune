@@ -15,6 +15,7 @@ export const load: PageServerLoad = async ({
     }. We are happy you're back here.`;
   }
   return {
+    profile,
     message,
   };
 };

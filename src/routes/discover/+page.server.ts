@@ -25,7 +25,8 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   const { data: profileData, error: profileError } = await supabase
     .from("profiles")
     .select(`username, avatar_url`)
-    .range(0, 4);
+    .range(0, 4)
+    .filter("username", "is.not", null);
 
   if (songError || profileError) {
     fail(500, {
