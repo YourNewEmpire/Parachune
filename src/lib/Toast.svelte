@@ -56,7 +56,7 @@
     background-color: rgba(0, 0, 255, 0.7);
   }
   .text {
-    font-size: 24px;
+    font-size: 18px;
     overflow-wrap: break-word;
     flex: 3;
   }
