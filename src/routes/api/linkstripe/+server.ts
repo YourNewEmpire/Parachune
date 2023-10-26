@@ -35,7 +35,9 @@ export const POST: RequestHandler = async ({
     account: account.id,
     refresh_url: url.origin,
     // todo - remove SB code from here and put in load function of stripe-status, checking that it exists.
-    return_url: `http://localhost:5223/stripe-status?account_link=${account.id}`,
+    return_url: import.meta.env.DEV
+      ? `http://localhost:5223/stripe-status?account_link=${account.id}`
+      : `https://parachune.vercel.app/stripe-status?account_link=${account.id}`,
     type: "account_onboarding",
   });
 

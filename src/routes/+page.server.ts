@@ -6,7 +6,6 @@ export const load: PageServerLoad = async ({
   const session = await getSession();
   const profile = await getProfile();
   let message;
-
   if (!session) {
     message = `Welcome newcomer, to Parachune. Parachute your tunes here, for free. Click below to login,  or scroll to learn more about Parachune.`;
   } else {
