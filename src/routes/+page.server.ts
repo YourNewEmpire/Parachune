@@ -1,7 +1,7 @@
 import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession, getProfile },
+  locals: { getSession, getProfile },
 }) => {
   const session = await getSession();
   const profile = await getProfile();

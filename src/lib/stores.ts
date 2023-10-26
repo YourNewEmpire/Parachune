@@ -5,14 +5,14 @@ import type { Writable } from "svelte/store";
 //? TYPES
 export type Toast = {
   message: string;
-  type: string;
+  type: "failure" | "success" | "info" | "warning";
   dismissable: boolean;
   timeout: number;
   id: number;
 };
 export type NewToast = {
   message: string;
-  type: string;
+  type: "failure" | "success" | "info" | "warning";
   dismissable: boolean;
   timeout: number;
 };

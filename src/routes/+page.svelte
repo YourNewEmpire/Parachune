@@ -6,7 +6,7 @@
   import { Icon, WrenchScrewdriver } from "svelte-hero-icons";
   import FlyInView from "$lib/transitions-inview/fly.svelte";
   import FadeInView from "$lib/transitions-inview/fade.svelte";
-  import { addToast } from "$lib/stores";
+
   export let data: PageData;
   $: ({ message, session } = data);
 
@@ -26,11 +26,10 @@
 
 <section class="landing-section">
   {#if animate}
-    <div class="welcome-text">
+    <article class="welcome-title">
       {#each lines as line, i}
         <div class="">
           <h1
-            style="display: inline-block;"
             in:fly|global={{
               y: i % 2 === 0 ? 100 : -100,
               delay: 400 * i,
@@ -40,7 +39,7 @@
           </h1>
         </div>
       {/each}
-    </div>
+    </article>
 
     <article
       in:fly={{
@@ -50,9 +49,8 @@
         duration: 1000,
       }}
       class="col-container"
-      style="max-width: 50%;"
     >
-      <p style="line-height: 2em; font-size: 1.5rem;">
+      <p class="welcome-message">
         {message}
       </p>
       {#if !session}
@@ -88,39 +86,6 @@
         duration: 1000,
       }}
     >
-      <div
-        style="position: absolute; bottom: 0; left: 12; color:black; font-size: 1.25rem;"
-      >
-        <p class="tutorial-text">
-          * Create an account with Google (recommended) or with email
-        </p>
-      </div>
-      <img src="create_acc.png" alt="create account" class="tutorial-image" />
-    </FadeInView>
-  </a>
-</section>
-
-<section class="tutorial-section">
-  <article class="overflow">
-    <FlyInView
-      options={{
-        x: -200,
-        delay: 500,
-        easing: quintIn,
-        duration: 800,
-      }}
-    >
-      <h1 class="heading">Create your account</h1>
-    </FlyInView>
-  </article>
-
-  <a href="/login" class="tutorial-image-container">
-    <FadeInView
-      options={{
-        delay: 2000,
-        duration: 1000,
-      }}
-    >
       <p class="tutorial-text">
         * Create an account with Google (recommended) or with email
       </p>
@@ -130,48 +95,17 @@
   </a>
 </section>
 
-<!-- <section class="tutorial-section">
-  <article class="overflow">
-    <FlyInView
-      options={{
-        x: -200,
-        delay: 500,
-        easing: quintIn,
-        duration: 800,
-      }}
-    >
-      <h1 class="heading">Upload your music</h1>
-    </FlyInView>
-  </article>
-
-  <a href="/login" class="tutorial-image-container">
-    <FadeInView
-      options={{
-        delay: 2000,
-        duration: 1000,
-      }}
-    >
-      <div
-        style="position: absolute; bottom: 0; left: 12; color:black; font-size: 1.25rem;"
-      >
-        <p class="tutorial-text">
-          * Create an account with Google (recommended) or with email
-        </p>
-      </div>
-      <img src="create_acc.png" alt="create account" class="tutorial-image" />
-    </FadeInView>
-  </a>
-</section> -->
-
 <style>
   .heading {
     font-size: 2rem;
   }
+
   .overflow {
     display: inline-block;
     overflow: hidden;
     vertical-align: bottom;
   }
+
   .landing-section {
     height: 100svh;
     /* border: 1px solid red; */
@@ -181,7 +115,8 @@
     align-items: center;
     justify-content: center;
   }
-  .welcome-text {
+
+  .welcome-title {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 2fr;
@@ -189,8 +124,13 @@
     align-items: center;
     /* border: 1px solid red; */
     text-align: center;
+    font-size: 1rem;
+  }
+
+  .welcome-message {
     font-size: 0.75rem;
   }
+
   .tutorial-section {
     min-height: 100vh;
     margin-top: 0.5rem;
@@ -199,10 +139,12 @@
     flex-direction: column;
     /* border: 1px solid red; */
   }
+
   .tutorial-image-container {
     align-self: center;
     position: relative;
   }
+
   .tutorial-image-container:hover .tutorial-image {
     box-shadow: 0px 3px 50px var(--primary-color);
   }
@@ -216,15 +158,23 @@
     height: auto;
     /* border: 1px solid red; */
   }
+
   .tutorial-text {
     margin-left: 5px;
     font-size: 9px;
     color: black;
+    position: absolute;
+    bottom: 0;
+    left: 12;
   }
+
   @media only screen and (min-width: 1024px) {
-    .welcome-text {
+    .welcome-title {
       /* border: 1px solid red; */
       font-size: 1.5rem;
+    }
+    .welcome-message {
+      font-size: 1rem;
     }
     .tutorial-text {
       font-size: 16px;

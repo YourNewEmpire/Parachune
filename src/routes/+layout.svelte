@@ -65,7 +65,7 @@
     margin: 4rem 2rem;
   }
   .slot-wrapper-home {
-    margin: 0 4rem 2rem;
+    margin: 1rem 1rem;
   }
   .desktop-header {
     display: none;

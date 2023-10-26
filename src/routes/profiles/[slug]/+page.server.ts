@@ -4,11 +4,11 @@ import type { PageServerLoad } from "./$types";
 type Profile = {
   username: string;
   avatar_url: string;
-  paypal_id: string;
+  stripe_id: string;
 };
 
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession },
+  locals: { supabase },
   params,
 }) => {
   let artistProfile: Profile;
@@ -19,6 +19,7 @@ export const load: PageServerLoad = async ({
     .not("username", "is", "null")
     .single();
   if (!profileData) {
+    // todo - needs fixing
     return {};
   }
   const { data: artistSongs, error: songsError } = await supabase

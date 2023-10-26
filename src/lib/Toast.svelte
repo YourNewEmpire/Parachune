@@ -6,12 +6,14 @@
     ExclamationCircle,
     CheckCircle,
     InformationCircle,
-    XCircle,
+    ExclamationTriangle,
   } from "svelte-hero-icons";
+
   const dispatch = createEventDispatcher();
 
   export let type = "failure";
   export let dismissable = true;
+
   const handleDismiss = () => {
     if (dismissable) dispatch("dismiss");
     return;
@@ -24,10 +26,11 @@
       <Icon src={CheckCircle} class="icon" />
     {:else if type === "failure"}
       <Icon src={ExclamationCircle} class="icon" />
-    {:else}
+    {:else if type === "info"}
       <Icon src={InformationCircle} class="icon" />
+    {:else}
+      <Icon src={ExclamationTriangle} class="icon" />
     {/if}
-
     <article class="text">
       <slot />
     </article>

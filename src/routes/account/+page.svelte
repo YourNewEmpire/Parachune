@@ -4,24 +4,23 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import Avatar from "./Avatar.svelte";
-  import { Icon, QuestionMarkCircle, Star } from "svelte-hero-icons";
-
+  import Createstripe from "$lib/createstripe.svelte";
+  import Stripeicon from "$lib/stripeicon.svelte";
   export let data: PageData;
   export let form: ActionData;
 
-  let { session, supabase, profile } = data;
-  $: ({ session, supabase, profile } = data);
+  let { session, supabase, profile, stripeReady } = data;
+  $: ({ session, supabase, profile, stripeReady } = data);
   let profileForm: any;
   let loading = false;
   let fullName: string | null = profile?.full_name;
   let username: string | null = profile?.username ?? "no username yet";
   let website: string | null = profile?.website;
-  let paypalId: string | null = profile?.paypal_id;
   let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
 
   const handleSubmit: SubmitFunction = () => {
     loading = true;
-    return async ({ result }) => {
+    return async ({ result, update }) => {
       loading = false;
       if (result.type === "failure") {
         addToast({
@@ -32,7 +31,7 @@
         });
       } else {
         addToast({
-          type: result.type,
+          type: "success",
           message: "Profile change successful!",
           timeout: 5000,
           dismissable: true,
@@ -59,10 +58,10 @@
 <svelte:head>
   <title>Your Account - Parachune</title>
 </svelte:head>
-<div>
+<section>
   <h1>Your Account</h1>
-  <div class="account-container">
-    <section class="card form-wrapper">
+  <section class="account-container">
+    <section class="card col-span-full">
       <form
         class="account-form"
         method="post"
@@ -102,24 +101,6 @@
           </div>
 
           <div class="input-item">
-            <label
-              style="display: flex; align-items: center; column-gap: 6px;"
-              for="paypalId"
-              >Paypal Merchant ID (donations which are coming soon)
-              <div
-                data-tooltip="You can find your merchant id on your paypal profile page"
-              >
-                <Icon src={QuestionMarkCircle} style="width: 1.5rem;" />
-              </div>
-            </label>
-            <input
-              id="paypalId"
-              name="paypalId"
-              type="text"
-              value={form?.paypalId ?? paypalId ?? ""}
-            />
-          </div>
-          <div class="input-item">
             <label for="website">Website</label>
             <input
               id="website"
@@ -149,12 +130,30 @@
           </form>
         </div>
       </form>
+    </section>
+    <section class="card col-span-full">
+      {#if stripeReady}
+        <article
+          style="display: flex; flex-direction: row; align-items: center;"
+        >
+          <Stripeicon />
+          <p>is ready</p>
+        </article>
+      {:else}
+        <article
+          style="display: flex; flex-direction: row; align-items: center;"
+        >
+          <Stripeicon />
+          <p>
+            You either have not setup a stripe account for us or your stripe
+            account has not completed onboarding process. Please click below to
+            start receiving and sending donations with Stripe
+          </p>
+        </article>
 
-      {#if form?.success}
-        <div>Profile Updated</div>
+        <Createstripe />
       {/if}
     </section>
-
     <section class="card">
       <h1>your music</h1>
       <div class="row-container">
@@ -172,8 +171,8 @@
         ⭐ View your saved songs</a
       >
     </section>
-  </div>
-</div>
+  </section>
+</section>
 
 <style>
   .account-container {
@@ -182,10 +181,12 @@
     width: 100%;
     gap: 8px;
   }
-  .form-wrapper {
+
+  .col-span-full {
     grid-column-start: 1;
     grid-column-end: 3;
   }
+
   .account-form {
     display: grid;
     gap: 25px;

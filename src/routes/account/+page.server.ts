@@ -1,16 +1,25 @@
 import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-
+import { stripe } from "$lib/server/stripe";
 export const load: PageServerLoad = async ({
   locals: { getSession, getProfile },
 }) => {
+  let stripeReady: boolean = false;
   const session = await getSession();
   const profile = await getProfile();
+
   if (!session) {
     throw redirect(303, "/login");
   }
 
-  return { session, profile };
+  if (profile?.stripe_id) {
+    const stripeAcc = await stripe.accounts.retrieve(profile?.stripe_id);
+    if (stripeAcc.details_submitted) {
+      stripeReady = true;
+    }
+  }
+
+  return { session, profile, stripeReady };
 };
 
 export const actions = {
@@ -20,7 +29,6 @@ export const actions = {
     const username = formData.get("username") as string;
     const website = formData.get("website") as string;
     const avatarUrl = formData.get("avatarUrl") as string;
-    const paypalId = formData.get("paypalId") as string;
     const session = await getSession();
 
     const { error } = await supabase.from("profiles").upsert({
@@ -28,18 +36,16 @@ export const actions = {
       full_name: fullName,
       username,
       website,
-      paypal_id: paypalId,
       avatar_url: avatarUrl,
       updated_at: new Date(),
     });
-    console.log(error);
+
     if (error) {
       return fail(500, {
         fullName,
         username,
         website,
         avatarUrl,
-        paypalId,
       });
     }
 
@@ -49,7 +55,6 @@ export const actions = {
       username,
       website,
       avatarUrl,
-      paypalId,
     };
   },
   signout: async ({ locals: { supabase, getSession } }) => {

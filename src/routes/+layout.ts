@@ -16,11 +16,10 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`username, full_name, website, avatar_url, paypal_id`)
-    .eq("id", session?.user.id)
-    .single();
-
-  return { supabase, session, url: url.pathname, profile };
+  return {
+    supabase,
+    session,
+    url: url.pathname,
+    profile: data.profile,
+  };
 };

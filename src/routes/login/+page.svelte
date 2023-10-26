@@ -2,13 +2,14 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   import type { PageData } from "./$types";
   import { enhance } from "$app/forms";
-  import { Icon, PaperAirplane, InformationCircle } from "svelte-hero-icons";
+  import { Icon, PaperAirplane } from "svelte-hero-icons";
   import Googleicon from "$lib/googleicon.svelte";
-  import type { Provider } from "@supabase/supabase-js";
+
   import { addToast } from "$lib/stores";
+  import type { Provider } from "@supabase/supabase-js";
 
   export let data: PageData;
-  export let form;
+
   $: ({ supabase, authProviders, url } = data);
   let loading = false;
 
@@ -36,6 +37,14 @@
           "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
       },
     });
+    if (error) {
+      addToast({
+        type: "warning",
+        dismissable: true,
+        message: "Failed auth login, try again",
+        timeout: 5000,
+      });
+    }
   };
 
   const handleSocialLogin: SubmitFunction = ({ action, cancel }) => {
@@ -53,8 +62,9 @@
 
 <div>
   <h1>Login</h1>
+
   {#if data.session}
-    <h1>You are logged in. Continue on this tab or on the new tab.</h1>
+    <h1>You are logged in, and should be redirected</h1>
   {:else}
     <div class="card">
       <div class="row-container" style="justify-content: center;">
@@ -62,11 +72,7 @@
           <div class="input-group">
             <div class="input-item">
               <label for="email"> Email</label>
-              <input
-                name="email"
-                placeholder="VoodooChild@example"
-                value={form?.email ?? ""}
-              />
+              <input name="email" placeholder="VoodooChild@example" />
             </div>
             <button
               formaction="?/withEmail"
@@ -85,36 +91,20 @@
             </button>
             <button
               class="styled-button"
-              data-tooltip="coming soon"
               disabled={true}
-              formaction="?/login&provider=github">Sign in with Github</button
+              formaction="?/withGithub">Sign in with Github</button
             >
             <button
               class="styled-button"
-              data-tooltip="coming soon"
               disabled={true}
-              formaction="?/login&provider=discord">Sign in with Discord</button
+              formaction="?/withDiscord">Sign in with Discord</button
             >
           </div>
         </form>
       </div>
       <article>
-        <h1>Important</h1>
-        <p>
-          Logging in with a provider such as Google is recommended. Logging in
-          by Email with the same gmail account would use the same Paratune
-          account, so using the Google method will be faster.
-        </p>
-        <p>
-          Logging in with Email may fail under heavy load. This issue will be
-          gone when I add <a target="_blank" href="https://sendgrid.com">
-            Sendgrid</a
-          > to the project soon.
-        </p>
-        <p>
-          You will see Supabase urls when logging, this is the testing backend.
-          In live production, this experience will be less confusing.
-        </p>
+        <h1>Info</h1>
+        <p>Logging in with a provider such as Google is recommended.</p>
       </article>
     </div>
   {/if}

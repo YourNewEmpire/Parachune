@@ -11,7 +11,7 @@ declare global {
         full_name: any;
         website: any;
         avatar_url: any;
-        paypal_id: any;
+        stripe_id: any;
       } | null>;
     }
     interface PageData {
@@ -21,7 +21,7 @@ declare global {
         full_name: any;
         website: any;
         avatar_url: any;
-        paypal_id: any;
+        stripe_id: any;
       } | null;
     }
 

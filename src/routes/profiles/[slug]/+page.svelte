@@ -3,10 +3,48 @@
   import Playbutton from "$lib/Playbutton.svelte";
   import Queuebutton from "$lib/Queuebutton.svelte";
   import Savebutton from "$lib/Savebutton.svelte";
+  import Stripeicon from "$lib/stripeicon.svelte";
   import type { PageData } from "./$types";
+  import { addToast } from "$lib/stores";
+  import { goto } from "$app/navigation";
 
   export let data: PageData;
   let { artistProfile, artistSongs } = data;
+
+  async function createDonation() {
+    //add toast : Redirecting to stripe soon.
+    addToast({
+      type: "info",
+      dismissable: false,
+      message: "Waiting for redirect to Stripe donation checkout",
+      timeout: 10000,
+    });
+    const response = await fetch("/api/artistdonation", {
+      method: "POST",
+      body: JSON.stringify({ stripe_id: artistProfile?.stripe_id }),
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    if (!response) {
+      addToast({
+        type: "failure",
+        dismissable: false,
+        message: "No response from server",
+        timeout: 10000,
+      });
+    }
+    const stripeLink = await response.json();
+    if (!stripeLink) {
+      addToast({
+        type: "failure",
+        dismissable: false,
+        message: "Server side failed, try again or contact the dev",
+        timeout: 10000,
+      });
+    }
+    goto(stripeLink);
+  }
 </script>
 
 <svelte:head>
@@ -23,6 +61,11 @@
         size={15}
       />
       <h1>{artistProfile.username}</h1>
+    </article>
+    <article style="display: flex; justify-content: center;">
+      <button on:click={() => createDonation()} class="styled-button">
+        Donate <Stripeicon />
+      </button>
     </article>
   </section>
   <h1>Music:</h1>
