@@ -43,7 +43,7 @@
         timeout: 10000,
       });
     }
-    goto(stripeLink);
+    window.location.href = stripeLink;
   }
 </script>
 
