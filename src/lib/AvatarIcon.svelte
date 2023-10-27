@@ -13,6 +13,13 @@
   let loadingImage: boolean;
   const downloadImage = async (path: string) => {
     loadingImage = true;
+    //? if image path is a full url (not supabase object name) then just set it.
+    // this is because of users signing up with google and a profile image on google acc.
+    if (path.startsWith("http")) {
+      avatarUrl = path;
+      loadingImage = false;
+      return;
+    }
     await tick();
     try {
       const { data, error } = await supabase.storage
