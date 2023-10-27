@@ -7,7 +7,7 @@ export const POST: RequestHandler = async ({
   url,
 }) => {
   const session = await getSession();
-  const profile = await getProfile();
+
   if (!session) {
     return json({ message: "not logged in", toastType: "failure" });
   }
