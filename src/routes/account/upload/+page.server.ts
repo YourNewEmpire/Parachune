@@ -45,7 +45,7 @@ export const actions = {
       .from("songs")
       .upload(url, songFile);
     if (error) {
-      console.log(error);
+      // console.log(error);
       return fail(400, { message: "Failed to set DB entry, try again." });
     }
     const { data: dbData, error: dbError } = await supabase
@@ -58,7 +58,7 @@ export const actions = {
         },
       ]);
     if (dbError) {
-      console.log(dbError);
+      // console.log(dbError);
       return fail(400, { message: "Failed to set DB entry, try again." });
     }
     //? No errors were caught, so return good

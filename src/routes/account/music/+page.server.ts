@@ -57,8 +57,8 @@ export const actions = {
       ]);
 
     if (storageError || dbError) {
-      console.log(storageError);
-      console.log(dbError);
+      // console.log(storageError);
+      // console.log(dbError);
       return fail(400, { message: "Error, try again" });
     }
     return {
