@@ -4,9 +4,11 @@
   import { tick } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { page } from "$app/stores";
+
   export let url: string;
   export let size: number;
   export let altText: string;
+
   let supabase: SupabaseClient;
   let avatarUrl: string | null = null;
 
@@ -34,9 +36,7 @@
       avatarUrl = url;
       loadingImage = false;
     } catch (error) {
-      if (error instanceof Error) {
-        console.log("Error downloading image: ", error.message);
-      }
+      // todo - handle error with
       loadingImage = false;
     }
   };
@@ -48,7 +48,7 @@
 </script>
 
 <div class="row-container">
-  {#if !loadingImage}
+  {#if !loadingImage && avatarUrl}
     <img
       in:fly
       out:fade
@@ -58,11 +58,8 @@
     />
   {:else}
     <div
-      style=" display: flex; flex-direction: row; align-items:center; justify-content: center;  height: {size}em; width: {size}em"
-      in:fade
-      out:fade
+      style=" border-radius: 50%; display: flex; flex-direction: row; align-items:center; justify-content: center;  height: {size}em; width: {size}em"
     >
-      <p>Loading avatar ...</p>
       <Icon src={UserCircle} size="{size.toString()}em" />
     </div>
   {/if}
