@@ -45,8 +45,14 @@
         paused = false;
       }
     } catch (e) {
-      // todo - push error toaster
+      // todo - CORRECTLY HANDLE STATE CHANGE.
       console.log(e);
+      addToast({
+        type: "warning",
+        dismissable: true,
+        message: "There was a problem downloading and playing the next song",
+        timeout: 5000,
+      });
     }
   };
   const reachedTrackEnd = () => {
