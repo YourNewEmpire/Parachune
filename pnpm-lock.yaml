@@ -14,9 +14,9 @@ importers:
       '@auth/sveltekit':
         specifier: ^0.3.9
         version: 0.3.9(@sveltejs/kit@1.25.1)(svelte@4.2.1)
-      '@supabase/auth-helpers-sveltekit':
-        specifier: ^0.10.3
-        version: 0.10.3(@supabase/supabase-js@2.38.0)(@sveltejs/kit@1.25.1)
+      '@supabase/ssr':
+        specifier: ^0.0.4
+        version: 0.0.4(@supabase/supabase-js@2.38.0)
       '@supabase/supabase-js':
         specifier: ^2.38.0
         version: 2.38.0
@@ -362,26 +362,6 @@ packages:
     resolution: {integrity: sha512-bv4YK375U9TDS50SmJ5VdFy2UmMhgKbJCCbo6IUU3qs2luEj2VX6sQoDy96j8AIKttxMd62ih1j0lZj7CTjIfA==}
     dev: true
 
-  /@supabase/auth-helpers-shared@0.5.0(@supabase/supabase-js@2.38.0):
-    resolution: {integrity: sha512-kioUeYDBZ89cfqOTZFOLEFIO7kGczL0XJYZdVv/bKt5efXqhiY14NbzgGWiMvvD9o9Iluo0+YEV2tG3ZZ5W06A==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.19.0
-    dependencies:
-      '@supabase/supabase-js': 2.38.0
-      jose: 4.14.4
-    dev: false
-
-  /@supabase/auth-helpers-sveltekit@0.10.3(@supabase/supabase-js@2.38.0)(@sveltejs/kit@1.25.1):
-    resolution: {integrity: sha512-vU39ecz1xXpBZMaSCZi7Rh+NLIS0W67hbrdWt2UdSWOVi/XT6z01DoO97/G4n5p/e9fyCR/j9xHGCoeFO++1lA==}
-    peerDependencies:
-      '@supabase/supabase-js': ^2.19.0
-      '@sveltejs/kit': ^1.15.4
-    dependencies:
-      '@supabase/auth-helpers-shared': 0.5.0(@supabase/supabase-js@2.38.0)
-      '@supabase/supabase-js': 2.38.0
-      '@sveltejs/kit': 1.25.1(svelte@4.2.1)(vite@4.4.7)
-    dev: false
-
   /@supabase/functions-js@2.1.5:
     resolution: {integrity: sha512-BNzC5XhCzzCaggJ8s53DP+WeHHGT/NfTsx2wUSSGKR2/ikLFQTBCDzMvGz/PxYMqRko/LwncQtKXGOYp1PkPaw==}
     dependencies:
@@ -416,6 +396,16 @@ packages:
       websocket: 1.0.34
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@supabase/ssr@0.0.4(@supabase/supabase-js@2.38.0):
+    resolution: {integrity: sha512-whqSXZvDD4VOmiFhUAWAYuRDbvps1I9nQMAi87PxNHiYNhfCS+SL5DDUgkRtyxPheIcl+cAqiOHqLuC9IaPBIg==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.33.1
+    dependencies:
+      '@supabase/supabase-js': 2.38.0
+      cookie: 0.5.0
+      ramda: 0.29.1
     dev: false
 
   /@supabase/storage-js@2.5.4:
@@ -1307,6 +1297,10 @@ packages:
   /queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
+
+  /ramda@0.29.1:
+    resolution: {integrity: sha512-OfxIeWzd4xdUNxlWhgFazxsA/nl3mS4/jGZI5n00uWOoSSFRhC1b6gl6xvmzUamgmqELraWp0J/qqVlXYPDPyA==}
+    dev: false
 
   /readable-stream@3.6.2:
     resolution: {integrity: sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==}
