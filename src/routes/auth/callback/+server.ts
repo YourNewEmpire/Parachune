@@ -1,4 +1,3 @@
-// src/routes/auth/callback/+server.ts
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 
 export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
