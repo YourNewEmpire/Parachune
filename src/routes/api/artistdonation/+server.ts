@@ -11,10 +11,9 @@ export const POST: RequestHandler = async ({
   if (!session) {
     return json({ message: "not logged in", toastType: "failure" });
   }
-  const stripe_id = await request.json();
+  const reqData = await request.json();
 
   // perhaps check if stripe_id exists
-
   const stripeCheckout = await stripe.checkout.sessions.create({
     mode: "payment",
     line_items: [
@@ -25,7 +24,7 @@ export const POST: RequestHandler = async ({
     ],
     payment_intent_data: {
       transfer_data: {
-        destination: stripe_id,
+        destination: reqData.stripe_id,
       },
     },
     success_url: import.meta.env.DEV
