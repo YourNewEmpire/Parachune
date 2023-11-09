@@ -59,7 +59,7 @@
   <title>Your Account - Parachune</title>
 </svelte:head>
 <section>
-  <h1>Your Account</h1>
+  <h1>Manage Your Account</h1>
   <section class="account-container">
     <section class="card col-span-full">
       <form
@@ -145,9 +145,9 @@
         >
           <Stripeicon />
           <p>
-            You either have not setup a stripe account for us or your stripe
-            account has not completed onboarding process. Please click below to
-            start receiving and sending donations with Stripe
+            You have not linked your account with our Stripe integration and
+            submitted your details. Please click below to begin receiving secure
+            donations from other users with Stripe.
           </p>
         </article>
 
