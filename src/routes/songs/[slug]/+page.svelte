@@ -5,80 +5,9 @@
   import Playbutton from "$lib/Playbutton.svelte";
   import Queuebutton from "$lib/Queuebutton.svelte";
   import Savebutton from "$lib/Savebutton.svelte";
-  import { addToast } from "$lib/stores";
 
   export let data: PageData;
-  let { song, supabase, session } = data;
-
-  async function setLike(payload: boolean) {
-    if (!session) {
-      addToast({
-        dismissable: true,
-        message:
-          "You are not logged in, try refreshing and navigating to login",
-        timeout: 5000,
-        type: "failure",
-      });
-      return;
-    }
-
-    if (song.liked === payload) {
-      const { error: delErr } = await supabase
-        .from("song_likes")
-        .delete()
-        .eq("user_id", session?.user.id)
-        .eq("song_id", song.id);
-      //remove the row
-      if (delErr) {
-        addToast({
-          dismissable: true,
-          message: "Error removing like.",
-          timeout: 5000,
-          type: "failure",
-        });
-        return;
-      }
-      song.liked = null;
-      addToast({
-        dismissable: true,
-        message: "Removed like",
-        timeout: 5000,
-        type: "info",
-      });
-      return;
-    }
-
-    const { data: likeUpserted, error: likeUpsertError } = await supabase
-      .from("song_likes")
-      .upsert(
-        { song_id: song.id, user_id: session?.user.id, liked: payload },
-        { onConflict: "song_id, user_id" }
-      );
-
-    if (likeUpsertError) {
-      const { data: likeInserted, error: likeInsertError } = await supabase
-        .from("song_likes")
-        .insert({
-          song_id: song.id,
-          user_id: session?.user.id,
-          liked: payload,
-        });
-
-      if (!likeInsertError) song.liked = payload;
-      else {
-        addToast({
-          dismissable: true,
-          message:
-            "Error setting like. Try again or contact archiesmyth26 on linkedin.",
-          timeout: 5000,
-          type: "failure",
-        });
-      }
-      return;
-    } else {
-      song.liked = payload;
-    }
-  }
+  let { song } = data;
 </script>
 
 <div>
@@ -120,45 +49,6 @@
       <p>"{song.description}"</p>
     </article>
   </section>
-  <section>
-    <h1>Reviews & Likes</h1>
-    <div class="grid-1">
-      <article class="card">
-        <h1>reviews</h1>
-      </article>
-      <article class="card likes-container">
-        <div class="likes">
-          Likes: {song.likes}
-        </div>
-        {#if song.liked === true}
-          <button
-            class="like-button"
-            data-tooltip="Click to remove like"
-            on:click={() => setLike(true)}>Liked!</button
-          >
-          <button class="dislike-button" on:click={() => setLike(false)}
-            >Dislike</button
-          >
-        {:else if song.liked === false}
-          <button class="like-button" on:click={() => setLike(true)}
-            >Like</button
-          >
-          <button
-            data-tooltip="Click to remove dislike"
-            class="dislike-button"
-            on:click={() => setLike(false)}>Disliked!</button
-          >
-        {:else}
-          <button class="like-button" on:click={() => setLike(true)}
-            >Like</button
-          >
-          <button class="dislike-button" on:click={() => setLike(false)}
-            >Dislike</button
-          >
-        {/if}
-      </article>
-    </div>
-  </section>
 </div>
 
 <style>
@@ -174,43 +64,5 @@
       grid-template-rows: 1fr;
       grid-template-columns: 3fr 1fr;
     }
-  }
-  .likes-container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0;
-    padding: 0;
-  }
-  .likes {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-  }
-  .like-button {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: blue;
-  }
-  .dislike-button {
-    border-radius: 0 0 0.5rem 0.5rem;
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 18px;
-    color: red;
-  }
-  .like-button:hover {
-    color: white;
-    background-color: rgba(0, 100, 222, 0.6);
-  }
-  .dislike-button:hover {
-    color: white;
-    background-color: rgba(199, 0, 0, 0.6);
   }
 </style>

@@ -18,12 +18,9 @@ type SongRow = {
 };
 
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession },
+  locals: { supabase },
   params,
 }) => {
-  const session = await getSession();
-  let isLiked: boolean | "unset" = "unset";
-
   const { data: songData, error: songDataErr } = await supabase
     .from("songs")
     .select(
@@ -38,38 +35,7 @@ export const load: PageServerLoad = async ({
     });
   }
 
-  const {
-    data: songLikes,
-    error: songLikesErr,
-    count,
-  } = await supabase
-    .from("song_likes")
-    .select(`liked`, { count: "exact", head: true })
-    .eq("song_id", songData?.id)
-    .eq("liked", true);
-
-  if (songLikesErr) {
-    throw error(500, {
-      message: "Server error when getting song data",
-    });
-  }
-
-  if (!session) {
-    let song: SongRow | any = { ...songData, likes: count ?? 0, liked: null };
-
-    return { song };
-  }
-  const { data: userLiked, error: userLikedErr } = await supabase
-    .from("song_likes")
-    .select(`user_id, liked`)
-    .eq("user_id", session?.user.id)
-    .single();
-
-  if (userLiked) {
-    // console.log(`server side user liked result ${userLiked.liked}`);
-    isLiked = userLiked.liked;
-  }
-  let song: SongRow | any = { ...songData, likes: count ?? 0, liked: isLiked };
+  let song: SongRow | any = { ...songData };
 
   return { song };
 };
