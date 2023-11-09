@@ -50,6 +50,7 @@
 <div class="row-container">
   {#if !loadingImage && avatarUrl}
     <img
+      referrerpolicy="no-referrer"
       in:fly
       out:fade
       src={avatarUrl}
