@@ -1,10 +1,20 @@
-import { redirect, type RequestHandler } from "@sveltejs/kit";
+import { error, redirect } from "@sveltejs/kit";
 
-export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
-  const code = url.searchParams.get("code");
+export const GET = async (event) => {
+  const {
+    url,
+    locals: { supabase },
+  } = event;
+  const code = url.searchParams.get("code") as string;
+  const next = url.searchParams.get("next") ?? "/";
 
   if (code) {
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      throw redirect(303, `/${next.slice(1)}`);
+    }
   }
-  throw redirect(303, "/logging-in");
+
+  // return the user to an error page with instructions
+  throw error(500, "Server err");
 };
