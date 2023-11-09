@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { SubmitFunction } from "@sveltejs/kit";
+  import type { Provider } from "@supabase/supabase-js";
   import type { PageData } from "./$types";
   import { enhance } from "$app/forms";
   import { Icon, PaperAirplane } from "svelte-hero-icons";
   import Googleicon from "$lib/googleicon.svelte";
-
   import { addToast } from "$lib/stores";
-  import type { Provider } from "@supabase/supabase-js";
 
   export let data: PageData;
 
@@ -15,7 +14,7 @@
 
   const handleSignIn: SubmitFunction = () => {
     loading = true;
-    return async ({ update, result }) => {
+    return async ({ update }) => {
       loading = false;
       addToast({
         type: "info",
@@ -33,8 +32,7 @@
       provider,
       options: {
         redirectTo: `${url}/auth/callback`,
-        scopes:
-          "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+        scopes: "openid https://www.googleapis.com/auth/userinfo.email",
       },
     });
     if (error) {
