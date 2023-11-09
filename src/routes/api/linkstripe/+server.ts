@@ -40,8 +40,8 @@ export const POST: RequestHandler = async ({
   const accountLink = await stripe.accountLinks.create({
     account: account.id,
     refresh_url: import.meta.env.DEV
-      ? `http://localhost:5223/`
-      : `https://parachune.vercel.app/`,
+      ? `http://localhost:5223/account`
+      : `https://parachune.vercel.app/account`,
     // todo - remove SB code from here and put in load function of stripe-status, checking that it exists.
     return_url: import.meta.env.DEV
       ? `http://localhost:5223/stripe-status?account_link=${account.id}`
