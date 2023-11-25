@@ -3,6 +3,7 @@ import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
+  parent,
 }) => {
   const session = await getSession();
   let songIds: number[] = [];
@@ -30,5 +31,6 @@ export const load: PageServerLoad = async ({
   if (songsError) {
     throw error(404, "Error getting data about songs you like");
   }
-  return { savedSongs: songs };
+  const { profile } = await parent();
+  return { savedSongs: songs, profile, session };
 };

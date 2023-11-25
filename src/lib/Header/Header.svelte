@@ -1,17 +1,15 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
-  import {
-    Icon,
-    UserCircle,
-    MagnifyingGlass,
-    Star,
-    CircleStack,
-    Home,
-    Cog6Tooth,
-  } from "svelte-hero-icons";
+  import { createEventDispatcher, onMount } from "svelte";
+  import { Icon, MagnifyingGlass, Home } from "svelte-hero-icons";
+  import Login from "./login.svelte";
+  import type { SupabaseClient } from "@supabase/supabase-js";
+
   const dispatch = createEventDispatcher();
+
   export let open: boolean;
+  export let supabase: SupabaseClient;
   export let profile: App.PageData["profile"];
+  export let session: App.PageData["session"];
   function closeMenu() {
     if (open) {
       dispatch("closemenu");
@@ -26,24 +24,9 @@
   <a on:click={closeMenu} class="link" href="/discover"
     ><Icon class="icon" src={MagnifyingGlass} />Discover
   </a>
-  {#if profile}
-    <a on:click={closeMenu} class="link" href="/account"
-      ><Icon class="icon" src={Cog6Tooth} />My Account
-    </a>
-    <a on:click={closeMenu} class="link" href="/profiles/{profile.username}"
-      ><Icon class="icon" src={UserCircle} />My Public Profile
-    </a>
-    <a on:click={closeMenu} class="link" href="/account/music"
-      ><Icon class="icon" src={CircleStack} />My Music
-    </a>
-    <a on:click={closeMenu} class="link" href="/account/saved"
-      ><Icon class="icon" src={Star} />My Saved Music
-    </a>
-  {:else}
-    <a on:click={closeMenu} class="link" href="/login"
-      ><Icon class="icon" src={UserCircle} />Login / Signup
-    </a>
-  {/if}
+  <article class="login-wrapper">
+    <Login {supabase} {profile} {session} />
+  </article>
 </nav>
 
 <style>
@@ -59,7 +42,6 @@
     color: #ddd;
     font-size: 1rem;
     font-weight: 600;
-    align-items: left;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -68,10 +50,10 @@
     display: flex;
     flex-direction: row;
     column-gap: 6px;
-    align-items: center;
     color: inherit;
     text-decoration: none;
-    padding: 0.5rem 0.5rem;
+    align-items: center;
+    padding: 0.5rem;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
   }
@@ -82,5 +64,9 @@
   .link:focus {
     background-color: #856bdc;
     box-shadow: 0px 0px 8px #856bdc;
+  }
+  .login-wrapper {
+    margin-top: auto;
+    position: relative;
   }
 </style>

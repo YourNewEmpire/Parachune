@@ -20,6 +20,7 @@ type SongRow = {
 export const load: PageServerLoad = async ({
   locals: { supabase },
   params,
+  parent,
 }) => {
   const { data: songData, error: songDataErr } = await supabase
     .from("songs")
@@ -36,6 +37,6 @@ export const load: PageServerLoad = async ({
   }
 
   let song: SongRow | any = { ...songData };
-
-  return { song };
+  const { profile, session } = await parent();
+  return { song, profile, session };
 };

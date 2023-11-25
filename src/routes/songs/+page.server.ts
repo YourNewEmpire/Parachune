@@ -1,6 +1,10 @@
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
+export const load: PageServerLoad = async ({
+  locals: { supabase },
+  url,
+  parent,
+}) => {
   //? get the skip (from) and limit (to) from search params or use defaults.
   const limit = Number(url.searchParams.get("limit")) || 10;
   const skip = Number(url.searchParams.get("skip")) || 0;
@@ -16,6 +20,6 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
     )
     .order("created_at", { ascending: false })
     .range(skip, limit - 1);
-
-  return { songList, totalSongs: songCount };
+  const { profile, session } = await parent();
+  return { songList, totalSongs: songCount, profile, session };
 };

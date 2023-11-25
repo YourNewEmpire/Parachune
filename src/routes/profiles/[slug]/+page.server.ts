@@ -10,6 +10,7 @@ type Profile = {
 export const load: PageServerLoad = async ({
   locals: { supabase },
   params,
+  parent,
 }) => {
   let artistProfile: Profile;
   const { data: profileData, error: profileError } = await supabase
@@ -27,6 +28,6 @@ export const load: PageServerLoad = async ({
     .select(`name, song_url, id`)
     .eq("artist", profileData.username);
   artistProfile = { ...profileData };
-
-  return { artistProfile, artistSongs };
+  const { profile, session } = await parent();
+  return { artistProfile, artistSongs, profile, session };
 };

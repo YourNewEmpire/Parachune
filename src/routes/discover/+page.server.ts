@@ -14,7 +14,10 @@ type Artist = {
   username: string;
   avatar_url: string;
 };
-export const load: PageServerLoad = async ({ locals: { supabase } }) => {
+export const load: PageServerLoad = async ({
+  locals: { supabase },
+  parent,
+}) => {
   const { data: songFetch, error: songError } = await supabase
     .from("songs")
     .select(
@@ -37,6 +40,6 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   //@ts-ignore
   //? So hard to type the data from supabase db fetch. Need to generate types from db.
   let songData: SongRow[] = [].concat(songFetch);
-
-  return { songData, profileData };
+  const { profile, session } = await parent();
+  return { songData, profileData, profile, session };
 };

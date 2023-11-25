@@ -2,17 +2,21 @@ import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
 import type Stripe from "stripe";
+import type { Session } from "@supabase/supabase-js";
 
 type StripeStatus = {
   errMsg: string | null;
-  payment: {
-    url: string | null;
-    status: Stripe.Checkout.Session.PaymentStatus | null;
-  };
+  paymentStatus: Stripe.Checkout.Session.PaymentStatus | null;
   linkSuccess: boolean | null;
+  session: Session;
+  profile: App.PageData["profile"];
 };
 
-export const load: PageServerLoad = async ({ locals: { getSession }, url }) => {
+export const load: PageServerLoad = async ({
+  parent,
+  locals: { getSession },
+  url,
+}) => {
   const session = await getSession();
   if (!session) {
     return error(500, "Error, no user session");
@@ -20,31 +24,21 @@ export const load: PageServerLoad = async ({ locals: { getSession }, url }) => {
 
   let ret: StripeStatus = {
     errMsg: null,
-    payment: {
-      status: null,
-      url: null,
-    },
+    paymentStatus: null,
     linkSuccess: null,
+    session: session,
+    profile: null,
   };
   const checkoutId = url.searchParams.get("session_id");
   const linkId = url.searchParams.get("account_link");
-  const failed = url.searchParams.get("invalid");
-
-  if (failed) {
-    ret.errMsg = "Failed to complete stripe donation or account link.";
-  }
 
   if (checkoutId) {
     const checkout = await stripe.checkout.sessions.retrieve(checkoutId);
-    if (!checkout) return { errMsg: "Failed to find checkout with that ID." };
-
-    ret.payment = {
-      url: checkout.url ?? "",
-      status: checkout.payment_status,
-    };
-  }
-
-  if (linkId) {
+    if (!checkout) {
+      throw error(404, "checkout link not found");
+    }
+    ret.paymentStatus = checkout.payment_status;
+  } else if (linkId) {
     // check
     const newAcc = await stripe.accounts.retrieve(linkId);
     if (newAcc.details_submitted) {
@@ -52,7 +46,10 @@ export const load: PageServerLoad = async ({ locals: { getSession }, url }) => {
     } else {
       ret.linkSuccess = false;
     }
+  } else {
+    throw error(404, `🧭 Nothing found here, sorry`);
   }
-
+  const { profile } = await parent();
+  ret.profile = profile;
   return ret;
 };

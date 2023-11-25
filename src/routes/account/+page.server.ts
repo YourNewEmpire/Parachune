@@ -22,7 +22,7 @@ export const load: PageServerLoad = async ({
   return { session, profile, stripeReady };
 };
 
-export const actions = {
+export const actions: Actions = {
   update: async ({ request, locals: { supabase, getSession } }) => {
     const formData = await request.formData();
     const fullName = formData.get("fullName") as string;
@@ -64,4 +64,4 @@ export const actions = {
       throw redirect(303, "/");
     }
   },
-} satisfies Actions;
+};

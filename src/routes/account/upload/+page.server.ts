@@ -1,7 +1,9 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { v4 as uuidv4 } from "uuid";
 import type { Actions, PageServerLoad } from "./$types";
-export const load = (async ({ locals: { getSession, getProfile } }) => {
+export const load: PageServerLoad = async ({
+  locals: { getSession, getProfile },
+}) => {
   const session = await getSession();
   const profile = await getProfile();
   if (!session) {
@@ -9,7 +11,7 @@ export const load = (async ({ locals: { getSession, getProfile } }) => {
   }
 
   return { session, profile };
-}) satisfies PageServerLoad;
+};
 
 export const actions = {
   uploadSong: async ({ request, locals: { supabase, getProfile } }) => {

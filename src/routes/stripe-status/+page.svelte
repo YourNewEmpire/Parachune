@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   export let data: PageData;
 
-  let { errMsg, payment, linkSuccess } = data;
+  let { errMsg, paymentStatus, linkSuccess } = data;
 </script>
 
 {#if errMsg}
@@ -10,10 +10,10 @@
     <h1>There was an error or your stripe action was cancelled.</h1>
     <p>{errMsg}</p>
   </section>
-{:else if payment}
+{:else if paymentStatus}
   <section>
     <h1>Payment info</h1>
-    <p>{payment.payment_status} @ <a href={payment.payment_url}>this url</a></p>
+    <p>Status: {paymentStatus}</p>
   </section>
 {:else if linkSuccess === true}
   <section>

@@ -1,3 +1,4 @@
+import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 

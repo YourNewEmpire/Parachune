@@ -1,10 +1,12 @@
 <script lang="ts">
-  import Header from "$lib/Header.svelte";
+  import Header from "$lib/Header/Header.svelte";
   import { Icon, Bars3 } from "svelte-hero-icons";
   import { fly } from "svelte/transition";
   import clickOutside from "$lib/utils/clickOutside";
-  export let profile: any;
-
+  import type { SupabaseClient } from "@supabase/supabase-js";
+  export let supabase: SupabaseClient;
+  export let profile: App.PageData["profile"];
+  export let session: App.PageData["session"];
   let menuVisible = false;
   function handleClose() {
     menuVisible = false;
@@ -26,7 +28,13 @@
   </div>
   {#if menuVisible}
     <div transition:fly={{ x: -300, duration: 200 }} class="header-wrapper">
-      <Header {profile} on:closemenu={handleClose} open={menuVisible} />
+      <Header
+        {supabase}
+        {session}
+        {profile}
+        on:closemenu={handleClose}
+        open={menuVisible}
+      />
     </div>
     <div transition:fly={{ x: -300, duration: 200 }} class="close-menu-btn">
       <button
@@ -65,7 +73,7 @@
   }
   .header-wrapper {
     display: none;
-    z-index: 1004;
+    z-index: 21;
     display: block;
     width: 250px;
     position: fixed;
