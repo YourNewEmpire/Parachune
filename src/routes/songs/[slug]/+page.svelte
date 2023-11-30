@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Icon, Photo } from "svelte-hero-icons";
   import type { PageData } from "./$types";
-  import AvatarIcon from "$lib/AvatarIcon.svelte";
-  import Playbutton from "$lib/Playbutton.svelte";
-  import Queuebutton from "$lib/Queuebutton.svelte";
-  import Savebutton from "$lib/Savebutton.svelte";
+  import AvatarIcon from "$lib/avataricon.svelte";
+  import Playbutton from "$lib/playbutton.svelte";
+  import Queuebutton from "$lib/queuebutton.svelte";
+  import Savebutton from "$lib/savebutton.svelte";
 
   export let data: PageData;
   let { song } = data;

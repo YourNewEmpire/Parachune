@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Toast from "./Toast.svelte";
+  import Toast from "./toast.svelte";
 
   import { dismissToast, toasts } from "./stores";
 </script>

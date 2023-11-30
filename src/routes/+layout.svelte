@@ -3,11 +3,11 @@
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
-  import Header from "$lib/Header/Header.svelte";
-  import Menu from "$lib/Header/Menu.svelte";
-  import Player from "$lib/Player.svelte";
-  import ToastsParent from "$lib/Toastsparent.svelte";
-  import PageTransition from "$lib/Transition.svelte";
+  import Header from "$lib/header/header.svelte";
+  import Menu from "$lib/header/menu.svelte";
+  import Player from "$lib/player.svelte";
+  import ToastsParent from "$lib/toastsparent.svelte";
+  import PageTransition from "$lib/transition.svelte";
   export let data: LayoutData;
 
   let { supabase, session, url, profile } = data;

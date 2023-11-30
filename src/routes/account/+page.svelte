@@ -3,7 +3,7 @@
   import { enhance } from "$app/forms";
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
-  import Avatar from "./Avatar.svelte";
+  import Avatar from "./avatar.svelte";
   import Createstripe from "$lib/createstripe.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
   export let data: PageData;

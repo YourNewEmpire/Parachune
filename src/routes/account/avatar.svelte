@@ -1,6 +1,6 @@
-<!-- src/routes/account/Avatar.svelte -->
+
 <script lang="ts">
-  import AvatarIcon from "$lib/AvatarIcon.svelte";
+  import AvatarIcon from "$lib/avataricon.svelte";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { createEventDispatcher } from "svelte";
 

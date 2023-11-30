@@ -1,5 +1,6 @@
 import { error, fail, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+import { stripe } from "$lib/server/stripe";
 
 type Profile = {
   username: string;

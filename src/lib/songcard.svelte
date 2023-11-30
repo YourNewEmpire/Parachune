@@ -1,8 +1,8 @@
 <script lang="ts">
-  import AvatarIcon from "$lib/AvatarIcon.svelte";
-  import Playbutton from "$lib/Playbutton.svelte";
-  import Queuebutton from "$lib/Queuebutton.svelte";
-  import Savebutton from "$lib/Savebutton.svelte";
+  import AvatarIcon from "$lib/avataricon.svelte";
+  import Playbutton from "$lib/playbutton.svelte";
+  import Queuebutton from "$lib/queuebutton.svelte";
+  import Savebutton from "$lib/savebutton.svelte";
   type SongRow = {
     artist: string | null;
     created_at: string | null;
