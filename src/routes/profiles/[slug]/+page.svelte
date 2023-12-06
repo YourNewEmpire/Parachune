@@ -6,13 +6,12 @@
   import Stripeicon from "$lib/stripeicon.svelte";
   import type { PageData } from "./$types";
   import { addToast } from "$lib/stores";
-  import { goto } from "$app/navigation";
+  import tooltip from "$lib/utils/tooltip";
 
   export let data: PageData;
-  let { artistProfile, artistSongs } = data;
+  let { artistProfile, artistSongs, stripeReady } = data;
 
   async function createDonation() {
-    //add toast : Redirecting to stripe soon.
     addToast({
       type: "info",
       dismissable: false,
@@ -63,9 +62,17 @@
       <h1>{artistProfile.username}</h1>
     </article>
     <article style="display: flex; justify-content: center;">
-      <button on:click={() => createDonation()} class="styled-button">
-        Donate <Stripeicon />
-      </button>
+      {#if stripeReady}
+        <button on:click={() => createDonation()} class="styled-button">
+          Donate <Stripeicon />
+        </button>
+      {:else}
+        <span use:tooltip={{ content: "User has not setup Stripe yet" }}>
+          <button class="styled-button" disabled>
+            Donate <Stripeicon />
+          </button>
+        </span>
+      {/if}
     </article>
   </section>
   <h1>Music:</h1>
