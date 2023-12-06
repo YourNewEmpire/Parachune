@@ -95,8 +95,8 @@
       ><Icon size={"1.5rem"} src={UserCircle} />
       <h1 class="text-ellipsis">
         {profile?.username ?? session.user.email}
-      </h1></span
-    >
+      </h1>
+    </span>
     {#each links as l}
       <Dropitem>
         <a class="menu-item" href={l.url}>
@@ -121,11 +121,7 @@
         <Googleicon size={20} />
         Sign in with Google
       </button>
-      <button
-        class="styled-button"
-        disabled={true}
-        formaction="?/login&provider=discord"
-      >
+      <button class="styled-button" formaction="?/login&provider=discord">
         <Discordicon size={20} /> Sign in with Discord</button
       >
       <button class="styled-button" disabled={true} formaction="?/withGithub"
@@ -145,6 +141,7 @@
     align-items: center;
     gap: 5%;
   }
+
   .menu-item {
     inline-size: 100%;
     line-height: 1;
