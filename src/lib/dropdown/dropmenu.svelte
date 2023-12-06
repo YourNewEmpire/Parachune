@@ -19,7 +19,7 @@
     padding: 0;
     border: 1px solid black;
     background: linear-gradient(240deg, black 60%, #856bdc);
-    transition: opacity 0.3s ease;
+    transition: opacity 0.1s ease;
     -webkit-transition: opacity 0.1s ease;
     -ms-transition: opacity 0.1s ease;
     -o-transition: opacity 0.1s ease;
@@ -36,6 +36,7 @@
   div:focus,
   div:hover > menu,
   div:focus > menu {
+    transition: opacity 0.3s ease;
     -webkit-transition: opacity 0.3s ease;
     -ms-transition: opacity 0.3s ease;
     -o-transition: opacity 0.3s ease;
