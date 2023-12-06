@@ -1,4 +1,4 @@
-import { fail, redirect } from "@sveltejs/kit";
+import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
 export const load: PageServerLoad = async ({
@@ -13,12 +13,15 @@ export const load: PageServerLoad = async ({
   }
 
   if (profile?.stripe_id) {
-    const stripeAcc = await stripe.accounts.retrieve(profile?.stripe_id);
-    if (!stripeAcc) {
-      stripeReady = false;
-    }
-    if (stripeAcc.details_submitted) {
-      stripeReady = true;
+    try {
+      const stripeAcc = await stripe.accounts.retrieve(profile.stripe_id);
+      if (stripeAcc.details_submitted) {
+        stripeReady = true;
+      } else {
+        stripeReady = false;
+      }
+    } catch (e: any) {
+      throw error(500, `An error occured: ${e.message}`);
     }
   }
 

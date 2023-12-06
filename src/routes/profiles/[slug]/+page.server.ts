@@ -1,7 +1,6 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
-
 type Profile = {
   username: string;
   avatar_url: string;
@@ -41,14 +40,15 @@ export const load: PageServerLoad = async ({
   }
 
   if (profileData.stripe_id) {
-    const stripeAcc = await stripe.accounts.retrieve(profileData.stripe_id);
-    if (!stripeAcc) {
-      stripeReady = false;
-    }
-    if (stripeAcc.details_submitted) {
-      stripeReady = true;
-    } else {
-      stripeReady = false;
+    try {
+      const stripeAcc = await stripe.accounts.retrieve(profileData.stripe_id);
+      if (stripeAcc.details_submitted) {
+        stripeReady = true;
+      } else {
+        stripeReady = false;
+      }
+    } catch (e: any) {
+      throw error(500, `An error occured: ${e.message}`);
     }
   } else {
     stripeReady = false;
