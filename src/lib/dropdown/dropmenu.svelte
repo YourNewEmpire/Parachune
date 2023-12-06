@@ -8,8 +8,10 @@
 <style>
   button {
     border: none;
-    background-color: inherit;
+    background-color: none;
     width: 100%;
+    border-radius: 0 0 0.5rem 0.5rem;
+    transition: all 0.1s ease;
   }
 
   menu {
@@ -17,8 +19,7 @@
     display: block;
     margin-block-end: 0;
     padding: 0;
-    border: 1px solid black;
-    background: linear-gradient(240deg, black 60%, #856bdc);
+    background: linear-gradient(250deg, black 60%, #856bdc);
     transition: opacity 0.1s ease;
     -webkit-transition: opacity 0.1s ease;
     -ms-transition: opacity 0.1s ease;
@@ -28,7 +29,7 @@
     opacity: 0;
     bottom: 100%;
     overflow: hidden;
-    border-radius: 0.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
     width: 100%;
   }
 
@@ -43,5 +44,13 @@
     -moz-transition: opacity 0.3s ease;
     visibility: visible;
     opacity: 1;
+  }
+  div:hover,
+  div:focus,
+  div:hover > button,
+  div:focus > button {
+    border-radius: 0 0 0.5rem 0.5rem;
+    /* transition: all 0.3s ease; */
+    background: linear-gradient(250deg, black 40%, #856bdc);
   }
 </style>
