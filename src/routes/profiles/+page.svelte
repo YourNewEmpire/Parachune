@@ -10,7 +10,7 @@
   <h1>Find artists</h1>
   <section class="card-container">
     {#each profileList ?? [] as profile}
-      <a href="/profiles/{profile.username}" class="link-card col-container">
+      <a href="/profiles/{profile.id}" class="link-card col-container">
         <AvatarIcon
           altText={profile.username}
           size={10}

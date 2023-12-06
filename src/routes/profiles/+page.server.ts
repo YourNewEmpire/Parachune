@@ -6,7 +6,7 @@ export const load: PageServerLoad = async ({
 }) => {
   const { data: profileList, error: dbError } = await supabase
     .from("profiles")
-    .select(`username, avatar_url`)
+    .select(`username, avatar_url, id`)
     .not("username", "is", null);
   const { profile, session } = await parent();
   return { profileList, profile, session };
