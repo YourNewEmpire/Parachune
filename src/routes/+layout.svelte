@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../styles/app.css";
+  import "tippy.js/dist/tippy.css";
   import { invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import type { LayoutData } from "./$types";
