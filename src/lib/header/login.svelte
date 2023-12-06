@@ -1,9 +1,10 @@
 <script lang="ts">
-  import Googleicon from "$lib/googleicon.svelte";
   import type { SubmitFunction } from "@sveltejs/kit";
   import type { Provider, SupabaseClient } from "@supabase/supabase-js";
-  import { addToast } from "$lib/stores";
   import { enhance } from "$app/forms";
+  import { addToast } from "$lib/stores";
+  import Discordicon from "$lib/discordicon.svelte";
+  import Googleicon from "$lib/googleicon.svelte";
   import Dropmenu from "$lib/dropdown/dropmenu.svelte";
   import Dropitem from "$lib/dropdown/dropitem.svelte";
   import {
@@ -12,11 +13,11 @@
     Icon,
     MusicalNote,
     UserCircle,
+    CircleStack,
   } from "svelte-hero-icons";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
 
-  const providers = [];
   const links = [
     {
       text: "My Account",
@@ -31,7 +32,7 @@
     {
       text: "My Music",
       url: "/account/music",
-      iconSrc: UserCircle,
+      iconSrc: CircleStack,
     },
     {
       text: "My Saved Music",
@@ -63,7 +64,9 @@
       options: {
         redirectTo: `${orig}/auth/callback?next=${pageUrl}`,
         scopes:
-          "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+          provider === "google"
+            ? "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            : "",
       },
     });
     if (error) {
@@ -77,7 +80,7 @@
   };
 
   const handleSocialLogin: SubmitFunction = ({ action, cancel }) => {
-    const authProviders = ["google"];
+    const authProviders = ["google", "discord"];
     let providerParam = action.searchParams.get("provider") as Provider;
     if (authProviders.includes(providerParam)) {
       _providerSignIn(providerParam);
@@ -89,8 +92,10 @@
 {#if session}
   <Dropmenu>
     <span class="menu-toggle" slot="toggle"
-      ><Icon size={"1rem"} src={UserCircle} />
-      <p>{profile?.username}</p></span
+      ><Icon size={"1.5rem"} src={UserCircle} />
+      <h1 class="text-ellipsis">
+        {profile?.username ?? session.user.email}
+      </h1></span
     >
     {#each links as l}
       <Dropitem>
@@ -111,13 +116,17 @@
   </Dropmenu>
 {:else}
   <form method="POST" use:enhance={handleSocialLogin}>
-    <div class="input-group">
+    <div class="login">
       <button class="styled-button" formaction="?/login&provider=google">
         <Googleicon size={20} />
         Sign in with Google
       </button>
-      <button class="styled-button" disabled={true} formaction="?/withDiscord"
-        >Sign in with Discord</button
+      <button
+        class="styled-button"
+        disabled={true}
+        formaction="?/login&provider=discord"
+      >
+        <Discordicon size={20} /> Sign in with Discord</button
       >
       <button class="styled-button" disabled={true} formaction="?/withGithub"
         >Sign in with Github</button
@@ -134,7 +143,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 2px;
+    gap: 5%;
   }
   .menu-item {
     inline-size: 100%;
@@ -149,5 +158,10 @@
     font-family: Sono, sans-serif;
     align-items: center;
     gap: 5%;
+  }
+  .login {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 </style>
