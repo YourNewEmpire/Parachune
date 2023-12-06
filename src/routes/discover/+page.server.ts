@@ -27,7 +27,7 @@ export const load: PageServerLoad = async ({
 
   const { data: profileData, error: profileError } = await supabase
     .from("profiles")
-    .select(`username, avatar_url`)
+    .select(`username, avatar_url, id`)
     .range(0, 4)
     .not("username", "is", null);
 

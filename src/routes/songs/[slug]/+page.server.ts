@@ -12,6 +12,7 @@ type SongRow = {
   profiles: {
     avatar_url: string;
     username: string;
+    id: number;
   };
   likes: number;
   isLiked: boolean | "unset";
@@ -25,7 +26,7 @@ export const load: PageServerLoad = async ({
   const { data: songData, error: songDataErr } = await supabase
     .from("songs")
     .select(
-      `artist, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username)`
+      `artist, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username, id)`
     )
     .eq("id", params.slug)
     .single();

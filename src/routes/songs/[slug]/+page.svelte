@@ -13,7 +13,7 @@
 <div>
   <h1>
     {song.name} by
-    <a href="/profiles/{song.profiles.username}" class="styled-link">
+    <a href="/profiles/{song.profiles.id}" class="styled-link">
       {song.profiles.username}
     </a>
   </h1>
@@ -39,7 +39,7 @@
       </article>
     </article>
     <article class="card">
-      <a href="/profiles/{song.profiles.username}">
+      <a href="/profiles/{song.profiles.id}">
         <AvatarIcon
           altText={song.profiles.username}
           size={5}
