@@ -14,7 +14,7 @@
 </script>
 
 <header
-  style="z-index: 20; display:block; opacity: 1;"
+  style="max-width: 250px"
   use:clickOutside={{ enabled: menuVisible, cb: () => (menuVisible = false) }}
 >
   <div class="open-menu-btn">
@@ -50,11 +50,11 @@
 
 <style>
   button {
-    border-radius: 50%;
+    padding: 0;
     color: #856bdc;
   }
-
   .open-menu-btn {
+    z-index: 1;
     display: flex;
     align-items: center;
     position: fixed;
@@ -62,8 +62,10 @@
     width: 60px;
   }
   .close-menu-btn {
+    z-index: 1;
+    border-radius: 50%;
     background-color: rgba(133, 107, 220, 0.5);
-    border-radius: 0px 100px 100px 0px;
+    border-radius: 0px 0.5rem 0.5rem 0px;
     display: flex;
     align-items: center;
     position: fixed;
@@ -73,7 +75,7 @@
   }
   .header-wrapper {
     display: none;
-    z-index: 21;
+    z-index: 1;
     display: block;
     width: 250px;
     position: fixed;
