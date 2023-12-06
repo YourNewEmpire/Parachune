@@ -14,6 +14,9 @@ export const load: PageServerLoad = async ({
 
   if (profile?.stripe_id) {
     const stripeAcc = await stripe.accounts.retrieve(profile?.stripe_id);
+    if (!stripeAcc) {
+      stripeReady = false;
+    }
     if (stripeAcc.details_submitted) {
       stripeReady = true;
     }
