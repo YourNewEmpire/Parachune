@@ -10,6 +10,7 @@
     XCircle,
   } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
+  import tooltip from "./utils/tooltip";
 
   export let sClient: SupabaseClient;
   let audioBind: HTMLAudioElement;
@@ -170,7 +171,7 @@
       <div class="buttons">
         <button
           class="styled-button"
-          data-tooltip="Backward"
+          use:tooltip={{ content: "Backward" }}
           on:click={handleBack}
         >
           <Icon style="width: 2rem;" src={Backward} />
@@ -178,7 +179,7 @@
         {#if paused}
           <button
             class="styled-button"
-            data-tooltip="Play"
+            use:tooltip={{ content: "Play" }}
             on:click={handlePause}
           >
             <Icon style="width: 2rem;" src={Play} />
@@ -186,7 +187,7 @@
         {:else}
           <button
             class="styled-button"
-            data-tooltip="Pause"
+            use:tooltip={{ content: "Pause" }}
             on:click={handlePause}
           >
             <Icon style="width: 2rem;" src={Pause} />
@@ -194,7 +195,7 @@
         {/if}
         <button
           class="styled-button"
-          data-tooltip="Forward"
+          use:tooltip={{ content: "Forward" }}
           on:click={handleForward}
         >
           <Icon style="width: 2rem;" src={Forward} />

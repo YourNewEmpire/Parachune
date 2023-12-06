@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Icon, Star } from "svelte-hero-icons";
   import { addToast } from "$lib/stores";
+  import tooltip from "./utils/tooltip";
 
   export let songId: string;
   export let songUrl: string;
@@ -25,7 +26,11 @@
 </script>
 
 <div>
-  <button data-tooltip="Add to Saved" class="styled-button" on:click={saveSong}>
+  <button
+    class="styled-button"
+    use:tooltip={{ content: "Add To Saved" }}
+    on:click={saveSong}
+  >
     <Icon style="width: 2rem;" src={Star} />
   </button>
 </div>
