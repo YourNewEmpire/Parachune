@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({
   const { data: songList, error: songErr } = await supabase
     .from("songs")
     .select(
-      `artist, name, song_url, created_at, id, profiles (avatar_url, username)`
+      `artist_id, name, song_url, created_at, id, profiles (avatar_url, username)`
     )
     .order("created_at", { ascending: false })
     .range(skip, limit - 1);

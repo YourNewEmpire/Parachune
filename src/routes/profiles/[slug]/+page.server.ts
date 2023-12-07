@@ -57,7 +57,7 @@ export const load: PageServerLoad = async ({
   const { data: artistSongs, error: songsError } = await supabase
     .from("songs")
     .select(`name, song_url, id`)
-    .eq("artist", profileData.username);
+    .eq("artist_id", profileData.id);
 
   artistProfile = { ...profileData };
 

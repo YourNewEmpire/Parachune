@@ -2,7 +2,7 @@ import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
 type SongRow = {
-  artist: string | null;
+  artist_id: string | null;
   created_at: string | null;
   id: number;
   name: string | null;
@@ -26,7 +26,7 @@ export const load: PageServerLoad = async ({
   const { data: songData, error: songDataErr } = await supabase
     .from("songs")
     .select(
-      `artist, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username, id)`
+      `artist_id, name, description, lyrics, song_url, created_at, id, profiles ( avatar_url, username)`
     )
     .eq("id", params.slug)
     .single();

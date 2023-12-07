@@ -4,13 +4,14 @@
   import Queuebutton from "$lib/queuebutton.svelte";
   import Savebutton from "$lib/savebutton.svelte";
   type SongRow = {
-    artist: string | null;
+    artist_id: number;
     created_at: string | null;
     id: number;
     name: string | null;
     song_url: string | null;
     profiles: {
       avatar_url: string;
+      username: string;
     };
   };
   export let song: SongRow | any;
@@ -25,15 +26,15 @@
     >
       {song.name}
     </a>
-    <a class="song-profile-link" href="/profiles/{song.artist}">
+    <a class="song-profile-link" href="/profiles/{song.artist_id}">
       <AvatarIcon
-        altText={song.artist}
+        altText={song.profiles.username}
         size={2}
         url={song.profiles.avatar_url}
       />
 
       <p class="text-ellipsis">
-        {song.artist}
+        {song.profiles.username}
       </p>
     </a>
   </article>

@@ -3,7 +3,7 @@
   import type { PageData } from "./$types";
   export let data: PageData;
 
-  let { session, profile, dbData } = data;
+  let { dbData } = data;
 </script>
 
 <h1>Your music</h1>

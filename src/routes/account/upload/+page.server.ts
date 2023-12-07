@@ -14,9 +14,9 @@ export const load: PageServerLoad = async ({
 };
 
 export const actions = {
-  uploadSong: async ({ request, locals: { supabase, getProfile } }) => {
-    const profile = await getProfile();
-    if (!profile) {
+  uploadSong: async ({ request, locals: { supabase, getSession } }) => {
+    const session = await getSession();
+    if (!session) {
       return fail(400, {
         message: "Please login",
       });
@@ -55,7 +55,7 @@ export const actions = {
       .insert([
         {
           name: songName,
-          artist: profile?.username,
+          artist_id: session.user.id,
           song_url: url,
         },
       ]);

@@ -2,31 +2,28 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 type SongRow = {
-  artist: string | null;
+  artist_id: number;
   created_at: string | null;
   id: number;
   name: string | null;
   song_url: string | null;
 };
 export const load: PageServerLoad = async ({
-  locals: { supabase, getSession, getProfile },
+  locals: { supabase, getSession },
 }) => {
   const session = await getSession();
-  const profile = await getProfile();
   if (!session) {
-    throw redirect(303, "/login");
-  }
-  if (!profile) {
     throw redirect(303, "/");
   }
+
   const { data: dbFetch, error: dbError } = await supabase
     .from("songs")
-    .select(`artist, name, song_url, created_at, id`)
-    .eq("artist", profile?.username);
+    .select(`artist_id, name, song_url, created_at, id`)
+    .eq("artist_id", session.user.id);
   //@ts-ignore
   //? So hard to type the data from supabase db fetch. Need help tbh.
   let dbData: SongRow[] = [].concat(dbFetch);
-  return { session, profile, dbData };
+  return { session, dbData };
 };
 
 export const actions = {
