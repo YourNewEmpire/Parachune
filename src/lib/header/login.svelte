@@ -122,8 +122,9 @@
         Sign in with Google
       </button>
       <button class="styled-button" formaction="?/login&provider=discord">
-        <Discordicon size={20} /> Sign in with Discord</button
-      >
+        <Discordicon size={20} />
+        Sign in with Discord
+      </button>
       <button class="styled-button" disabled={true} formaction="?/withGithub"
         >Sign in with Github</button
       >
