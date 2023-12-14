@@ -36,7 +36,10 @@
   div:hover,
   div:focus,
   div:hover > menu,
-  div:focus > menu {
+  div:focus > menu,
+  div:focus-within > menu,
+  button:focus + menu,
+  button:hover + menu {
     transition: opacity 0.3s ease;
     -webkit-transition: opacity 0.3s ease;
     -ms-transition: opacity 0.3s ease;
@@ -48,9 +51,12 @@
   div:hover,
   div:focus,
   div:hover > button,
-  div:focus > button {
+  div:focus > button,
+  div:focus-within > button,
+  button:focus {
+    outline: none;
     border-radius: 0 0 0.5rem 0.5rem;
     /* transition: all 0.3s ease; */
-    background: linear-gradient(250deg, black 40%, #856bdc);
+    background: linear-gradient(250deg, black 35%, #856bdc);
   }
 </style>
