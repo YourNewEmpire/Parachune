@@ -60,6 +60,7 @@
   <h1>Upload a song or create an album</h1>
   <div style="display: flex; justify-content: center; gap: 2em;">
     <form
+      enctype="multipart/form-data"
       class="input-group card"
       method="post"
       action="?/uploadSong"
@@ -103,6 +104,7 @@
 
     <form
       class="input-group card"
+      enctype="multipart/form-data"
       method="post"
       action="?/createAlbum"
       use:enhance={handleSubmit}

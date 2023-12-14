@@ -1,6 +1,7 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { v4 as uuidv4 } from "uuid";
 import type { Actions, PageServerLoad } from "./$types";
+
 export const load: PageServerLoad = async ({
   locals: { getSession, supabase },
   parent,
