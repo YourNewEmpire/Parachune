@@ -6,6 +6,7 @@
   import Avatar from "./avatar.svelte";
   import Createstripe from "$lib/createstripe.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
+
   export let data: PageData;
   export let form: ActionData;
 
@@ -20,7 +21,7 @@
 
   const handleSubmit: SubmitFunction = () => {
     loading = true;
-    return async ({ result, update }) => {
+    return async ({ result }) => {
       loading = false;
       if (result.type === "failure") {
         addToast({
