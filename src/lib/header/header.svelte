@@ -49,11 +49,11 @@
   .link {
     display: flex;
     flex-direction: row;
-    column-gap: 6px;
+    gap: 5%;
     color: inherit;
     text-decoration: none;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.5rem 0.5rem;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
   }
