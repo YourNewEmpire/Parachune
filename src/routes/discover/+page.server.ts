@@ -7,6 +7,7 @@ type SongRow = {
   name: string | null;
   song_url: string | null;
   profiles: {
+    id: string;
     username: string;
     avatar_url: string;
   };
@@ -19,7 +20,7 @@ export const load: PageServerLoad = async ({
   const { data: songFetch, error: songError } = await supabase
     .from("songs")
     .select(
-      `artist_id, name, song_url, created_at, id, profiles (avatar_url, username)`
+      `artist_id, name, song_url, created_at, id, profiles (id, avatar_url, username)`
     )
     .range(0, 4);
 

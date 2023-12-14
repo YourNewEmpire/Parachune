@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({
   const { data: songs, error: songsError } = await supabase
     .from("songs")
     .select(
-      `song_url, name, artist_id, id, created_at, profiles (avatar_url, username)`
+      `song_url, name, artist_id, id, created_at, profiles (id, avatar_url, username)`
     )
     .in("id", songIds);
 
