@@ -10,6 +10,7 @@
     name: string | null;
     song_url: string | null;
     profiles: {
+      id: string;
       avatar_url: string;
       username: string;
     };
