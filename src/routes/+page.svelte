@@ -53,9 +53,6 @@
       <p class="welcome-message">
         {message}
       </p>
-      {#if !session}
-        <a class="styled-button" href="/login">Login and Upload music</a>
-      {/if}
     </article>
     <article
       style="display:flex; align-items:center; max-width:fit-content; column-gap: 6px; color: orange; "
