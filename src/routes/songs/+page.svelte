@@ -19,7 +19,7 @@
     {/each}
   </section>
   {#if totalPages >= 2}
-    <nav style="display: flex; flex-direction: row; column-gap: 2px;">
+    <nav style="display: flex; flex-direction: row; column-gap: 1rem;">
       {#each Array(totalPages) as _, idx}
         <a
           data-sveltekit-reload
