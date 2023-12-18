@@ -2,7 +2,7 @@ import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
 export const load: PageServerLoad = async ({
-  locals: { getSession, getProfile },
+  locals: { getSession, getProfile, supabase },
 }) => {
   let stripeReady: boolean = false;
   const session = await getSession();
@@ -21,11 +21,24 @@ export const load: PageServerLoad = async ({
         stripeReady = false;
       }
     } catch (e: any) {
+      // console.log(e);
+      if (e.code === "account_invalid") {
+        const { error: dbError } = await supabase.from("profiles").upsert({
+          id: session?.user.id,
+          stripe_id: null,
+        });
+        if (dbError) {
+          throw error(
+            500,
+            `An error occured when removing your invalid account from our database: ${dbError.message}`
+          );
+        }
+      }
       throw error(500, `An error occured: ${e.message}`);
+    } finally {
+      return { session, profile, stripeReady };
     }
-  }
-
-  return { session, profile, stripeReady };
+  } else return { session, profile, stripeReady };
 };
 
 export const actions: Actions = {
