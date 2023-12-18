@@ -96,9 +96,4 @@
       column-gap: 2rem;
     }
   }
-  @media only screen and (min-width: 1024px) {
-    .song-buttons {
-      column-gap: 1rem;
-    }
-  }
 </style>
