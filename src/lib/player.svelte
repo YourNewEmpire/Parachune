@@ -15,7 +15,9 @@
   export let sClient: SupabaseClient;
   let audioBind: HTMLAudioElement;
   let scrubBind: HTMLInputElement;
+  let volumeScrubBind: HTMLInputElement;
   let time = 0;
+  let volume = 0.5;
   let paused = false;
   let duration: number;
   // Not sure if this is needed after songPlaying was added
@@ -143,8 +145,9 @@
   }
 
   $: if ($songPlaying == true)
-    scrubBind.style.backgroundSize =
-      ((time - 0) * 100) / (duration - 0) + "% 100%";
+    scrubBind.style.backgroundSize = (time * 100) / duration - 0 + "% 100%";
+  $: if ($songPlaying == true)
+    volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
 
   $: if (time === duration) reachedTrackEnd();
   $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
@@ -169,6 +172,14 @@
         <p>{formatTime(duration)}</p>
       </div>
       <div class="buttons">
+        <button
+          class="styled-button"
+          style="position: absolute; left: 0;"
+          on:click={endPlayer}
+        >
+          <Icon src={XCircle} style="width: 2rem;" />
+          Close Player
+        </button>
         <button
           class="styled-button"
           use:tooltip={{ content: "Backward" }}
@@ -200,18 +211,24 @@
         >
           <Icon style="width: 2rem;" src={Forward} />
         </button>
-        <button
-          class="styled-button"
-          style="position: absolute; right: 0;"
-          on:click={endPlayer}
-        >
-          <Icon src={XCircle} style="width: 2rem;" />
-          Close Player
-        </button>
+        <input
+          style="position: absolute; right:0; width: 10%; "
+          type="range"
+          bind:this={volumeScrubBind}
+          bind:value={volume}
+          max="1"
+          step="0.01"
+        />
       </div>
     </div>
 
-    <audio autoplay bind:this={audioBind} bind:currentTime={time} bind:duration>
+    <audio
+      autoplay
+      bind:this={audioBind}
+      bind:volume
+      bind:currentTime={time}
+      bind:duration
+    >
       <source type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
@@ -250,6 +267,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    column-gap: 4px;
+    column-gap: 0.5em;
   }
 </style>
