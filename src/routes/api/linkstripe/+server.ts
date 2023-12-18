@@ -1,4 +1,4 @@
-import { error, json, redirect } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { stripe } from "$lib/server/stripe";
 
@@ -15,7 +15,7 @@ export const POST: RequestHandler = async ({
   }
   //todo - check if they already have an account id from before but didnt onboard it, saves creating a fresh account and rewriting it.
   const account = await stripe.accounts.create({
-    type: "express",
+    type: "standard",
   });
 
   if (!account) {
