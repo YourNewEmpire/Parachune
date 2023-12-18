@@ -56,7 +56,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
-    grid-gap: 12px;
+    gap: 1rem;
     justify-content: center;
   }
   @media only screen and (min-width: 1024px) {
