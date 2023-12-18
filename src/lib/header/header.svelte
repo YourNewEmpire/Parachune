@@ -40,7 +40,6 @@
     min-height: 100svh;
     background-color: rgba(38, 30, 30, 1);
     color: #ddd;
-    font-size: 1rem;
     font-weight: 600;
     padding: 10px;
     display: flex;
@@ -49,7 +48,7 @@
   .link {
     display: flex;
     flex-direction: row;
-    gap: 5%;
+    gap: 0.5em;
     color: inherit;
     text-decoration: none;
     align-items: center;
