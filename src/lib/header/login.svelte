@@ -140,7 +140,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5%;
+    gap: 0.5em;
   }
 
   .menu-item {
@@ -151,11 +151,11 @@
     color: inherit;
     display: flex;
     flex-direction: row;
-    font-size: 1rem;
     font-weight: inherit;
+    font-size: 1em;
     font-family: Sono, sans-serif;
     align-items: center;
-    gap: 5%;
+    gap: 0.5em;
   }
   .login {
     display: flex;
