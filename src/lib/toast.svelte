@@ -41,6 +41,7 @@
   button {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     width: 100%;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -59,12 +60,12 @@
     background-color: rgba(0, 0, 255, 0.7);
   }
   .text {
-    font-size: 18px;
+    font-size: 1.25rem;
     overflow-wrap: break-word;
     flex: 3;
   }
   .icon {
-    width: 24px;
+    width: 1.25rem;
     flex: 1;
   }
 </style>
