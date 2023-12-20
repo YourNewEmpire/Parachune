@@ -11,6 +11,8 @@
   let uploadFormMsg: string;
   let albumFormMsg: string;
 
+  // Submit Handler
+
   const handleSubmit: SubmitFunction = () => {
     loading = true;
     return async ({ result, update }) => {
@@ -30,7 +32,7 @@
         addToast({
           dismissable: true,
           message:
-            "Failed upload, check you have filled the form. Contact support if there is a clear issue.",
+            "Failed upload, check you have filled the form and not exceeded file size limits. Contact support if there is a clear issue.",
           timeout: 5000,
           type: "failure",
         });
@@ -39,7 +41,7 @@
       loading = false;
     };
   };
-
+  // INPUT HANDLERS
   function handleUploadInput(e: any) {
     if (e.target.value < 1) {
       uploadFormMsg = "Song title must have at least 1 char";
@@ -52,6 +54,16 @@
       albumFormMsg = "Album title must have at least 1 char";
     } else {
       albumFormMsg = "";
+    }
+  }
+  function handleFileInput(e: any) {
+    if (e.target.files[0].size > 50000000) {
+      addToast({
+        type: "warning",
+        dismissable: true,
+        message: "File exceeds the current 50MB limit. Uploading it will fail.",
+        timeout: 5000,
+      });
     }
   }
 </script>
@@ -72,8 +84,8 @@
       </div>
 
       <div class="input-item">
-        <label for="song">Song File</label>
-        <input type="file" name="song" />
+        <label for="song">Song File (under 50MB)</label>
+        <input on:change={handleFileInput} type="file" name="song" />
       </div>
 
       <div class="input-item">
@@ -114,8 +126,8 @@
         <input on:input={handleAlbumInput} type="text" name="albumName" />
       </div>
       <div class="input-item">
-        <label for="albumImage">Album Image</label>
-        <input type="file" name="albumImage" />
+        <label for="albumImage">Album Image (under 50MB)</label>
+        <input on:change={handleFileInput} type="file" name="albumImage" />
       </div>
       <div class="input-item">
         <label for="albumGenre">Album Genre (Optional)</label>
