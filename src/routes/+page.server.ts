@@ -4,7 +4,7 @@ export const load: PageServerLoad = async ({ parent }) => {
   const { profile, session } = await parent();
   let message;
   if (!session) {
-    message = `Welcome newcomer, to Parachune. Parachute your tunes here, for free. Click below to login,  or scroll to learn more about Parachune.`;
+    message = `Welcome, to Parachune. Parachute your tunes here, for free. Scroll to learn more.`;
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
