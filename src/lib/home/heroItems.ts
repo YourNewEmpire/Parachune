@@ -16,7 +16,7 @@ export interface HeroProps {
 export const heroItems: HeroProps[] = [
   {
     heading: "No Fees",
-    text: "Free for artists and for listeners. No more bills, goodbye spotify",
+    text: "Free for artists and for listeners. No more bills",
     icon: CreditCard,
   },
   {
