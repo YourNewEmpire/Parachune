@@ -81,7 +81,7 @@
     margin: 4rem 2rem;
   }
   .slot-wrapper-home {
-    margin: 1rem 1rem;
+    margin: 0.5rem 1.5rem;
   }
   .desktop-header {
     display: none;
@@ -111,7 +111,7 @@
       margin: 4rem 4rem;
     }
     .slot-wrapper-home {
-      margin: 0 4rem 4rem;
+      margin: 0 4rem;
     }
     .layout-grid {
       grid-template-columns: 250px 1fr;
