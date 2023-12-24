@@ -8,6 +8,9 @@
     Backward,
     Forward,
     XCircle,
+    Plus,
+    Minus,
+    SpeakerXMark,
   } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import tooltip from "./utils/tooltip";
@@ -17,7 +20,7 @@
   let scrubBind: HTMLInputElement;
   let volumeScrubBind: HTMLInputElement;
   let time = 0;
-  let volume = 0.5;
+  let volume = 0.2;
   let paused = false;
   let duration: number;
   // Not sure if this is needed after songPlaying was added
@@ -144,10 +147,10 @@
     return `${minutes}:${seconds}`;
   }
 
-  $: if ($songPlaying == true)
+  $: if ($songPlaying == true) {
     scrubBind.style.backgroundSize = (time * 100) / duration - 0 + "% 100%";
-  $: if ($songPlaying == true)
     volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
+  }
 
   $: if (time === duration) reachedTrackEnd();
   $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
@@ -178,7 +181,6 @@
           on:click={endPlayer}
         >
           <Icon src={XCircle} style="width: 2rem;" />
-          Close Player
         </button>
         <button
           class="styled-button"
@@ -211,14 +213,50 @@
         >
           <Icon style="width: 2rem;" src={Forward} />
         </button>
-        <input
-          style="position: absolute; right:0; width: 10%; "
-          type="range"
-          bind:this={volumeScrubBind}
-          bind:value={volume}
-          max="1"
-          step="0.01"
-        />
+        <div class="volume">
+          <article class="volume-control">
+            <button
+              on:click={() => {
+                volume = 0;
+              }}
+            >
+              <Icon src={SpeakerXMark} size={"2rem"} />
+            </button>
+            <input
+              type="range"
+              bind:this={volumeScrubBind}
+              bind:value={volume}
+              max="1"
+              step="0.01"
+            />
+          </article>
+          <article class="volume-increment">
+            <button
+              class="styled-button"
+              on:click={() => {
+                if (volume - 0.1 >= 0) {
+                  volume = Number.parseFloat((volume -= 0.1).toFixed(1));
+                }
+                return;
+              }}
+            >
+              <Icon src={Minus} size={"1.5rem"} />
+            </button>
+
+            <p style="text-align: center;">{(volume * 10).toFixed(1)}</p>
+            <button
+              class="styled-button"
+              on:click={() => {
+                if (volume + 0.1 <= 1) {
+                  volume = Number.parseFloat((volume += 0.1).toFixed(1));
+                }
+                return;
+              }}
+            >
+              <Icon src={Plus} size={"1.5rem"} />
+            </button>
+          </article>
+        </div>
       </div>
     </div>
 
@@ -239,8 +277,8 @@
   .player-wrapper {
     display: block;
     position: fixed;
-    margin-left: 250px;
-    padding: 0 5px;
+    margin-left: 0;
+    padding: 0 0.5rem;
     bottom: 0;
     left: 0;
     width: calc(100% - 250px);
@@ -268,5 +306,27 @@
     align-items: center;
     flex-direction: row;
     column-gap: 0.5em;
+  }
+  .volume {
+    position: absolute;
+    right: 0.25rem;
+    width: 20%;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .volume-control {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1fr 5fr;
+  }
+  .volume-increment {
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 4fr 2fr 4fr;
   }
 </style>

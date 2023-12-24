@@ -4,7 +4,6 @@ import {
   Heart,
   NoSymbol,
   ShieldCheck,
-  UserGroup,
 } from "svelte-hero-icons";
 import type { IconSource } from "svelte-hero-icons";
 export interface HeroProps {
