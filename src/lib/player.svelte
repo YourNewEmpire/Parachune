@@ -277,7 +277,7 @@
   .player-wrapper {
     display: block;
     position: fixed;
-    margin-left: 0;
+    margin-left: 250px;
     padding: 0 0.5rem;
     bottom: 0;
     left: 0;
