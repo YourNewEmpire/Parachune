@@ -12,7 +12,7 @@ type SongRow = {
     avatar_url: string;
   };
 };
-
+export const prerender = true;
 export const load: PageServerLoad = async ({
   locals: { supabase },
   parent,

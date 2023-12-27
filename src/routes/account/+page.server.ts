@@ -1,6 +1,7 @@
 import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
+export const prerender = false;
 export const load: PageServerLoad = async ({
   locals: { getSession, getProfile, supabase },
 }) => {

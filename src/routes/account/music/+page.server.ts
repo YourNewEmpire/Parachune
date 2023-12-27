@@ -8,6 +8,9 @@ type SongRow = {
   name: string | null;
   song_url: string | null;
 };
+
+export const prerender = false;
+
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
 }) => {
