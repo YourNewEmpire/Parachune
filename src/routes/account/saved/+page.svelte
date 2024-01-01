@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Playbutton from "$lib/playbutton.svelte";
   import Songcard from "$lib/songcard.svelte";
   import type { PageData } from "./$types";
 
@@ -12,8 +11,12 @@
   <h1>Saved Music</h1>
   <div class="card-container">
     {#if savedSongs}
-      {#each savedSongs ?? [] as song}
-        <Songcard {song} />
+      {#each savedSongs as saved}
+        {#if saved.song}
+          <Songcard song={saved.song} />
+        {:else}
+          <p>No song. skeleton needed here</p>
+        {/if}
       {/each}
     {:else}
       <p>No songs saved.</p>
