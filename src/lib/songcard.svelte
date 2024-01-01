@@ -1,41 +1,27 @@
 <script lang="ts">
-  import AvatarIcon from "$lib/avataricon.svelte";
   import Playbutton from "$lib/playbutton.svelte";
   import Queuebutton from "$lib/queuebutton.svelte";
   import Savebutton from "$lib/savebutton.svelte";
-  type SongRow = {
-    artist_id: number;
+  import { Icon, MusicalNote, RectangleStack, User } from "svelte-hero-icons";
+  type Song = {
+    album_id: string;
+    artist_id: string | null;
     created_at: string | null;
-    id: number;
+    description: string | null;
+    id: string;
+    lyrics: string | null;
     name: string | null;
     song_url: string | null;
-    profiles: {
-      id: string;
-      avatar_url: string;
-      username: string;
-    };
   };
-  export let song: SongRow | any;
+  export let song: Song;
 </script>
 
 <div class="song-card-container">
   <article class="song-links">
-    <a
-      style="width: fit-content;"
-      class="text-ellipsis styled-link"
-      href="/songs/{song.id}"
-    >
-      {song.name}
-    </a>
-    <a class="song-profile-link" href="/profiles/{song.artist_id}">
-      <AvatarIcon
-        altText={song.profiles.username}
-        size={2}
-        url={song.profiles.avatar_url}
-      />
-
+    <a class="song-profile-link" href="/songs/{song.id}">
+      <Icon src={MusicalNote} size={"1.5em"} />
       <p class="text-ellipsis">
-        {song.profiles.username}
+        {song.name}
       </p>
     </a>
   </article>
@@ -55,21 +41,21 @@
     color: #1a1a26;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    gap: 1rem;
     align-items: center;
   }
   .song-links {
     display: flex;
     flex-direction: column;
-    row-gap: 6px;
-    font-size: 18px;
+    gap: 0;
+    font-size: 1.25rem;
   }
   .song-profile-link {
     display: flex;
     width: fit-content;
     flex-direction: row;
     align-items: center;
-    column-gap: 12px;
+    gap: 0.5rem;
     border: none;
     background: none;
     color: #443;
@@ -85,15 +71,11 @@
   .song-buttons {
     display: flex;
     flex-direction: row;
-    column-gap: 0.25rem;
+    gap: 0.25rem;
   }
   @media only screen and (min-width: 768px) {
     .song-buttons {
-      column-gap: 0.5rem;
-    }
-    .song-card-container {
-      flex-direction: column;
-      column-gap: 2rem;
+      gap: 0.5rem;
     }
   }
 </style>
