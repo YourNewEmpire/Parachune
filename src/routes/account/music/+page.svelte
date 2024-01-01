@@ -8,10 +8,7 @@
 
 <h1>Your music</h1>
 <section class="card-container">
-  {#each dbData as song}
-    <a href="/songs/{song.id}" class="link-card">
-      <p>{song.name}</p>
-      <p>{song.created_at}</p>
-    </a>
+  {#each dbData ?? [] as song}
+    <Songcard {song} />
   {/each}
 </section>
