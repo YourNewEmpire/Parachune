@@ -12,9 +12,9 @@
     {#each profileList ?? [] as profile}
       <a href="/profiles/{profile.id}" class="link-card col-container">
         <AvatarIcon
-          altText={profile.username}
+          altText={profile.username ?? ""}
           size={10}
-          url={profile.avatar_url}
+          url={profile.avatar_url ?? ""}
         />
         <h1>{profile.username}</h1>
       </a>
