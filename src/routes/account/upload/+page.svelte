@@ -4,9 +4,9 @@
   import type { PageData, SubmitFunction } from "./$types";
   export let data: PageData;
 
-  let { session, profile, albumData } = data;
+  let { albumData } = data;
   // not sure if form binding is needed
-  let uploadForm: any;
+  // let uploadForm: any;
   let loading = false;
   let uploadFormMsg: string;
   let albumFormMsg: string;

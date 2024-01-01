@@ -17,8 +17,6 @@ export const load: PageServerLoad = async ({
     .select("*")
     .eq("artist_id", session.user.id);
 
-  //todo - FETCH ALBUM DATA FOR THE USER FOR THE ALBUM FORM SELECT
-
   const { profile } = await parent();
   return { session, profile, albumData };
 };
