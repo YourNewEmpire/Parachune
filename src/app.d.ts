@@ -1,10 +1,9 @@
-// src/app.d.ts
-
 import { SupabaseClient, Session } from "@supabase/supabase-js";
+import { Database } from "./types/DbDefinitions";
 declare global {
   namespace App {
     interface Locals {
-      supabase: SupabaseClient;
+      supabase: SupabaseClient<Database>;
       getSession(): Promise<Session | null>;
       getProfile(): Promise<{
         username: any;
