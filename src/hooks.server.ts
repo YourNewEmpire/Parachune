@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import type { Handle } from "@sveltejs/kit";
 
 export const handle: Handle = async ({ event, resolve }) => {
+  //? Create supabase server client with cookies config
   event.locals.supabase = createServerClient(
     import.meta.env.VITE_SUPABASE_URL,
     import.meta.env.VITE_SUPABASE_ANON_KEY,
@@ -18,9 +19,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
   );
 
-  /**
-   * A convenience helper so we can just call await getSession() instead const { data: { session } } = await supabase.auth.getSession()
-   */
+  //? Helpers on locals object for loaders.
   event.locals.getSession = async () => {
     const {
       data: { session },
@@ -39,8 +38,13 @@ export const handle: Handle = async ({ event, resolve }) => {
       .single();
     return profile;
   };
-  //todo - add event.locals.getProfile for user profile.
 
+  //? Set secure headers.
+  event.setHeaders({
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "autoplay=(self)",
+    "X-Content-Type-Options": "nosniff",
+  });
   return resolve(event, {
     /**
      * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`
