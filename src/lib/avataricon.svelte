@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { Icon, UserCircle } from "svelte-hero-icons";
-  import { tick } from "svelte";
+  import { onMount, tick } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { page } from "$app/stores";
 
@@ -41,9 +41,10 @@
     }
   };
   $: if (url) downloadImage(url);
-
-  page.subscribe((params) => {
-    supabase = params.data.supabase;
+  onMount(() => {
+    page.subscribe((params) => {
+      supabase = params.data.supabase;
+    });
   });
 </script>
 
