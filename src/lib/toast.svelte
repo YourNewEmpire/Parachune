@@ -22,15 +22,6 @@
 
 <div role="alert" transition:fade>
   <button class={type} on:click={() => handleDismiss()}>
-    {#if type === "success"}
-      <Icon src={CheckCircle} class="icon" />
-    {:else if type === "failure"}
-      <Icon src={ExclamationCircle} class="icon" />
-    {:else if type === "info"}
-      <Icon src={InformationCircle} class="icon" />
-    {:else}
-      <Icon src={ExclamationTriangle} class="icon" />
-    {/if}
     <article class="text">
       <slot />
     </article>
@@ -41,9 +32,9 @@
   button {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+
     width: 100%;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     color: white;
   }
