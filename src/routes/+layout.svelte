@@ -32,6 +32,7 @@
     <header class="desktop-header">
       <Header {supabase} {session} {profile} open={false} />
     </header>
+    <div class="bg"></div>
     <main class="main">
       <PageTransition key={url} duration={600}>
         <section class={url === "/" ? "slot-wrapper-home" : "slot-wrapper"}>
@@ -47,12 +48,10 @@
 </div>
 
 <style>
-  .main {
-    color: #fff;
-    min-height: 100vh;
+  .bg {
     background-color: #856bdc;
 
-    /* need to add support for all browsers*/
+    /* BROKEN: mobile has to recompute bg when UI bottom bar moves into view. need an absolute bg. need to add support for all browsers*/
     background-image: linear-gradient(
         140deg,
         rgba(12, 12, 12, 0.9) 70%,
@@ -63,10 +62,18 @@
         rgba(0, 0, 0, 0.5)
       ),
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='100%25' height='100%25'%3E%3Cdefs%3E%3Cpattern id='p' width='100' height='100' patternUnits='userSpaceOnUse' patternTransform='rotate(35) scale(0.46)'%3E%3Cpath id='a' data-color='fill' fill='%239898AC' stroke='%239898AC' stroke-width='13.35' d='M-25 20h50L0-20z'%3E%3C/path%3E%3Cuse xlink:href='%23a' x='100'%3E%3C/use%3E%3Cuse xlink:href='%23a' y='100'%3E%3C/use%3E%3Cuse xlink:href='%23a' x='100' y='100'%3E%3C/use%3E%3Cuse xlink:href='%23a' x='50' y='50'%3E%3C/use%3E%3Cuse xlink:href='%23a' x='50' y='150'%3E%3C/use%3E%3C/pattern%3E%3C/defs%3E%3Crect fill='url(%23p)' width='100%25' height='100%25'%3E%3C/rect%3E%3C/svg%3E");
-    background-size: cover;
-    background-position: center;
+
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    /* z-index usage is up to you.. although there is no need of using it because the default stack context will work. */
+    z-index: 0;
+  }
+  .main {
+    color: #fff;
+    position: relative;
   }
 
   .layout-grid {
@@ -117,6 +124,7 @@
       grid-template-columns: 250px 1fr;
     }
     .desktop-header {
+      z-index: 1;
       display: block;
     }
     /* .sidebar-wrapper {
