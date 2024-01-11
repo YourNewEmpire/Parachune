@@ -174,54 +174,61 @@
         />
         <p>{formatTime(duration)}</p>
       </div>
-      <div class="buttons">
-        <button
-          class="styled-button"
-          style="position: absolute; left: 0;"
-          on:click={endPlayer}
-        >
-          <Icon src={XCircle} style="width: 2rem;" />
-        </button>
-        <button
-          class="styled-button"
-          use:tooltip={{ content: "Backward" }}
-          on:click={handleBack}
-        >
-          <Icon style="width: 2rem;" src={Backward} />
-        </button>
-        {#if paused}
+      <div class="buttons-grid">
+        <div>
           <button
-            class="styled-button"
-            use:tooltip={{ content: "Play" }}
-            on:click={handlePause}
+            use:tooltip={{ content: "Close and Clear Queue" }}
+            class="player-button"
+            on:click={endPlayer}
           >
-            <Icon style="width: 2rem;" src={Play} />
+            <span class="main-icon">
+              <Icon src={XCircle} />
+            </span>
           </button>
-        {:else}
+        </div>
+        <div class="play-buttons">
           <button
-            class="styled-button"
-            use:tooltip={{ content: "Pause" }}
-            on:click={handlePause}
+            class="player-button"
+            use:tooltip={{ content: "Backward" }}
+            on:click={handleBack}
           >
-            <Icon style="width: 2rem;" src={Pause} />
+            <span class="main-icon">
+              <Icon src={Backward} />
+            </span>
           </button>
-        {/if}
-        <button
-          class="styled-button"
-          use:tooltip={{ content: "Forward" }}
-          on:click={handleForward}
-        >
-          <Icon style="width: 2rem;" src={Forward} />
-        </button>
+          {#if paused}
+            <button
+              class="player-button"
+              use:tooltip={{ content: "Play" }}
+              on:click={handlePause}
+            >
+              <span class="main-icon">
+                <Icon src={Play} />
+              </span>
+            </button>
+          {:else}
+            <button
+              class="player-button"
+              use:tooltip={{ content: "Pause" }}
+              on:click={handlePause}
+            >
+              <span class="main-icon">
+                <Icon src={Pause} />
+              </span>
+            </button>
+          {/if}
+          <button
+            class="player-button"
+            use:tooltip={{ content: "Forward" }}
+            on:click={handleForward}
+          >
+            <span class="main-icon">
+              <Icon src={Forward} />
+            </span>
+          </button>
+        </div>
         <div class="volume">
           <article class="volume-control">
-            <button
-              on:click={() => {
-                volume = 0;
-              }}
-            >
-              <Icon src={SpeakerXMark} size={"2rem"} />
-            </button>
             <input
               type="range"
               bind:this={volumeScrubBind}
@@ -232,7 +239,7 @@
           </article>
           <article class="volume-increment">
             <button
-              class="styled-button"
+              class="player-button"
               on:click={() => {
                 if (volume - 0.1 >= 0) {
                   volume = Number.parseFloat((volume -= 0.1).toFixed(1));
@@ -240,12 +247,14 @@
                 return;
               }}
             >
-              <Icon src={Minus} size={"1.5rem"} />
+              <span class="volume-icon">
+                <Icon src={Minus} />
+              </span>
             </button>
 
             <p style="text-align: center;">{(volume * 10).toFixed(1)}</p>
             <button
-              class="styled-button"
+              class="player-button"
               on:click={() => {
                 if (volume + 0.1 <= 1) {
                   volume = Number.parseFloat((volume += 0.1).toFixed(1));
@@ -253,7 +262,9 @@
                 return;
               }}
             >
-              <Icon src={Plus} size={"1.5rem"} />
+              <span class="volume-icon">
+                <Icon src={Plus} />
+              </span>
             </button>
           </article>
         </div>
@@ -274,21 +285,33 @@
 {/if}
 
 <style>
+  span {
+    display: flex;
+  }
   .player-wrapper {
     display: block;
     position: fixed;
-    margin-left: 250px;
-    padding: 0 0.5rem;
+    margin-left: 0;
+    padding: 0.1rem 0.1rem;
     bottom: 0;
     left: 0;
-    width: calc(100% - 250px);
+    width: 100%;
     border-radius: 1rem 0px 0px 0px;
     background-color: #9898ac;
     box-shadow: 0px 0px 6px #856bdc;
+    font-size: 0.75rem;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .player-wrapper {
+      font-size: 1rem;
+      padding: 0 0.5rem;
+      margin-left: 250px;
+      width: calc(100% - 250px);
+    }
   }
 
   .controls {
-    padding: 1rem 1rem;
     display: block;
     position: relative;
   }
@@ -300,33 +323,110 @@
     justify-content: center;
   }
 
-  .buttons {
+  .buttons-grid {
+    display: grid;
+    grid-template-columns: 30% 40% 30%;
+    justify-content: center;
+    align-items: center;
+  }
+  .play-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    column-gap: 0.5em;
+    column-gap: 0.5rem;
   }
   .volume {
-    position: absolute;
-    right: 0.25rem;
-    width: 20%;
-    gap: 0.5rem;
+    gap: 0.3rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
   .volume-control {
-    display: grid;
-    justify-content: center;
     align-items: center;
-    grid-template-columns: 1fr 5fr;
+    justify-content: center;
+    display: flex;
+    width: 100%;
   }
+
   .volume-increment {
     width: 100%;
     display: grid;
+    gap: 0.5rem;
     justify-content: center;
     align-items: center;
     grid-template-columns: 4fr 2fr 4fr;
+  }
+
+  .player-button {
+    font-family: "Sono", sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.1rem 0.1rem;
+    background: none;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--primary-color);
+  }
+  .player-button:hover {
+    background-color: var(--primary-color);
+    box-shadow: 0px 0px 8px var(--primary-color);
+  }
+  .main-icon {
+    width: 2rem;
+  }
+  .volume-icon {
+    width: 1.5rem;
+  }
+  @media only screen and (min-width: 768px) {
+    .player-button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.5rem;
+      background: none;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-color);
+    }
+    .player-button:hover {
+      background-color: var(--primary-color);
+      box-shadow: 0px 0px 8px var(--primary-color);
+    }
+    .main-icon {
+      width: 2.5rem;
+    }
+    .volume-icon {
+      width: 2rem;
+    }
+  }
+
+  @media only screen and (min-width: 1024px) {
+    .player-button {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 0.5rem;
+      background: none;
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      border-radius: 0.75rem;
+      transition: all 0.3s ease;
+      border: 2px solid var(--primary-color);
+    }
+    .player-button:hover {
+      background-color: var(--primary-color);
+      box-shadow: 0px 0px 8px var(--primary-color);
+    }
   }
 </style>
