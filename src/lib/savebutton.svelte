@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { Icon, Star } from "svelte-hero-icons";
+  import { Icon, Star, MinusCircle } from "svelte-hero-icons";
   import { addToast } from "$lib/stores";
   import tooltip from "./utils/tooltip";
 
   export let songId: string;
   export let songUrl: string;
+  export let unSave: boolean = false;
   async function saveSong() {
     const response = await fetch("/api/savesong", {
       method: "POST",
-      body: JSON.stringify({ songId, songUrl }),
+      body: JSON.stringify({ songId, songUrl, unSave: unSave ? true : false }),
       headers: {
         "content-type": "application/json",
       },
@@ -28,10 +29,10 @@
 <div>
   <button
     class="styled-button"
-    use:tooltip={{ content: "Add To Saved" }}
+    use:tooltip={{ content: unSave ? "Remove from Saved" : "Add to Saved" }}
     on:click={saveSong}
   >
-    <Icon style="width: 2rem;" src={Star} />
+    <Icon style="width: 2rem;" src={unSave ? MinusCircle : Star} />
   </button>
 </div>
 

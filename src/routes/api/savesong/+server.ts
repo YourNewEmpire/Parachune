@@ -9,8 +9,21 @@ export const POST: RequestHandler = async ({
   if (!session) {
     return json({ message: "not logged in", toastType: "failure" });
   }
-  const { songId, songUrl } = await request.json();
+  const { songId, songUrl, unSave } = await request.json();
 
+  if (unSave) {
+    const { error: songUnsaveErr } = await supabase
+      .from("saved songs")
+      .delete()
+      .eq("song_id", songId);
+    if (songUnsaveErr) {
+      return json({
+        message: "Error removing, try again or contact the dev",
+        toastType: "failure",
+      });
+    }
+    return json({ message: "Song removed", toastType: "success" });
+  }
   //? Search for song id in likes. If it already exists, quit
   const { data: saveData, error: saveDataError } = await supabase
     .from("saved songs")

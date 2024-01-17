@@ -14,6 +14,7 @@
     song_url: string | null;
   };
   export let song: Song;
+  export let unSave: boolean = false;
 </script>
 
 <div class="song-card-container">
@@ -28,7 +29,7 @@
   <article class="song-buttons">
     <Playbutton songUrl={song.song_url ?? ""} />
     <Queuebutton songUrl={song.song_url ?? ""} />
-    <Savebutton songUrl={song.song_url ?? ""} songId={song.id ?? ""} />
+    <Savebutton {unSave} songUrl={song.song_url ?? ""} songId={song.id ?? ""} />
   </article>
 </div>
 

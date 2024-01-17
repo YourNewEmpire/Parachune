@@ -13,7 +13,7 @@
     {#if savedSongs}
       {#each savedSongs as saved}
         {#if saved.song}
-          <Songcard song={saved.song} />
+          <Songcard unSave={true} song={saved.song} />
         {:else}
           <p>No song. skeleton needed here</p>
         {/if}
