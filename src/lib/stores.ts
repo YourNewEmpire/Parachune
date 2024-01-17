@@ -1,8 +1,6 @@
-import type { Session, SupabaseClient } from "@supabase/supabase-js";
 import { writable } from "svelte/store";
 import type { Writable } from "svelte/store";
 
-// TODO - use union type for type field
 //? TYPES
 export type Toast = {
   message: string;
@@ -19,6 +17,7 @@ export type NewToast = {
 };
 
 //? SONGS STORES
+//TODO - songsQueued & songsPlayed will be object array with url and others, as oppose to string[] of url
 export const songsQueued: Writable<string[]> = writable([]);
 export const songPlaying: Writable<boolean> = writable(false);
 export const songsPlayed: Writable<string[]> = writable([]);
