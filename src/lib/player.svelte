@@ -10,7 +10,6 @@
     XCircle,
     Plus,
     Minus,
-    SpeakerXMark,
   } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import tooltip from "./utils/tooltip";
@@ -26,6 +25,9 @@
   // Not sure if this is needed after songPlaying was added
   let isOpen: boolean;
 
+  /*  understand how to revokeObjectURL to save memory 
+  
+  */
   const downloadSong = async (url: string | undefined) => {
     // console.log("start dl");
     // console.log($songsQueued);
@@ -33,6 +35,7 @@
       // console.log("no url");
       return;
     }
+    //
     if ($songPlaying) {
       // console.log("already playing");
       return;
@@ -63,16 +66,6 @@
       });
     }
   };
-  const reachedTrackEnd = () => {
-    $songPlaying = false;
-    // console.log("reachedTrackEnd");
-    $songsPlayed = [...$songsPlayed, $songsQueued[0]];
-    $songsQueued = $songsQueued.slice(1);
-    if ($songsQueued.length === 0) {
-      // console.log("nothing remaining in queue");
-      endPlayer();
-    }
-  };
 
   // click handlers
   function endPlayer() {
@@ -94,31 +87,24 @@
       paused = true;
     }
   }
-  // todo - USING DOLLAR SYMBOL TO READ AND UPDATE STATE
+
   function handleForward() {
-    if ($songsQueued.length < 2) {
-      // console.log("forward Failed");
-
-      return addToast({
-        type: "info",
-        dismissable: true,
-        message: "No songs remaining",
-        timeout: 3000,
-      });
-    }
-
     // console.log("forward Succeeded");
     $songPlaying = false;
-    //! This code is ran in 2 places here in this file. should be considered
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
     $songsQueued = $songsQueued.slice(1);
+    URL.revokeObjectURL(audioBind.src);
+    if ($songsQueued.length === 0) {
+      // console.log("nothing remaining in queue");
+      endPlayer();
+    }
   }
+
   // Correct way of handling state
   function handleBack() {
     if ($songsPlayed.at(-1)) {
       $songPlaying = false;
       songsQueued.update((songs) => {
-        songs.shift();
         // using OR gate here to stop TS lint.
         songs.unshift($songsPlayed.at(-1) || "");
         return songs;
@@ -152,7 +138,9 @@
     volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
   }
 
-  $: if (time === duration) reachedTrackEnd();
+  $: if (time === duration) handleForward();
+  //todo - Here will be the same, so when songsQueued is coded to object[] pass _.songurl (or better naming).
+  //? This code is important, as it listens for state changes and downloads + plays the song.
   $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
 </script>
 
@@ -251,7 +239,6 @@
                 <Icon src={Minus} />
               </span>
             </button>
-
             <p style="text-align: center;">{(volume * 10).toFixed(1)}</p>
             <button
               class="player-button"
@@ -305,7 +292,7 @@
   @media only screen and (min-width: 1024px) {
     .player-wrapper {
       font-size: 1rem;
-      padding: 0 0.5rem;
+      padding: 0.25rem 0.5rem;
       margin-left: 250px;
       width: calc(100% - 250px);
     }
@@ -405,7 +392,7 @@
       width: 2.5rem;
     }
     .volume-icon {
-      width: 2rem;
+      width: 1.5rem;
     }
   }
 
