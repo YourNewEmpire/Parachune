@@ -1,12 +1,18 @@
 <script lang="ts">
   import { Icon, Bars3CenterLeft } from "svelte-hero-icons";
-  import { songsQueued } from "$lib/stores";
+  import { addToast, songsQueued } from "$lib/stores";
   import tooltip from "./utils/tooltip";
 
   export let songUrl: string;
 
   const addToQueue = (newUrl: string) => {
     $songsQueued = [...$songsQueued, newUrl];
+    addToast({
+      timeout: 2000,
+      dismissable: true,
+      message: "Added a song to queue",
+      type: "info",
+    });
   };
 </script>
 
