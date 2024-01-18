@@ -5,6 +5,7 @@
   import AvatarIcon from "$lib/avataricon.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
   import Songcard from "$lib/songcard.svelte";
+  import Albumimage from "$lib/albumimage.svelte";
 
   export let data: PageData;
   let { artistProfile, stripeReady } = data;
@@ -91,7 +92,7 @@
     <div class="card-container">
       {#each artistProfile.albums ?? [] as album}
         <a href="/albums/{album.id}" class="link-card col-container">
-          <!-- <AvatarIcon altText={album.title} size={10} url={album.image_url} /> -->
+          <Albumimage altText={album.title} size={10} url={album.image_url} />
           <h1>{album.title}</h1>
         </a>
       {/each}

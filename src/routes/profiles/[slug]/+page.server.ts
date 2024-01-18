@@ -12,7 +12,7 @@ export const load: PageServerLoad = async ({
 
   const { data: artistProfile, error: profileError } = await supabase
     .from("profiles")
-    .select(`*, albums(*), songs(*)`)
+    .select(`*, albums(title, id, image_url), songs(*)`)
     .eq("id", params.slug)
     .not("username", "is", "null")
     .single();
