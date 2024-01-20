@@ -184,27 +184,20 @@
               <Icon src={Backward} />
             </span>
           </button>
-          {#if paused}
-            <button
-              class="player-button"
-              use:tooltip={{ content: "Play" }}
-              on:click={handlePause}
-            >
-              <span class="main-icon">
+          <button
+            class="player-button"
+            use:tooltip={{ content: "Play" }}
+            on:click={() => (paused ? audioBind.play() : audioBind.pause())}
+          >
+            <span class="main-icon">
+              {#if paused}
                 <Icon src={Play} />
-              </span>
-            </button>
-          {:else}
-            <button
-              class="player-button"
-              use:tooltip={{ content: "Pause" }}
-              on:click={handlePause}
-            >
-              <span class="main-icon">
+              {:else}
                 <Icon src={Pause} />
-              </span>
-            </button>
-          {/if}
+              {/if}
+            </span>
+          </button>
+
           <button
             class="player-button"
             use:tooltip={{ content: "Forward" }}
@@ -262,6 +255,7 @@
       autoplay
       bind:this={audioBind}
       bind:volume
+      bind:paused
       bind:currentTime={time}
       bind:duration
     >
