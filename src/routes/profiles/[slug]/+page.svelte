@@ -57,7 +57,7 @@
         <AvatarIcon
           altText={artistProfile.username ?? ""}
           url={artistProfile.avatar_url ?? ""}
-          size={15}
+          size={10}
         />
         <h1>{artistProfile.username}</h1>
       </article>
@@ -112,7 +112,7 @@
     align-items: center;
     justify-content: center;
     & h1 {
-      font-size: 2rem;
+      font-size: 1.5rem;
     }
   }
 </style>
