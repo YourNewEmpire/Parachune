@@ -13,8 +13,8 @@
 <div>
   <h1>
     {song.name} by
-    <a href="/profiles/{song.profiles.id}" class="styled-link">
-      {song.profiles.username}
+    <a href="/profiles/{song.profiles?.id}" class="styled-link">
+      {song.profiles?.username}
     </a>
   </h1>
   <section class="grid-1">
@@ -31,22 +31,21 @@
 
       <p>Song/Album photo coming soon with albums</p>
       <article class="row-container">
-        <Playbutton songUrl={song.song_url} />
-
-        <Queuebutton songUrl={song.song_url} />
-
-        <Savebutton songId={song.id} songUrl={song.song_url} />
+        <Playbutton songUrl={song.song_url ?? ""} />
+        <Queuebutton songUrl={song.song_url ?? ""} />
+        <Savebutton songId={song.id} songUrl={song.song_url ?? ""} />
       </article>
     </article>
     <article class="card">
-      <a href="/profiles/{song.profiles.id}">
-        <AvatarIcon
-          altText={song.profiles.username}
-          size={5}
-          url={song.profiles.avatar_url}
-        />
-      </a>
-      <p>"{song.description}"</p>
+      <AvatarIcon
+        altText={song.profiles?.username ?? "No avatar"}
+        size={5}
+        url={song.profiles?.avatar_url ?? ""}
+      />
+
+      <p>
+        "{song.lyrics ?? "No lyrics for this one."}"
+      </p>
     </article>
   </section>
 </div>

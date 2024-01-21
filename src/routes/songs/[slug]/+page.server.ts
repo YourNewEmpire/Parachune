@@ -1,23 +1,6 @@
 import { error, redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-type SongRow = {
-  artist_id: string | null;
-  created_at: string | null;
-  id: number;
-  name: string | null;
-  song_url: string | null;
-  description: string | null;
-  lyrics: string | null;
-  profiles: {
-    avatar_url: string;
-    username: string;
-    id: number;
-  };
-  likes: number;
-  isLiked: boolean | "unset";
-};
-
 export const load: PageServerLoad = async ({
   locals: { supabase },
   params,
@@ -37,7 +20,6 @@ export const load: PageServerLoad = async ({
     });
   }
 
-  let song: SongRow | any = { ...songData };
   const { profile, session } = await parent();
-  return { song, profile, session };
+  return { song: songData, profile, session };
 };
