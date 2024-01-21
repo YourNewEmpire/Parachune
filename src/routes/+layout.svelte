@@ -65,8 +65,8 @@
 
     background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     position: fixed;
     /* z-index usage is up to you.. although there is no need of using it because the default stack context will work. */
     z-index: 0;
