@@ -20,7 +20,7 @@
   let volumeScrubBind: HTMLInputElement;
   let time = 0;
   let volume = 0.2;
-  let paused = false;
+  let paused: boolean;
   let duration: number;
   // Not sure if this is needed after songPlaying was added
   let isOpen: boolean;
@@ -186,7 +186,7 @@
           </button>
           <button
             class="player-button"
-            use:tooltip={{ content: "Play" }}
+            use:tooltip={{ content: paused ? "Play" : "Pause" }}
             on:click={() => (paused ? audioBind.play() : audioBind.pause())}
           >
             <span class="main-icon">
