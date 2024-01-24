@@ -49,14 +49,14 @@
       if (!songError) {
         audioBind.src = URL.createObjectURL(songData);
         audioBind.load();
+        //TODO - need to track paused to not autoplay tracks when user is going forward or back
         audioBind.play();
         $songPlaying = true;
-        paused = false;
       }
     } catch (e) {
       isOpen = false;
       $songPlaying = false;
-      paused = true;
+
       console.log(e);
       addToast({
         type: "warning",
@@ -69,35 +69,34 @@
 
   // click handlers
   function endPlayer() {
-    audioBind.pause();
-    audioBind.currentTime = 0;
     isOpen = false;
+    audioBind.currentTime = 0;
+    audioBind.src = "";
+    // Set paused to false to reset, so that when the player opens again its autoplaying
     $songPlaying = false;
-    paused = true;
     $songsQueued = [];
     $songsPlayed = [];
   }
 
-  function handlePause() {
-    if (audioBind.paused) {
-      audioBind.play();
-      paused = false;
+  function trackEnded() {
+    if ($songsQueued.length === 0) {
+      // console.log("nothing remaining in queue");
+      endPlayer();
     } else {
-      audioBind.pause();
-      paused = true;
+      handleForward();
     }
   }
 
   function handleForward() {
+    if ($songsQueued.length <= 1) {
+      // console.log("nothing remaining in queue");
+      return;
+    }
     // console.log("forward Succeeded");
     $songPlaying = false;
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
     $songsQueued = $songsQueued.slice(1);
     URL.revokeObjectURL(audioBind.src);
-    if ($songsQueued.length === 0) {
-      // console.log("nothing remaining in queue");
-      endPlayer();
-    }
   }
 
   // Correct way of handling state
@@ -138,7 +137,7 @@
     volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
   }
 
-  $: if (time === duration) handleForward();
+  $: if (time === duration) trackEnded();
   //todo - Here will be the same, so when songsQueued is coded to object[] pass _.songurl (or better naming).
   //? This code is important, as it listens for state changes and downloads + plays the song.
   $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
@@ -177,6 +176,7 @@
         <div class="play-buttons">
           <button
             class="player-button"
+            disabled={$songsPlayed.length >= 1 ? false : true}
             use:tooltip={{ content: "Backward" }}
             on:click={handleBack}
           >
@@ -200,6 +200,7 @@
 
           <button
             class="player-button"
+            disabled={$songsQueued.length > 1 ? false : true}
             use:tooltip={{ content: "Forward" }}
             on:click={handleForward}
           >
@@ -252,7 +253,6 @@
     </div>
 
     <audio
-      autoplay
       bind:this={audioBind}
       bind:volume
       bind:paused
@@ -356,6 +356,10 @@
   .player-button:hover {
     background-color: var(--primary-color);
     box-shadow: 0px 0px 8px var(--primary-color);
+  }
+  .player-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
   .main-icon {
     width: 2rem;
