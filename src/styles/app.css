@@ -125,7 +125,7 @@ button:hover {
   font-family: "Sono", sans-serif;
   display: flex;
   flex-direction: row;
-  column-gap: 6px;
+  column-gap: 0.2rem;
   align-items: center;
   justify-content: center;
   padding: 0.5rem 0.5rem;
@@ -136,8 +136,7 @@ button:hover {
   cursor: pointer;
   border-radius: 0.75rem;
   transition: all 0.3s ease;
-  border: 2px solid var(--primary-color);
-  opacity: 1;
+  border: 0.1rem solid var(--primary-color);
   font-weight: 700;
 }
 
@@ -183,33 +182,27 @@ button:hover {
 
 /* SCROLLBAR STYLES */
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 1rem;
   background-color: black;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-corner {
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 10px;
+  border-radius: 0.75rem;
+  background: #846fa0;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #846fa0;
+  background: var(--primary-color);
 }
+
+/* INPUT RANGE STYLES */
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
-  height: 7px;
+  height: 0.5rem;
   background: rgba(85, 76, 114, 0.646);
-  border-radius: 5px;
+  border-radius: 0.5rem;
   background-image: linear-gradient(#856bdc, black);
   background-size: 0% 100%;
   background-repeat: no-repeat;
@@ -217,12 +210,22 @@ input[type="range"] {
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 16px;
-  width: 16px;
+  border: none;
+  height: 1rem;
+  width: 1rem;
   border-radius: 50%;
-  background: #856bdc;
-  cursor: ew-resize;
-  box-shadow: 0 0 2px 0 #555;
+  background: var(--primary-color);
+  box-shadow: 0 0 0.2rem 0 #555;
+  cursor: pointer;
+}
+input[type="range"]::-moz-range-thumb {
+  border: none;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  background: var(--primary-color);
+  box-shadow: 0 0 0.2rem 0 #555;
+  cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
