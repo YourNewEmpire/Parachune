@@ -80,7 +80,9 @@
     <h1>Music:</h1>
     <div class="card-container">
       {#each artistProfile.songs ?? [] as song}
-        <Songcard {song} />
+        <Songcard
+          song={{ ...song, profiles: { username: artistProfile.username } }}
+        />
       {/each}
     </div>
     {#if !artistProfile.songs}
