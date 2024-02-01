@@ -4,7 +4,7 @@
 
   export let data: PageData;
 
-  let { savedSongs } = data;
+  let { savedSongs, profile } = data;
 </script>
 
 <div>
@@ -13,7 +13,10 @@
     {#if savedSongs}
       {#each savedSongs as saved}
         {#if saved.song}
-          <Songcard unSave={true} song={saved.song} />
+          <Songcard
+            unSave={true}
+            song={{ ...saved.song, profiles: { username: profile?.username } }}
+          />
         {:else}
           <p>No song. skeleton needed here</p>
         {/if}
