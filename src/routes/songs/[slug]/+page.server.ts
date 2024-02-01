@@ -8,9 +8,7 @@ export const load: PageServerLoad = async ({
 }) => {
   const { data: songData, error: songDataErr } = await supabase
     .from("songs")
-    .select(
-      `artist_id, name, description, lyrics, song_url, created_at, id, profiles (id, avatar_url, username)`
-    )
+    .select(`*, profiles (id, avatar_url, username)`)
     .eq("id", params.slug)
     .single();
 

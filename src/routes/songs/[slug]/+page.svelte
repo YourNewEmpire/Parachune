@@ -8,6 +8,13 @@
 
   export let data: PageData;
   let { song } = data;
+  let songPlayerData = {
+    artistId: song.artist_id ?? "",
+    artistName: song.profiles?.username ?? "",
+    id: song.id,
+    name: song.name ?? "",
+    songUrl: song.song_url ?? "",
+  };
 </script>
 
 <div>
@@ -31,8 +38,8 @@
 
       <p>Song/Album photo coming soon with albums</p>
       <article class="row-container">
-        <Playbutton songUrl={song.song_url ?? ""} />
-        <Queuebutton songUrl={song.song_url ?? ""} />
+        <Playbutton songData={songPlayerData} />
+        <Queuebutton songData={songPlayerData} />
         <Savebutton songId={song.id} songUrl={song.song_url ?? ""} />
       </article>
     </article>
