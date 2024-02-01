@@ -25,22 +25,45 @@
   // Not sure if this is needed after songPlaying was added
   let isOpen: boolean;
 
-  /*  understand how to revokeObjectURL to save memory 
-  
+  //object url cache for previous songs
+  type objUrlType = {
+    songUrl: string;
+    objUrl: string;
+  };
+  let objUrlArr = new Array<objUrlType>(5);
+  objUrlArr.splice(0, 5);
+
+  /*
+    Download function runs when songsQueued state is changed, 
+    either by playbutton.svelte, queuebutton.svelte or handleForward and handleBack functions in this comp.
+    Playbutton sets $songPlaying to false, so the function passes on line 47 and loads new audio
   */
   const downloadSong = async (url: string | undefined) => {
-    // console.log("start dl");
-    // console.log($songsQueued);
     if (!url) {
       // console.log("no url");
       return;
     }
-    //
+
     if ($songPlaying) {
       // console.log("already playing");
       return;
     }
-
+    // If the audio element is binded then the player is being used so...
+    // Want to reset time & src before loading next song, so that the scrubBind thumb is moved back.
+    if (audioBind) {
+      audioBind.currentTime = 0;
+      audioBind.src = "";
+    }
+    //? Check objUrlArr variable for the url passed to this function.
+    const foundObjUrl = objUrlArr.find((el) => el.songUrl === url);
+    if (foundObjUrl?.songUrl) {
+      audioBind.src = foundObjUrl.objUrl;
+      audioBind.load();
+      //TODO - need to track paused to not autoplay tracks when user is going forward or back
+      audioBind.play();
+      $songPlaying = true;
+      return;
+    }
     try {
       isOpen = true;
       const { data: songData, error: songError } = await sClient.storage
@@ -52,11 +75,19 @@
         //TODO - need to track paused to not autoplay tracks when user is going forward or back
         audioBind.play();
         $songPlaying = true;
+        if (objUrlArr.length === 5) {
+          let removed = objUrlArr.shift();
+          if (removed) {
+            URL.revokeObjectURL(removed?.objUrl);
+          }
+          objUrlArr.push({ objUrl: audioBind.src, songUrl: url });
+        } else {
+          objUrlArr.push({ objUrl: audioBind.src, songUrl: url });
+        }
       }
     } catch (e) {
       isOpen = false;
       $songPlaying = false;
-
       console.log(e);
       addToast({
         type: "warning",
@@ -72,15 +103,22 @@
     isOpen = false;
     audioBind.currentTime = 0;
     audioBind.src = "";
-    // Set paused to false to reset, so that when the player opens again its autoplaying
     $songPlaying = false;
     $songsQueued = [];
     $songsPlayed = [];
+    //? loop through and revoke objUrl
+    objUrlArr.forEach((obj, i) => {
+      if (obj.objUrl) {
+        URL.revokeObjectURL(obj.objUrl);
+      }
+    });
+    objUrlArr.splice(0, 5);
   }
 
   function trackEnded() {
     if ($songsQueued.length === 0) {
       // console.log("nothing remaining in queue");
+
       endPlayer();
     } else {
       handleForward();
@@ -93,21 +131,20 @@
       return;
     }
     // console.log("forward Succeeded");
+
     $songPlaying = false;
+
     $songsPlayed = [...$songsPlayed, $songsQueued[0]];
     $songsQueued = $songsQueued.slice(1);
-    URL.revokeObjectURL(audioBind.src);
   }
 
-  // Correct way of handling state
   function handleBack() {
     if ($songsPlayed.at(-1)) {
       $songPlaying = false;
-      songsQueued.update((songs) => {
-        // using OR gate here to stop TS lint.
-        songs.unshift($songsPlayed.at(-1) || "");
-        return songs;
-      });
+      //@ts-ignore
+      $songsQueued = [$songsPlayed.at(-1), ...$songsQueued];
+
+      // Remove the song that was added to songsQueued
       songsPlayed.update((songs) => {
         songs.pop();
         return songs;
@@ -131,16 +168,19 @@
 
     return `${minutes}:${seconds}`;
   }
-
+  $: if (volumeScrubBind) {
+    volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
+  }
   $: if ($songPlaying == true) {
     scrubBind.style.backgroundSize = (time * 100) / duration - 0 + "% 100%";
-    volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
+  } else if (scrubBind) {
+    scrubBind.style.backgroundSize = "0% 100%";
   }
 
   $: if (time === duration) trackEnded();
   //todo - Here will be the same, so when songsQueued is coded to object[] pass _.songurl (or better naming).
   //? This code is important, as it listens for state changes and downloads + plays the song.
-  $: if ($songsQueued.length > 0) downloadSong($songsQueued[0]);
+  $: if ($songsQueued.length > 0) downloadSong($songsQueued[0].songUrl);
 </script>
 
 {#if isOpen}
@@ -153,6 +193,7 @@
       <div class="scrub">
         <p>{formatTime(time)}</p>
         <input
+          disabled={!$songPlaying}
           type="range"
           bind:this={scrubBind}
           bind:value={time}
@@ -212,6 +253,7 @@
         <div class="volume">
           <article class="volume-control">
             <input
+              disabled={!$songPlaying}
               type="range"
               bind:this={volumeScrubBind}
               bind:value={volume}
