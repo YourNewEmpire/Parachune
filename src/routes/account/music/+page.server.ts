@@ -1,10 +1,11 @@
-import { fail, redirect } from "@sveltejs/kit";
-import type { Actions, PageServerLoad } from "./$types";
+import { redirect } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
 
 export const prerender = false;
 
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
+  parent,
 }) => {
   const session = await getSession();
   if (!session) {
@@ -15,8 +16,6 @@ export const load: PageServerLoad = async ({
     .from("songs")
     .select("*")
     .eq("artist_id", session.user.id);
-  //@ts-ignore
-  //? So hard to type the data from supabase db fetch. Need help tbh.
-
-  return { session, dbData };
+  const { profile } = await parent();
+  return { session, profile, dbData };
 };
