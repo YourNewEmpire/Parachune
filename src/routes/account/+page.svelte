@@ -142,7 +142,7 @@
         </article>
       {:else}
         <article
-          style="display: flex; flex-direction: row; align-items: center;"
+          style="display: flex; flex-direction: column; align-items: center;"
         >
           <Stripeicon />
           <p>
@@ -180,7 +180,7 @@
     display: grid;
     grid-template-columns: 50% 50%;
     width: 100%;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .col-span-full {
