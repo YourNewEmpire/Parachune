@@ -3,6 +3,7 @@
   import Queuebutton from "$lib/queuebutton.svelte";
   import Savebutton from "$lib/savebutton.svelte";
   import { Icon, MusicalNote } from "svelte-hero-icons";
+
   type Song = {
     album_id: string;
     artist_id: string | null;
@@ -12,9 +13,20 @@
     lyrics: string | null;
     name: string | null;
     song_url: string | null;
+    profiles: {
+      username: string | null;
+    } | null;
   };
+
   export let song: Song;
   export let unSave: boolean = false;
+  let songPlayerData = {
+    artistId: song.artist_id ?? "",
+    artistName: song.profiles?.username ?? "",
+    id: song.id,
+    name: song.name ?? "",
+    songUrl: song.song_url ?? "",
+  };
 </script>
 
 <div class="song-card-container">
@@ -27,8 +39,8 @@
     </a>
   </article>
   <article class="song-buttons">
-    <Playbutton songUrl={song.song_url ?? ""} />
-    <Queuebutton songUrl={song.song_url ?? ""} />
+    <Playbutton songData={songPlayerData} />
+    <Queuebutton songData={songPlayerData} />
     <Savebutton {unSave} songUrl={song.song_url ?? ""} songId={song.id ?? ""} />
   </article>
 </div>
