@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({
     .select("*", { count: "exact", head: true });
   const { data: songList, error: songErr } = await supabase
     .from("songs")
-    .select("*")
+    .select("*, profiles(username)")
     .order("created_at", { ascending: false })
     .range(skip, limit - 1);
   const { profile, session } = await parent();
