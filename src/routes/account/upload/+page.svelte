@@ -70,7 +70,7 @@
 
 <section>
   <h1>Upload a song or create an album</h1>
-  <div style="display: flex; justify-content: center; gap: 2em;">
+  <div style="display: flex; justify-content: center; gap: 1rem;">
     <form
       enctype="multipart/form-data"
       class="input-group card"
@@ -101,12 +101,9 @@
           <!-- todo - MAP OVER ALBUMS FROM DATA AND RENDER -->
         </select>
       </div>
-
-      <span style="color: red;">{uploadFormMsg ?? ""}</span>
-
       <button
         class="styled-button"
-        style="font-family: Sono, sans-serif;"
+        style="font-family: Sono, sans-serif; margin-top: auto;"
         disabled={loading}
         type="submit"
       >
@@ -144,10 +141,9 @@
         </article>
       </div>
 
-      <span style="color: red;">{albumFormMsg ?? ""}</span>
       <button
         class="styled-button"
-        style="font-family: Sono, sans-serif;"
+        style="font-family: Sono, sans-serif; margin-top: auto;"
         disabled={loading}
         type="submit">Upload</button
       >
@@ -171,7 +167,7 @@
     align-items: center;
     background-color: white;
     padding: 0.5em 0.5em;
-    font-size: 2em;
+    font-size: 1.5em;
     cursor: pointer;
     transition: all 0.1s ease;
     border-radius: 0.5em;
