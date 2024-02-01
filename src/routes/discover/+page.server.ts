@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({
 }) => {
   const { data: songData, error: songError } = await supabase
     .from("songs")
-    .select("*")
+    .select("*, profiles(username)")
     .range(0, 4);
 
   const { data: profileData, error: profileError } = await supabase
