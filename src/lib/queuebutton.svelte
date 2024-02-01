@@ -2,11 +2,12 @@
   import { Icon, Bars3CenterLeft } from "svelte-hero-icons";
   import { addToast, songsQueued } from "$lib/stores";
   import tooltip from "./utils/tooltip";
+  import { type StoreSong } from "$lib/stores";
 
-  export let songUrl: string;
+  export let songData: StoreSong;
 
-  const addToQueue = (newUrl: string) => {
-    $songsQueued = [...$songsQueued, newUrl];
+  const addToQueue = () => {
+    $songsQueued = [...$songsQueued, songData];
     addToast({
       timeout: 2000,
       dismissable: true,
@@ -20,7 +21,7 @@
   <button
     class="styled-button"
     use:tooltip={{ content: "Add To Queue" }}
-    on:click={() => addToQueue(songUrl)}
+    on:click={addToQueue}
   >
     <Icon style="width: 2rem;" src={Bars3CenterLeft} />
   </button>
