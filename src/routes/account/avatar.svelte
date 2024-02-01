@@ -1,4 +1,3 @@
-
 <script lang="ts">
   import AvatarIcon from "$lib/avataricon.svelte";
   import type { SupabaseClient } from "@supabase/supabase-js";
@@ -42,10 +41,10 @@
 </script>
 
 <div
-  style="display: flex; flex-direction: column; row-gap: 12px; align-items: center; "
+  style="display: flex; flex-direction: column; row-gap: 0.5rem; align-items: center; "
 >
   {#if url}
-    <AvatarIcon altText="Your Avatar" size={10} bind:url />
+    <AvatarIcon altText="Your Avatar" {size} bind:url />
   {:else}
     <div
       class="avatar no-image"
