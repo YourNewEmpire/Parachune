@@ -10,9 +10,11 @@
     XCircle,
     Plus,
     Minus,
+    EyeSlash,
   } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import tooltip from "./utils/tooltip";
+  import Playerdisc from "./playerdisc.svelte";
 
   export let sClient: SupabaseClient;
   let audioBind: HTMLAudioElement;
@@ -23,7 +25,7 @@
   let paused: boolean;
   let duration: number;
   // Not sure if this is needed after songPlaying was added
-  let isOpen: boolean;
+  let isOpen: boolean = true;
 
   //object url cache for previous songs
   type objUrlType = {
@@ -203,7 +205,7 @@
         <p>{formatTime(duration)}</p>
       </div>
       <div class="buttons-grid">
-        <div>
+        <div class="song-details">
           <button
             use:tooltip={{ content: "Close and Clear Queue" }}
             class="player-button"
@@ -213,6 +215,15 @@
               <Icon src={XCircle} />
             </span>
           </button>
+          <button
+            use:tooltip={{ content: "Hide Player (coming soon)" }}
+            class="player-button"
+          >
+            <span class="main-icon">
+              <Icon src={EyeSlash} />
+            </span>
+          </button>
+          <Playerdisc />
         </div>
         <div class="play-buttons">
           <button
@@ -348,9 +359,15 @@
 
   .buttons-grid {
     display: grid;
-    grid-template-columns: 30% 40% 30%;
+    grid-template-columns: 25% 50% 25%;
     justify-content: center;
     align-items: center;
+  }
+  .song-details {
+    /* border: 0.2rem solid blue; */
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.5rem;
   }
   .play-buttons {
     display: flex;
@@ -362,6 +379,7 @@
   .volume {
     gap: 0.3rem;
     display: flex;
+    font-size: 1.25rem;
     flex-direction: column;
   }
   .volume-control {
