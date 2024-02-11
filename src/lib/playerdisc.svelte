@@ -1,107 +1,72 @@
-<script>
+<script lang="ts">
   import Disc from "svelte-bootstrap-icons/lib/Disc.svelte";
+  import { songsQueued } from "$lib/stores";
+  export let paused: Boolean;
 </script>
 
 <div>
-  <button>
+  <span style:animation-play-state={paused === false ? "running" : "paused"}>
     <Disc class="disc-icon" />
-  </button>
+  </span>
+
   <article>
-    <a class="text-ellipsis" style="max-width: 18ch;" href="/">
-      album tester #1
+    <a class="styled-link" href="/songs/{$songsQueued[0].id}">
+      {$songsQueued[0]?.name}
     </a>
-    <a class="text-ellipsis" style="max-width: 16ch;" href="/profiles">
-      ExampleProfile
+    <a class="styled-link" href="/profiles/{$songsQueued[0].artistId}">
+      {$songsQueued[0]?.artistName}
     </a>
   </article>
 </div>
 
 <style>
   div {
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.2rem;
   }
-  button {
-    border: none;
-    background-color: none;
+
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    overflow: hidden;
+    font-size: 0.5rem;
+    max-width: 100%;
+  }
+
+  a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    animation: spin 2s linear infinite;
+    animation-play-state: paused;
+  }
+
+  :global(.disc-icon) {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0.1rem 0.1rem;
-    color: inherit;
-  }
-
-  :global(.disc-icon) {
-    width: 100%;
+    width: 1rem;
     height: 100%;
-    transition: transform 0.2s ease;
-    transform: rotate(0deg);
   }
-  div:hover :global(.disc-icon),
-  div:focus :global(.disc-icon) {
-    transition: transform 0.5s ease;
-    transform: rotate(360deg);
-  }
-  @media only screen and (min-width: 768px) {
-    :global(.disc-icon) {
-      width: 2.5rem;
+  @media only screen and (min-width: 500px) {
+    article {
+      font-size: 1rem;
     }
-    button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 0.5rem;
-      background: none;
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
+    :global(.disc-icon) {
+      width: 1.5rem;
     }
   }
   @media only screen and (min-width: 1024px) {
-    button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 0.5rem;
-      background: none;
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
+    article {
+      gap: 0.5rem;
     }
-  }
-  article {
-    border: 1px solid red;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    visibility: hidden;
-    opacity: 0;
-    top: 25%;
-    left: 100%;
-    transition: all 0.1s ease;
-    transform: translateY(100%);
-    -webkit-transition: all 0.1s ease;
-    -ms-transition: all 0.1s ease;
-    -o-transition: all 0.1s ease;
-    -moz-transition: all 0.1s ease;
-  }
-  div:hover,
-  div:focus,
-  div:hover > article,
-  div:focus > article,
-  div:focus-within > article,
-  button:hover + article,
-  button:focus + article {
-    transition: all 0.3s ease;
-    -webkit-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(0);
   }
   @-moz-keyframes spin {
     from {

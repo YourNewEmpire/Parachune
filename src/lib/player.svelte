@@ -15,6 +15,8 @@
   import type { SupabaseClient } from "@supabase/supabase-js";
   import tooltip from "./utils/tooltip";
   import Playerdisc from "./playerdisc.svelte";
+  import VolumeUp from "svelte-bootstrap-icons/lib/VolumeUp.svelte";
+  import VolumeMute from "svelte-bootstrap-icons/lib/VolumeMute.svelte";
 
   export let sClient: SupabaseClient;
   let audioBind: HTMLAudioElement;
@@ -25,7 +27,7 @@
   let paused: boolean;
   let duration: number;
   // Not sure if this is needed after songPlaying was added
-  let isOpen: boolean = true;
+  let isOpen: boolean;
 
   //object url cache for previous songs
   type objUrlType = {
@@ -206,24 +208,28 @@
       </div>
       <div class="buttons-grid">
         <div class="song-details">
-          <button
-            use:tooltip={{ content: "Close and Clear Queue" }}
-            class="player-button"
-            on:click={endPlayer}
-          >
-            <span class="main-icon">
-              <Icon src={XCircle} />
-            </span>
-          </button>
-          <button
-            use:tooltip={{ content: "Hide Player (coming soon)" }}
-            class="player-button"
-          >
-            <span class="main-icon">
-              <Icon src={EyeSlash} />
-            </span>
-          </button>
-          <Playerdisc />
+          <div>
+            <Playerdisc {paused} />
+          </div>
+          <div class="song-details-buttons">
+            <button
+              use:tooltip={{ content: "Close and Clear Queue" }}
+              class="player-button"
+              on:click={endPlayer}
+            >
+              <span class="song-details-icon">
+                <Icon src={XCircle} />
+              </span>
+            </button>
+            <button
+              use:tooltip={{ content: "Hide Player (coming soon)" }}
+              class="player-button"
+            >
+              <span class="song-details-icon">
+                <Icon src={EyeSlash} />
+              </span>
+            </button>
+          </div>
         </div>
         <div class="play-buttons">
           <button
@@ -263,6 +269,15 @@
         </div>
         <div class="volume">
           <article class="volume-control">
+            {#if volume === 0}
+              <button class="default-button" on:click={() => (volume = 0)}>
+                <VolumeMute />
+              </button>
+            {:else}
+              <button class="default-button" on:click={() => (volume = 0)}>
+                <VolumeUp />
+              </button>
+            {/if}
             <input
               disabled={!$songPlaying}
               type="range"
@@ -274,6 +289,7 @@
           </article>
           <article class="volume-increment">
             <button
+              disabled={!$songPlaying}
               class="player-button"
               on:click={() => {
                 if (volume - 0.1 >= 0) {
@@ -286,8 +302,8 @@
                 <Icon src={Minus} />
               </span>
             </button>
-            <p style="text-align: center;">{(volume * 10).toFixed(1)}</p>
             <button
+              disabled={!$songPlaying}
               class="player-button"
               on:click={() => {
                 if (volume + 0.1 <= 1) {
@@ -312,7 +328,6 @@
       bind:currentTime={time}
       bind:duration
     >
-      <source type="audio/mp3" />
       Your browser does not support the audio element.
     </audio>
   </section>
@@ -363,39 +378,44 @@
     justify-content: center;
     align-items: center;
   }
+
   .song-details {
-    /* border: 0.2rem solid blue; */
     display: flex;
-    flex-direction: row;
-    column-gap: 0.5rem;
+    flex-direction: column;
+    gap: 0.25rem;
   }
+
+  .song-details-buttons {
+    display: flex;
+    gap: 0.1rem;
+  }
+
   .play-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    column-gap: 0.5rem;
+    column-gap: 0.25rem;
   }
+
   .volume {
     gap: 0.3rem;
     display: flex;
-    font-size: 1.25rem;
     flex-direction: column;
   }
+
   .volume-control {
     align-items: center;
     justify-content: center;
     display: flex;
-    width: 100%;
   }
 
   .volume-increment {
-    width: 100%;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.25rem;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 4fr 2fr 4fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   .player-button {
@@ -404,14 +424,14 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 0.1rem 0.1rem;
+    padding: 0.25rem 0.25rem;
     background: none;
     color: inherit;
     text-decoration: none;
     cursor: pointer;
     border-radius: 0.5rem;
     transition: all 0.3s ease;
-    border: 1px solid var(--primary-color);
+    border: 0.1rem solid var(--primary-color);
   }
   .player-button:hover {
     background-color: var(--primary-color);
@@ -421,6 +441,9 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+  .song-details-icon {
+    width: 1.25rem;
+  }
   .main-icon {
     width: 2rem;
   }
@@ -428,50 +451,30 @@
     width: 1.5rem;
   }
   @media only screen and (min-width: 768px) {
+    .play-buttons {
+      column-gap: 0.5rem;
+    }
     .player-button {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      padding: 0.5rem 0.5rem;
       background: none;
       color: inherit;
       text-decoration: none;
       cursor: pointer;
       border-radius: 0.75rem;
       transition: all 0.3s ease;
-      border: 2px solid var(--primary-color);
     }
     .player-button:hover {
       background-color: var(--primary-color);
-      box-shadow: 0px 0px 8px var(--primary-color);
+      box-shadow: 0px 0px 0.5rem var(--primary-color);
     }
     .main-icon {
       width: 2.5rem;
     }
     .volume-icon {
       width: 1.5rem;
-    }
-  }
-
-  @media only screen and (min-width: 1024px) {
-    .player-button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 0.5rem;
-      background: none;
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      border-radius: 0.75rem;
-      transition: all 0.3s ease;
-      border: 2px solid var(--primary-color);
-    }
-    .player-button:hover {
-      background-color: var(--primary-color);
-      box-shadow: 0px 0px 8px var(--primary-color);
     }
   }
 </style>
