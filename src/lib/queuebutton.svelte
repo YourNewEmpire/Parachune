@@ -11,7 +11,7 @@
     addToast({
       timeout: 2000,
       dismissable: true,
-      message: "Added a song to queue",
+      message: `Added ${songData.name} to queue`,
       type: "info",
     });
   };
