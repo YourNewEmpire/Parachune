@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { Icon, UserCircle } from "svelte-hero-icons";
-  import { onMount, tick } from "svelte";
+  import { onDestroy, onMount, tick } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { page } from "$app/stores";
 
@@ -40,6 +40,9 @@
       supabase = params.data.supabase;
     });
   });
+  onDestroy(() => {
+    if (imageUrl) URL.revokeObjectURL(imageUrl);
+  });
 </script>
 
 <div class="row-container">
@@ -50,7 +53,7 @@
       out:fade
       src={imageUrl}
       alt={altText}
-      style="box-shadow: 0 2px 8px #856bdc; width: {size}em; height: {size}em; "
+      style="box-shadow: 0 2px 8px #856bdc; width: {size}em; height: {size}em; object-fit: cover"
     />
   {:else}
     <div
