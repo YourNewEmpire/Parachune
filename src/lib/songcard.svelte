@@ -47,8 +47,8 @@
 
 <style>
   .song-card-container {
-    background-color: #9898ac;
-    box-shadow: 0px 0px 8px #856bdc;
+    background-color: var(--fg-color);
+    box-shadow: 0px 0px 0.5rem var(--primary-color);
     border-radius: 0.5rem;
     padding: 1rem 1rem;
     color: #000;
