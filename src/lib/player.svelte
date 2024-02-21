@@ -172,6 +172,7 @@
 
     return `${minutes}:${seconds}`;
   }
+
   $: if (volumeScrubBind) {
     volumeScrubBind.style.backgroundSize = (volume * 100) / 1 + "% 100%";
   }
@@ -347,13 +348,11 @@
     width: 100%;
     border-radius: 1rem 0px 0px 0px;
     background-color: #9898ac;
-    box-shadow: 0px 0px 6px #856bdc;
-    font-size: 0.75rem;
+    box-shadow: 0px 0px 0.5rem #856bdc;
   }
 
   @media only screen and (min-width: 1024px) {
     .player-wrapper {
-      font-size: 1rem;
       padding: 0.25rem 0.5rem;
       margin-left: 250px;
       width: calc(100% - 250px);
@@ -435,7 +434,7 @@
   }
   .player-button:hover {
     background-color: var(--primary-color);
-    box-shadow: 0px 0px 8px var(--primary-color);
+    box-shadow: 0px 0px 0.5rem var(--primary-color);
   }
   .player-button:disabled {
     opacity: 0.5;
