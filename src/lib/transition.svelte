@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { slide, fly, fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
 
   export let key: string;
   export let duration: number = 200;
