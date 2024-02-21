@@ -94,6 +94,22 @@ button:hover {
   font-size: 1em;
   font-family: "League Spartan";
 }
+.input-group textarea {
+  resize: none;
+  padding: 0.5em;
+  border-radius: 0.5rem;
+  font-family: "League Spartan";
+  font-size: 1em;
+  border: none;
+  transition: box-shadow 0.3s ease;
+  background: #ddd;
+}
+
+.input-group textarea:focus {
+  background: #fff;
+  outline: none;
+  box-shadow: 0px 0px 1rem var(--primary-color);
+}
 .input-item {
   display: flex;
   flex-direction: column;
@@ -103,17 +119,6 @@ button:hover {
 .icon {
   width: 1.5rem;
   height: 1.5rem;
-}
-
-.icon-button {
-  width: 3.5rem;
-  height: 3.5rem;
-  background: none;
-  border: none;
-  border-radius: 0.5rem;
-  color: inherit;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 .icon-button:hover {
