@@ -10,10 +10,10 @@
   </span>
 
   <article>
-    <a class="styled-link" href="/songs/{$songsQueued[0].id}">
+    <a class="styled-link" href="/songs/{$songsQueued[0]?.id}">
       {$songsQueued[0]?.name}
     </a>
-    <a class="styled-link" href="/profiles/{$songsQueued[0].artistId}">
+    <a class="styled-link" href="/profiles/{$songsQueued[0]?.artistId}">
       {$songsQueued[0]?.artistName}
     </a>
   </article>
