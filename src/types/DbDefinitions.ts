@@ -6,7 +6,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type Database = {
   public: {
     Tables: {
       albums: {
@@ -124,11 +124,12 @@ export interface Database {
           }
         ]
       }
-      "song comments": {
+      song_comments: {
         Row: {
           comment_text: string
           created_at: string | null
           id: number
+          private: boolean
           song_id: string
           user_id: string
         }
@@ -136,6 +137,7 @@ export interface Database {
           comment_text: string
           created_at?: string | null
           id?: number
+          private: boolean
           song_id: string
           user_id: string
         }
@@ -143,6 +145,7 @@ export interface Database {
           comment_text?: string
           created_at?: string | null
           id?: number
+          private?: boolean
           song_id?: string
           user_id?: string
         }
@@ -287,6 +290,23 @@ export interface Database {
           object: string
         }
         Returns: Record<string, unknown>
+      }
+      manage_comments: {
+        Args: {
+          action_type: string
+          comment_text_input: string
+          user_id_input: string
+          song_id_input: string
+          comment_id_input?: string
+          comment_private_input?: boolean
+        }
+        Returns: {
+          comment_text: string
+          user_id: string
+          song_id: string
+          comment_id: string
+          comment_private: boolean
+        }[]
       }
     }
     Enums: {
