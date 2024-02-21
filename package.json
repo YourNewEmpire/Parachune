@@ -30,6 +30,7 @@
   "dependencies": {
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.39.2",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "zod-form-data": "^2.0.2"
   }
 }
