@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
-  import { Icon, MagnifyingGlass, Home } from "svelte-hero-icons";
+  import { createEventDispatcher } from "svelte";
   import Login from "./login.svelte";
+  import House from "svelte-bootstrap-icons/lib/House.svelte";
+  import Globe from "svelte-bootstrap-icons/lib/Globe.svelte";
+
   import type { SupabaseClient } from "@supabase/supabase-js";
 
   const dispatch = createEventDispatcher();
@@ -18,12 +20,11 @@
 </script>
 
 <nav class="layout-nav-dark">
-  <a on:click={closeMenu} class="link" href="/"
-    ><Icon class="icon" src={Home} />Home
+  <a on:click={closeMenu} class="link" href="/"><House class="icon" />Home </a>
+  <a on:click={closeMenu} class="link" href="/discover">
+    <Globe class="icon" /> Discover
   </a>
-  <a on:click={closeMenu} class="link" href="/discover"
-    ><Icon class="icon" src={MagnifyingGlass} />Discover
-  </a>
+
   <article class="login-wrapper">
     <Login {supabase} {profile} {session} />
   </article>
@@ -38,17 +39,19 @@
     bottom: 0;
     left: 0;
     min-height: 100svh;
-    background-color: rgba(38, 30, 30, 1);
+
+    background-color: #261e1e;
     color: #ddd;
     font-weight: 600;
-    padding: 10px;
+    padding: 0.5rem;
+    /* padding: 0.625rem; */
     display: flex;
     flex-direction: column;
   }
   .link {
     display: flex;
     flex-direction: row;
-    gap: 0.5em;
+    gap: 0.5rem;
     color: inherit;
     text-decoration: none;
     align-items: center;
@@ -58,11 +61,11 @@
   }
   .link:hover {
     background-color: #856bdc;
-    box-shadow: 0px 0px 8px #856bdc;
+    box-shadow: 0px 0px 0.5rem #856bdc;
   }
   .link:focus {
     background-color: #856bdc;
-    box-shadow: 0px 0px 8px #856bdc;
+    box-shadow: 0px 0px 0.5rem #856bdc;
   }
   .login-wrapper {
     margin-top: auto;
