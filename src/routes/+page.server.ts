@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({ parent }) => {
   } else {
     message = `Welcome back ${
       profile?.username ?? session?.user.email
-    }. We are happy you're back here.`;
+    }. Good to see you.`;
   }
 
   return {
