@@ -65,7 +65,7 @@
         redirectTo: `${orig}/auth/callback?next=${pageUrl}`,
         scopes:
           provider === "google"
-            ? "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+            ? "openid https://www.googleapis.com/auth/userinfo.email"
             : "",
       },
     });
