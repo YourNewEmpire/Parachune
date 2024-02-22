@@ -12,15 +12,27 @@
 
   let { session, supabase, profile, stripeReady } = data;
   $: ({ session, supabase, profile, stripeReady } = data);
-  let profileForm: any;
+  //? form element binding to pass profileForm.requestSubmit to Avatar.svelte
+  let profileForm: HTMLFormElement;
   let loading = false;
   let fullName: string | null = profile?.full_name;
-  let username: string | null = profile?.username ?? "no username yet";
+  let username: string | null = profile?.username;
   let website: string | null = profile?.website;
   let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
 
-  const handleSubmit: SubmitFunction = () => {
+  const handleSubmit: SubmitFunction = ({ formData, cancel }) => {
     loading = true;
+    let uName = String(formData.get("username"));
+    if (uName?.length < 1) {
+      addToast({
+        type: "failure",
+        message: "Cancelled request, username not long enough",
+        timeout: 5000,
+        dismissable: true,
+      });
+      cancel();
+      loading = false;
+    }
     return async ({ result }) => {
       loading = false;
       if (result.type === "failure") {
