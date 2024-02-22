@@ -9,6 +9,7 @@
   import Player from "$lib/player.svelte";
   import ToastsParent from "$lib/toastsparent.svelte";
   import PageTransition from "$lib/transition.svelte";
+  import { addToast } from "$lib/stores";
   export let data: LayoutData;
 
   let { supabase, session, url, profile } = data;
@@ -40,9 +41,6 @@
         </section>
       </PageTransition>
     </main>
-    <!-- <div class="sidebar-wrapper">
-      <div class="sidebar" />
-    </div> -->
   </div>
   <Player sClient={supabase} />
 </div>
@@ -71,10 +69,6 @@
     /* z-index usage is up to you.. although there is no need of using it because the default stack context will work. */
     z-index: 0;
   }
-  .main {
-    color: #fff;
-    position: relative;
-  }
 
   .layout-grid {
     display: grid;
@@ -82,6 +76,11 @@
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+  }
+
+  .main {
+    color: #fff;
+    position: relative;
   }
 
   .slot-wrapper {
