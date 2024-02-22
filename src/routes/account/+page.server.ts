@@ -51,6 +51,10 @@ export const actions: Actions = {
     const avatarUrl = formData.get("avatarUrl") as string;
     const session = await getSession();
 
+    if (username.length < 1 || !session) {
+      return fail(400);
+    }
+    //@ts-ignore
     const { error } = await supabase.from("profiles").upsert({
       id: session?.user.id,
       full_name: fullName,
