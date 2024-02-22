@@ -1,13 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
-  import {
-    Icon,
-    ExclamationCircle,
-    CheckCircle,
-    InformationCircle,
-    ExclamationTriangle,
-  } from "svelte-hero-icons";
 
   const dispatch = createEventDispatcher();
 
@@ -40,6 +33,9 @@
   }
   button:focus {
     outline: none;
+  }
+  .warning {
+    background-color: rgba(242, 96, 5, 0.7);
   }
   .failure {
     background-color: rgba(255, 0, 0, 0.7);
