@@ -36,6 +36,16 @@
     return async ({ result }) => {
       loading = false;
       if (result.type === "failure") {
+        if (result.data?.isUsernameTaken) {
+          addToast({
+            type: result.type,
+            message:
+              "Failed! Username taken, try another or contact support about names",
+            timeout: 5000,
+            dismissable: true,
+          });
+          return;
+        }
         addToast({
           type: result.type,
           message: "Failed to update account, try again",

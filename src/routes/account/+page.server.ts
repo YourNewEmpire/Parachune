@@ -63,13 +63,14 @@ export const actions: Actions = {
       avatar_url: avatarUrl,
       updated_at: new Date(),
     });
-
     if (error) {
+      let isNameDuplicate = error.message.includes("duplicate");
       return fail(500, {
         fullName,
         username,
         website,
         avatarUrl,
+        isUsernameTaken: isNameDuplicate ? true : false,
       });
     }
 
