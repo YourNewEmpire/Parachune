@@ -9,7 +9,7 @@
   import { addToast } from "$lib/stores";
   import { enhance } from "$app/forms";
   import tooltip from "$lib/utils/tooltip";
-  import { invalidateAll } from "$app/navigation";
+  import Avataricon from "$lib/avataricon.svelte";
   export let data: PageData;
 
   let { song, session } = data;
@@ -84,14 +84,13 @@
           userComments = [result.data.newComment, ...userComments];
           insertTextarea.value = "";
           insertCheckbox.checked = false;
-        } else {
           addToast({
             dismissable: true,
-            message:
-              "Comment update succeeded but could not get information from server to update ui",
+            message: "Comment added",
             timeout: 5000,
-            type: "failure",
+            type: "success",
           });
+        } else {
         }
       } else {
         addToast({
@@ -200,43 +199,43 @@
 
   <section aria-labelledby="comments-heading">
     <h1 id="comments-heading">Comments</h1>
-
-    <article class="card">
-      <form
-        aria-label="Write a comment"
-        class="input-group"
-        use:enhance={handleSubmit}
-        action="?/insertComment"
-        method="post"
-      >
-        <textarea
-          bind:this={insertTextarea}
-          placeholder="Write your comment..."
-          rows="5"
-          name="comment_text"
-        />
-
-        <div
-          style="width: fit-content;"
-          use:tooltip={{
-            content: "Private to you and the artist",
-          }}
+    {#if session}
+      <article class="card">
+        <form
+          aria-label="Write a comment"
+          class="input-group"
+          use:enhance={handleSubmit}
+          action="?/insertComment"
+          method="post"
         >
-          <input
-            bind:this={insertCheckbox}
-            type="checkbox"
-            name="comment_private"
-            id="comment_private_id"
+          <textarea
+            bind:this={insertTextarea}
+            placeholder="Write your comment..."
+            rows="5"
+            name="comment_text"
           />
-          <label for="comment_private_id"> Set Private</label>
-        </div>
-        <input readonly hidden name="song_id" value={song.id} />
-        <button style="width:fit-content" class="styled-button" type="submit">
-          Submit Comment
-        </button>
-      </form>
-    </article>
 
+          <div
+            style="width: fit-content;"
+            use:tooltip={{
+              content: "Private to you and the artist",
+            }}
+          >
+            <input
+              bind:this={insertCheckbox}
+              type="checkbox"
+              name="comment_private"
+              id="comment_private_id"
+            />
+            <label for="comment_private_id"> Set Private</label>
+          </div>
+          <input readonly hidden name="song_id" value={song.id} />
+          <button style="width:fit-content" class="styled-button" type="submit">
+            Submit Comment
+          </button>
+        </form>
+      </article>
+    {/if}
     <section
       aria-label="List of all comments"
       style="display:flex; flex-direction: column; gap: 1rem; margin-top: 1rem"
@@ -252,7 +251,7 @@
             use:enhance={handleUpdate}
           >
             <h1 style="font-size: 1rem;">
-              {u.profiles?.username}
+              {u.profiles?.username} (You)
             </h1>
             <textarea
               on:input={() => handleCommentEdit(id)}
@@ -303,10 +302,32 @@
           </form>
         </article>
       {/each}
-
+      <!--  TODO - CREATE COMPONENT FOR THIS EACH LOOP -->
       {#each allComments ?? song.song_comments as s}
         <article class="card">
-          {s.comment_text}
+          <a
+            class="comment-profile"
+            href="/profiles/{s.user_id}"
+            style="font-weight: bold; font-size: 1rem; font-family: Sono, sans-serif; display: flex; flex-direction: row; gap: 0.5rem;"
+          >
+            <Avataricon
+              size={3}
+              url={s.profiles?.avatar_url ?? ""}
+              altText="Image of {s.profiles?.username}"
+            />
+            <p>
+              {s.profiles?.username}
+            </p>
+          </a>
+          <p>
+            {s.comment_text}
+          </p>
+          <button
+            class="styled-button"
+            use:tooltip={{ content: "Coming Soon" }}
+          >
+            Report</button
+          >
         </article>
       {/each}
       {#if userComments.length === 0 && session}
@@ -337,5 +358,17 @@
     resize: none;
     font-family: "League Spartan";
     /* background: none; */
+  }
+  .comment-profile {
+    width: fit-content;
+    text-decoration: none;
+  }
+  .comment-profile > p {
+    color: #000;
+    transition: all 0.3s ease;
+  }
+  .comment-profile:hover > p {
+    text-decoration: underline;
+    color: var(--primary-color);
   }
 </style>
