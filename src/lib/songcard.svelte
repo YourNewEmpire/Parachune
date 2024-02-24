@@ -51,7 +51,6 @@
     box-shadow: 0px 0px 0.5rem var(--primary-color);
     border-radius: 0.5rem;
     padding: 1rem 1rem;
-    color: #000;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -71,7 +70,7 @@
     gap: 0.5rem;
     border: none;
     background: none;
-    color: #000;
+    color: inherit;
     text-decoration: none;
     cursor: pointer;
     border-radius: 0.75rem;

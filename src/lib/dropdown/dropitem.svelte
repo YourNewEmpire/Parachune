@@ -6,9 +6,11 @@
     position: relative;
     display: block;
     transition-duration: 0.2s;
+    color: var(--text-color);
   }
   li:hover,
   li:focus {
-    background-color: rgba(0, 0, 0, 0.5);
+    color: var(--text-secondary-color);
+    background-color: var(--text-color);
   }
 </style>

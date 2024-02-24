@@ -1,10 +1,30 @@
 :root {
   --primary-color: #856bdc;
-  --border-color: #1a1a1a;
-  --font-color: #000;
-  --fg-color: #9898ac;
-  --bg-color: #fff;
-  --general-padding: 1.2em;
+  --text-color: #000;
+  --text-secondary-color: #ddd;
+  --fg-color: #a1a1af;
+  --bg-color: #b3b3b3;
+  --accent-color: #856bdc;
+  --gradient-1: #b3b3b3c6;
+  --gradient-2: #b3b3b3c6;
+  --gradient-3: #b3b3b3b6;
+  --gradient-4: #b3b3b3b1;
+  --gradient-5: var(--accent-color);
+  --primary-font: "League Spartan", sans-serif;
+  --secondary-font: "Sono", sans-serif;
+}
+[data-theme="dark"] {
+  --fg-color: #261e1e;
+  --bg-color: #000;
+  --accent-color: #856bdc;
+  --text-color: #ddd;
+  --text-secondary-color: #000;
+  /* gradients not dark enough */
+  --gradient-1: #101010c6;
+  --gradient-2: #171717c6;
+  --gradient-3: #171717c6;
+  --gradient-4: #242424c6;
+  --gradient-5: var(--accent-color);
   --primary-font: "League Spartan", sans-serif;
   --secondary-font: "Sono", sans-serif;
 }
@@ -63,7 +83,7 @@ button:hover {
   box-shadow: 0px 0px 8px var(--primary-color);
   border-radius: 0.5rem;
   padding: 1rem 1rem;
-  color: #000;
+  color: var(--text-color);
 }
 .card-container {
   display: grid;
@@ -120,10 +140,24 @@ button:hover {
   width: 1.5rem;
   height: 1.5rem;
 }
-
-.icon-button:hover {
-  background-color: var(--primary-color);
-  box-shadow: 0px 0px 8px var(--primary-color);
+.bs-icon-button {
+  display: flex;
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.bs-icon-button:hover {
+  background-color: var(--text-color);
+  box-shadow: 0px 0px 1rem var(--primary-color);
+}
+.bs-icon {
+  fill: var(--text-color);
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+.bs-icon-button:hover > .bs-icon {
+  fill: var(--text-secondary-color);
 }
 .default-button {
   padding: 0;
@@ -148,13 +182,15 @@ button:hover {
   cursor: pointer;
   border-radius: 0.75rem;
   transition: all 0.3s ease;
-  border: 0.1rem solid var(--primary-color);
   font-weight: 700;
+  background-color: var(--text-secondary-color);
 }
 
-.styled-button:hover {
-  background-color: var(--primary-color);
-  box-shadow: 0px 0px 0.5rem var(--primary-color);
+.styled-button:hover,
+.styled-button:focus {
+  color: var(--text-secondary-color);
+  background-color: var(--text-color);
+  box-shadow: 0px 0px 0.5rem var(--accent-color);
 }
 .styled-button:disabled {
   opacity: 0.5;
@@ -172,10 +208,10 @@ button:hover {
 
 .link-card {
   background-color: var(--fg-color);
-  box-shadow: 0px 0px 8px var(--primary-color);
+  box-shadow: 0px 0px 0.5rem var(--primary-color);
   border-radius: 0.5rem;
   padding: 1rem 1rem;
-  color: #000;
+  color: var(--text-color);
   transition: all;
   transition-duration: 250ms;
   text-decoration: none;
@@ -183,7 +219,7 @@ button:hover {
 
 .link-card:hover {
   background-color: var(--fg-color);
-  box-shadow: 0px 0px 22px var(--primary-color);
+  box-shadow: 0px 0px 1.5rem var(--primary-color);
 }
 
 .text-ellipsis {

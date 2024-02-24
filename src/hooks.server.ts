@@ -45,6 +45,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     "Permissions-Policy": "autoplay=(self)",
     "X-Content-Type-Options": "nosniff",
   });
+
+  const theme = event.cookies.get("siteTheme");
   return resolve(event, {
     /**
      * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`
@@ -54,5 +56,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     filterSerializedResponseHeaders(name) {
       return name === "content-range";
     },
+    transformPageChunk: ({ html }) =>
+      html.replace('data-theme=""', `data-theme="${theme}"`),
   });
 };

@@ -19,7 +19,11 @@
     display: block;
     margin-block-end: 0;
     padding: 0;
-    background: linear-gradient(250deg, black 60%, #856bdc);
+    background: linear-gradient(
+      260deg,
+      var(--bg-color) 80%,
+      var(--accent-color)
+    );
     transition: opacity 0.1s ease;
     -webkit-transition: opacity 0.1s ease;
     -ms-transition: opacity 0.1s ease;
@@ -57,6 +61,10 @@
     outline: none;
     border-radius: 0 0 0.5rem 0.5rem;
     /* transition: all 0.3s ease; */
-    background: linear-gradient(250deg, black 35%, #856bdc);
+    background: linear-gradient(
+      250deg,
+      var(--bg-color) 70%,
+      var(--accent-color)
+    );
   }
 </style>

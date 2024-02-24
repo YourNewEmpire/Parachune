@@ -1,8 +1,11 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { onMount } from "svelte";
   import Login from "./login.svelte";
   import House from "svelte-bootstrap-icons/lib/House.svelte";
   import Globe from "svelte-bootstrap-icons/lib/Globe.svelte";
+  import Moon from "svelte-bootstrap-icons/lib/Moon.svelte";
+  import Sun from "svelte-bootstrap-icons/lib/Sun.svelte";
 
   import type { SupabaseClient } from "@supabase/supabase-js";
 
@@ -17,9 +20,35 @@
       dispatch("closemenu");
     }
   }
+
+  let currentTheme = "";
+
+  onMount(() => {
+    const preferDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const isManualDark = document.documentElement.dataset.theme === "dark";
+    const isManualLight = document.documentElement.dataset.theme === "light";
+
+    if (!isManualLight || isManualDark) {
+      // no manual
+
+      setTheme(preferDark ? "dark" : "light");
+    } else {
+      // manual
+      setTheme(isManualDark ? "dark" : "light");
+    }
+  });
+
+  const setTheme = (theme: "dark" | "light") => {
+    console.log("no wayas");
+    document.documentElement.dataset.theme = theme;
+    document.cookie = `siteTheme=${theme};max-age=31536000;path="/"`;
+    currentTheme = theme;
+  };
 </script>
 
-<nav class="layout-nav-dark">
+<nav class="layout-nav">
   <a on:click={closeMenu} class="link" href="/"><House class="icon" />Home </a>
   <a on:click={closeMenu} class="link" href="/discover">
     <Globe class="icon" /> Discover
@@ -28,10 +57,19 @@
   <article class="login-wrapper">
     <Login {supabase} {profile} {session} />
   </article>
+  {#if currentTheme === "light"}
+    <button on:click={() => setTheme("dark")} class="bs-icon-button"
+      ><Moon class="bs-icon" />
+    </button>
+  {:else}
+    <button on:click={() => setTheme("light")} class="bs-icon-button">
+      <Sun class="bs-icon" />
+    </button>
+  {/if}
 </nav>
 
 <style>
-  .layout-nav-dark {
+  .layout-nav {
     font-family: "Sono", sans-serif;
     position: fixed;
     width: 250px;
@@ -39,9 +77,8 @@
     bottom: 0;
     left: 0;
     min-height: 100svh;
-
-    background-color: #261e1e;
-    color: #ddd;
+    background-color: var(--fg-color);
+    color: var(--text-color);
     font-weight: 600;
     padding: 0.5rem;
     /* padding: 0.625rem; */
@@ -59,14 +96,14 @@
     border-radius: 0.5rem;
     transition: all 0.3s ease;
   }
-  .link:hover {
-    background-color: #856bdc;
-    box-shadow: 0px 0px 0.5rem #856bdc;
-  }
+  .link:hover,
   .link:focus {
-    background-color: #856bdc;
-    box-shadow: 0px 0px 0.5rem #856bdc;
+    color: var(--text-secondary-color);
+    background-color: var(--text-color);
+    box-shadow: 0px 0px 0.5rem var(--accent-color);
+    outline: none;
   }
+
   .login-wrapper {
     margin-top: auto;
     position: relative;

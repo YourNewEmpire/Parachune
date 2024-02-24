@@ -134,7 +134,7 @@
 
 <style>
   .menu-toggle {
-    color: #ddd;
+    color: var(--text-color);
     border-radius: 0.5rem;
     padding: 2px;
     display: flex;
