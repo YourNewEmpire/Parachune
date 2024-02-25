@@ -1,7 +1,6 @@
 import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const prerender = true;
 export const load: PageServerLoad = async ({
   locals: { supabase },
   parent,
@@ -26,6 +25,5 @@ export const load: PageServerLoad = async ({
   //@ts-ignore
   //? So hard to type the data from supabase db fetch. Need to generate types from db.
 
-  const { profile, session } = await parent();
-  return { songData, profileData, profile, session };
+  return { songData, profileData };
 };
