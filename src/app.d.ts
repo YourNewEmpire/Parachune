@@ -4,6 +4,7 @@ declare global {
   namespace App {
     interface Locals {
       supabase: SupabaseClient<Database>;
+      checkAuth(): Promise<Boolean>;
       getSession(): Promise<Session | null>;
       getProfile(): Promise<{
         username: any;
