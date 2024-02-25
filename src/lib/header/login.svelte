@@ -145,7 +145,7 @@
 
   .menu-item {
     inline-size: 100%;
-    line-height: 1;
+    line-height: 0;
     text-decoration: none;
     padding: 0.5rem 0.5rem;
     color: inherit;
