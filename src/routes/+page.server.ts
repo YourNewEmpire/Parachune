@@ -12,8 +12,6 @@ export const load: PageServerLoad = async ({ parent }) => {
   }
 
   return {
-    profile,
     message,
-    session,
   };
 };

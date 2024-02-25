@@ -47,7 +47,5 @@ export const load: PageServerLoad = async ({
     stripeReady = false;
   }
 
-  const { profile, session } = await parent();
-
-  return { artistProfile, stripeReady, profile, session };
+  return { artistProfile, stripeReady };
 };

@@ -18,6 +18,5 @@ export const load: PageServerLoad = async ({
     .select("*, profiles(username)")
     .order("created_at", { ascending: false })
     .range(skip, limit - 1);
-  const { profile, session } = await parent();
-  return { songList, totalSongs: songCount, profile, session };
+  return { songList, totalSongs: songCount };
 };

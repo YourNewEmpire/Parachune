@@ -20,8 +20,8 @@ export const load: PageServerLoad = async ({
     });
   }
 
-  const { profile, session } = await parent();
-  return { song: songData, profile, session };
+  const { session } = await parent();
+  return { song: songData, session };
 };
 
 export const actions: Actions = {

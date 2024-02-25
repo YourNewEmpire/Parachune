@@ -17,5 +17,5 @@ export const load: PageServerLoad = async ({
     .select("*")
     .eq("artist_id", session.user.id);
   const { profile } = await parent();
-  return { session, profile, dbData };
+  return { profile, dbData };
 };

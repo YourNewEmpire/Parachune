@@ -1,10 +1,7 @@
 import { error } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({
-  locals: { supabase },
-  parent,
-}) => {
+export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   const { data: profileList, error: dbError } = await supabase
     .from("profiles")
     .select(`username, avatar_url, id`)
@@ -15,6 +12,5 @@ export const load: PageServerLoad = async ({
       `Error getting profiles data, message: ${dbError.message}`
     );
   }
-  const { profile, session } = await parent();
-  return { profileList, profile, session };
+  return { profileList };
 };
