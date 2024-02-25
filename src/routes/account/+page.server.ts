@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({
   const profile = await getProfile();
 
   if (!session) {
-    throw redirect(303, "/login");
+    throw redirect(303, "/");
   }
 
   if (profile?.stripe_id) {
@@ -43,7 +43,12 @@ export const load: PageServerLoad = async ({
 };
 
 export const actions: Actions = {
-  update: async ({ request, locals: { supabase, getSession } }) => {
+  update: async ({ request, locals: { supabase, getSession, checkAuth } }) => {
+    // const authCheck = await checkAuth();
+    // if (authCheck == false) {
+    //   await supabase.auth.signOut();
+    //   throw fail(401);
+    // }
     const formData = await request.formData();
     const fullName = formData.get("fullName") as string;
     const username = formData.get("username") as string;

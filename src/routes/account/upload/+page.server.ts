@@ -5,11 +5,10 @@ export const prerender = false;
 
 export const load: PageServerLoad = async ({
   locals: { getSession, supabase },
-  parent,
 }) => {
   const session = await getSession();
   if (!session) {
-    throw redirect(303, "/login");
+    throw redirect(303, "/");
   }
 
   const { data: albumData, error: albumError } = await supabase
@@ -17,8 +16,7 @@ export const load: PageServerLoad = async ({
     .select("*")
     .eq("artist_id", session.user.id);
 
-  const { profile } = await parent();
-  return { session, profile, albumData };
+  return { albumData };
 };
 
 export const actions: Actions = {

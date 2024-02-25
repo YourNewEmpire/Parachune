@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({
 }) => {
   const session = await getSession();
   if (!session) {
-    throw redirect(303, "/login");
+    throw redirect(303, "/");
   }
   const { data: likedData, error: likedDataError } = await supabase
     .from("saved songs")
@@ -17,5 +17,5 @@ export const load: PageServerLoad = async ({
     .eq("user_id", session.user.id);
 
   const { profile } = await parent();
-  return { savedSongs: likedData, profile, session };
+  return { savedSongs: likedData, profile };
 };
