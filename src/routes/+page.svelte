@@ -1,15 +1,15 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { fly, fade } from "svelte/transition";
+  import { fly, fade, scale } from "svelte/transition";
   import { quartIn, quintIn } from "svelte/easing";
   import { onMount } from "svelte";
   import { Icon, WrenchScrewdriver } from "svelte-hero-icons";
   import { heroItems } from "$lib/home/heroItems";
   import Hero from "$lib/home/hero.svelte";
   export let data: PageData;
-  $: ({ message, session } = data);
+  $: ({ message } = data);
 
-  const lines = ["Get Ready", "For", "Parachune", "🪂🎸"];
+  const topLines = ["Welcome", "To"];
 
   let animate = false;
   onMount(() => {
@@ -25,26 +25,37 @@
 
 <section class="landing-section">
   {#if animate}
-    <article class="welcome-title">
-      {#each lines as line, i}
-        <div class="">
-          <h1
-            in:fly|global={{
-              y: i % 2 === 0 ? 100 : -100,
-              delay: 400 * i,
-            }}
-          >
-            {line}
-          </h1>
-        </div>
-      {/each}
+    <article class="title">
+      <article class="title-small">
+        <p
+          in:fly={{
+            y: -100,
+            delay: 0,
+            duration: 500,
+          }}
+        >
+          {topLines[0]}
+        </p>
+        <p
+          in:fly|global={{
+            y: 100,
+            delay: 500,
+            duration: 500,
+          }}
+        >
+          {topLines[1]}
+        </p>
+      </article>
+      <p class="title-large" in:scale|global={{ delay: 1000, duration: 1000 }}>
+        PARACHUNE
+      </p>
     </article>
 
     <article
       class="welcome-message"
       in:fly={{
         y: 100,
-        delay: 500 * lines.length,
+        delay: 2000,
         duration: 1000,
       }}
     >
@@ -52,12 +63,13 @@
         {message}
       </p>
     </article>
+
     <article
-      style="display:flex; align-items:center; max-width:fit-content; column-gap: 0.5rem; color: orange; "
+      class="beta-notice"
       in:fly={{
         y: -50,
         opacity: 0,
-        delay: 600 * lines.length,
+        delay: 1500,
         duration: 2000,
       }}
     >
@@ -70,10 +82,6 @@
 {/each}
 
 <style>
-  p {
-    line-height: 2ch;
-  }
-
   .landing-section {
     height: 100svh;
     /* border: 1px solid red; */
@@ -84,39 +92,49 @@
     justify-content: center;
   }
 
-  .welcome-title {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 2fr;
-    justify-content: center;
-    align-items: center;
-    /* border: 1px solid red; */
-    text-align: center;
-    font-size: 1rem;
+  .title {
+    line-height: 0;
   }
 
   .welcome-message {
     text-align: center;
-    font-size: 0.75rem;
   }
 
-  @media only screen and (min-width: 768px) {
-    .welcome-title {
-      /* border: 1px solid red; */
-      font-size: 1.5rem;
-    }
-    .welcome-message {
-      font-size: 1rem;
-    }
+  .title-small {
+    font-size: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2.5%;
   }
 
+  .title-large {
+    font-family: Sono, sans-serif;
+    font-weight: bold;
+    font-size: 2.5rem;
+    margin: 0.2rem 0 0;
+    line-height: normal;
+  }
+
+  .beta-notice {
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+    gap: 0.5rem;
+    color: orange;
+  }
   @media only screen and (min-width: 1024px) {
-    .welcome-title {
-      /* border: 1px solid red; */
+    .title-small {
       font-size: 2rem;
+      display: flex;
+      flex-direction: row;
+      gap: 2.5%;
     }
-    .welcome-message {
-      font-size: 1.5rem;
+    .title-large {
+      font-family: Sono, sans-serif;
+      font-weight: bold;
+      font-size: 5rem;
+      margin: 0.2rem 0 0;
+      line-height: normal;
     }
   }
 </style>
