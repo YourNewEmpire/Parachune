@@ -19,11 +19,22 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
   );
 
+  // More secure version of getSession. Verify in the backend that the user is valid.
+  event.locals.checkAuth = async () => {
+    const {
+      data: { user },
+    } = await event.locals.supabase.auth.getUser();
+    if (!user) {
+      return false;
+    } else return true;
+  };
+
   //? Helpers on locals object for loaders.
   event.locals.getSession = async () => {
     const {
       data: { session },
     } = await event.locals.supabase.auth.getSession();
+    // get profile here and put return obj
     return session;
   };
   event.locals.getProfile = async () => {
