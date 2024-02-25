@@ -143,9 +143,11 @@
     let txtArea = document.getElementById(
       `update_text_${commentIndex}`
     ) as HTMLTextAreaElement;
-
+    let commentCheckBox = document.getElementById(
+      `update_private_${commentIndex}`
+    ) as HTMLInputElement;
     txtArea.value = userComments[commentIndex].comment_text;
-
+    commentCheckBox.checked = userComments[commentIndex].private;
     editBtn.disabled = true;
     cancelBtn.disabled = true;
   };
