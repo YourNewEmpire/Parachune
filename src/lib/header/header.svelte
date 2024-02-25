@@ -27,21 +27,25 @@
     const preferDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
+
     const isManualDark = document.documentElement.dataset.theme === "dark";
     const isManualLight = document.documentElement.dataset.theme === "light";
 
-    if (!isManualLight || isManualDark) {
-      // no manual
-
-      setTheme(preferDark ? "dark" : "light");
+    if (isManualLight) {
+      setTheme("light");
+      return;
+    }
+    if (isManualDark) {
+      setTheme("dark");
+      return;
     } else {
-      // manual
-      setTheme(isManualDark ? "dark" : "light");
+      console.log("not manual theme");
+      setTheme(preferDark ? "dark" : "light");
+      return;
     }
   });
 
   const setTheme = (theme: "dark" | "light") => {
-    console.log("no wayas");
     document.documentElement.dataset.theme = theme;
     document.cookie = `siteTheme=${theme};max-age=31536000;path="/"`;
     currentTheme = theme;
@@ -58,11 +62,16 @@
     <Login {supabase} {profile} {session} />
   </article>
   {#if currentTheme === "light"}
-    <button on:click={() => setTheme("dark")} class="bs-icon-button"
+    <button
+      on:click|stopPropagation={() => setTheme("dark")}
+      class="bs-icon-button"
       ><Moon class="bs-icon" />
     </button>
   {:else}
-    <button on:click={() => setTheme("light")} class="bs-icon-button">
+    <button
+      on:click|stopPropagation={() => setTheme("light")}
+      class="bs-icon-button"
+    >
       <Sun class="bs-icon" />
     </button>
   {/if}
