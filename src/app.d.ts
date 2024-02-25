@@ -6,23 +6,16 @@ declare global {
       supabase: SupabaseClient<Database>;
       checkAuth(): Promise<Boolean>;
       getSession(): Promise<Session | null>;
-      getProfile(): Promise<{
-        username: any;
-        full_name: any;
-        website: any;
-        avatar_url: any;
-        stripe_id: any;
-      } | null>;
     }
     interface PageData {
       session: Session | null;
-      profile: {
-        username: any;
-        full_name: any;
-        website: any;
-        avatar_url: any;
-        stripe_id: any;
-      } | null;
+      // profile: {
+      //   username: any;
+      //   full_name: any;
+      //   website: any;
+      //   avatar_url: any;
+      //   stripe_id: any;
+      // } | null;
     }
 
     // interface Error {}

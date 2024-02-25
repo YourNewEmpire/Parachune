@@ -3,18 +3,19 @@ import type { PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
 import type Stripe from "stripe";
 import type { Session } from "@supabase/supabase-js";
+import { getProfile } from "$lib/server/getProfile";
+import type { Database } from "../../types/DbDefinitions";
 
 type StripeStatus = {
   errMsg: string | null;
   paymentStatus: Stripe.Checkout.Session.PaymentStatus | null;
   linkSuccess: boolean | null;
   session: Session;
-  profile: App.PageData["profile"];
+  profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
 };
 
 export const load: PageServerLoad = async ({
-  parent,
-  locals: { getSession },
+  locals: { getSession, supabase },
   url,
 }) => {
   const session = await getSession();
@@ -49,7 +50,8 @@ export const load: PageServerLoad = async ({
   } else {
     throw error(404, `🧭 Nothing found here, sorry`);
   }
-  const { profile } = await parent();
+  const profile = await getProfile({ supabase, session });
+
   ret.profile = profile;
   return ret;
 };

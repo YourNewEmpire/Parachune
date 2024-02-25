@@ -13,7 +13,6 @@
 
   let { supabase, session, url, profile } = data;
   $: ({ supabase, session, url, profile } = data);
-
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((event, _session) => {
       if (_session?.expires_at !== session?.expires_at) {

@@ -17,6 +17,7 @@
   } from "svelte-hero-icons";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import type { Database } from "../../types/DbDefinitions";
 
   const links = [
     {
@@ -42,20 +43,20 @@
   ];
 
   export let supabase: SupabaseClient;
-  export let profile: App.PageData["profile"];
+  export let profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
   export let session: App.PageData["session"];
   let orig: string;
   let pageUrl: string;
 
   onMount(() => {
-    page.subscribe((p) => {
-      supabase = p.data.supabase;
-      profile = p.data.profile;
-      session = p.data.session;
-      orig = p.url.origin;
-      pageUrl = p.url.pathname;
-      // console.log(p.url)
-    });
+    // page.subscribe((p) => {
+    //   supabase = p.data.supabase;
+    //   profile = p.data.profile;
+    //   session = p.data.session;
+    //   orig = p.url.origin;
+    //   pageUrl = p.url.pathname;
+    //   // console.log(p.url)
+    // });
   });
 
   const _providerSignIn = async (provider: Provider) => {

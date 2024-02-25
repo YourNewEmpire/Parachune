@@ -1,18 +1,18 @@
 import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
+import { getProfile } from "$lib/server/getProfile";
 export const prerender = false;
 export const load: PageServerLoad = async ({
-  locals: { getSession, getProfile, supabase },
+  locals: { getSession, supabase },
 }) => {
   let stripeReady: boolean = false;
   const session = await getSession();
-  const profile = await getProfile();
 
   if (!session) {
     throw redirect(303, "/");
   }
-
+  const profile = await getProfile({ supabase, session });
   if (profile?.stripe_id) {
     try {
       const stripeAcc = await stripe.accounts.retrieve(profile.stripe_id);

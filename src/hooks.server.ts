@@ -37,18 +37,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     // get profile here and put return obj
     return session;
   };
-  event.locals.getProfile = async () => {
-    const session = await event.locals.getSession();
-    if (!session) {
-      return null;
-    }
-    const { data: profile } = await event.locals.supabase
-      .from("profiles")
-      .select(`username, full_name, website, avatar_url, stripe_id`)
-      .eq("id", session?.user.id)
-      .single();
-    return profile;
-  };
 
   //? Set secure headers.
   event.setHeaders({

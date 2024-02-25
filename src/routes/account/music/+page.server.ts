@@ -1,11 +1,11 @@
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
+import { getProfile } from "$lib/server/getProfile";
 
 export const prerender = false;
 
 export const load: PageServerLoad = async ({
   locals: { supabase, getSession },
-  parent,
 }) => {
   const session = await getSession();
   if (!session) {
@@ -16,6 +16,7 @@ export const load: PageServerLoad = async ({
     .from("songs")
     .select("*")
     .eq("artist_id", session.user.id);
-  const { profile } = await parent();
+  const profile = await getProfile({ supabase, session });
+
   return { profile, dbData };
 };

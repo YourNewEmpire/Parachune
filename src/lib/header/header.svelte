@@ -8,12 +8,13 @@
   import Sun from "svelte-bootstrap-icons/lib/Sun.svelte";
 
   import type { SupabaseClient } from "@supabase/supabase-js";
+  import type { Database } from "../../types/DbDefinitions";
 
   const dispatch = createEventDispatcher();
 
   export let open: boolean;
   export let supabase: SupabaseClient;
-  export let profile: App.PageData["profile"];
+  export let profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
   export let session: App.PageData["session"];
   function closeMenu() {
     if (open) {

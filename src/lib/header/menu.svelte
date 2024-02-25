@@ -4,8 +4,9 @@
   import { fly } from "svelte/transition";
   import clickOutside from "$lib/utils/clickOutside";
   import type { SupabaseClient } from "@supabase/supabase-js";
+  import type { Database } from "../../types/DbDefinitions";
   export let supabase: SupabaseClient;
-  export let profile: App.PageData["profile"];
+  export let profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
   export let session: App.PageData["session"];
   let menuVisible = false;
   function handleClose() {
