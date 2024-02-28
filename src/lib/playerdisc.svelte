@@ -24,7 +24,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.2rem;
   }
 
   article {
@@ -45,6 +44,7 @@
   span {
     animation: spin 2s linear infinite;
     animation-play-state: paused;
+    padding: 0.5rem;
   }
 
   :global(.disc-icon) {
@@ -66,30 +66,6 @@
   @media only screen and (min-width: 1024px) {
     article {
       gap: 0.5rem;
-    }
-  }
-  @-moz-keyframes spin {
-    from {
-      -moz-transform: rotate(0deg);
-    }
-    to {
-      -moz-transform: rotate(360deg);
-    }
-  }
-  @-webkit-keyframes spin {
-    from {
-      -webkit-transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(360deg);
-    }
-  }
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
     }
   }
 </style>
