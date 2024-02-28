@@ -93,7 +93,11 @@
     <h1>Albums:</h1>
     <div class="card-container">
       {#each artistProfile.albums ?? [] as album}
-        <a href="/albums/{album.id}" class="link-card col-container">
+        <a
+          href="/albums/{album.id}"
+          class="link-card col-container"
+          use:tooltip={{ content: "album pages are coming soon" }}
+        >
           <Albumimage altText={album.title} size={10} url={album.image_url} />
           <h1>{album.title}</h1>
         </a>

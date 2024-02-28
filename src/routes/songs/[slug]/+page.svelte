@@ -175,7 +175,11 @@
           <span style="font-family: League Spartan, sans-serif;"
             >Part of {song.profiles?.username}'s Album:
           </span>
-          <a class="styled-link" href="/albums">
+          <a
+            class="styled-link"
+            use:tooltip={{ content: "album pages are coming soon" }}
+            href="/albums"
+          >
             {song.albums?.title}
           </a>
         </h1>
