@@ -1,22 +1,17 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { songsQueued, songPlaying, songsPlayed, addToast } from "$lib/stores";
-  import {
-    Icon,
-    Play,
-    Pause,
-    Backward,
-    Forward,
-    XCircle,
-    Plus,
-    Minus,
-    EyeSlash,
-  } from "svelte-hero-icons";
   import type { SupabaseClient } from "@supabase/supabase-js";
+  import { songsQueued, songPlaying, songsPlayed, addToast } from "$lib/stores";
   import tooltip from "./utils/tooltip";
   import Playerdisc from "./playerdisc.svelte";
   import VolumeUp from "svelte-bootstrap-icons/lib/VolumeUp.svelte";
   import VolumeMute from "svelte-bootstrap-icons/lib/VolumeMute.svelte";
+  import XCircle from "svelte-bootstrap-icons/lib/XCircle.svelte";
+  import EyeSlash from "svelte-bootstrap-icons/lib/EyeSlash.svelte";
+  import SkipBackward from "svelte-bootstrap-icons/lib/SkipBackward.svelte";
+  import SkipForward from "svelte-bootstrap-icons/lib/SkipForward.svelte";
+  import Pause from "svelte-bootstrap-icons/lib/Pause.svelte";
+  import Play from "svelte-bootstrap-icons/lib/Play.svelte";
 
   export let sClient: SupabaseClient;
   let audioBind: HTMLAudioElement;
@@ -215,68 +210,65 @@
           <div class="song-details-buttons">
             <button
               use:tooltip={{ content: "Close and Clear Queue" }}
-              class="player-button"
+              class="bs-icon-button"
               on:click={endPlayer}
             >
-              <span class="song-details-icon">
-                <Icon src={XCircle} />
-              </span>
+              <XCircle class="bs-icon" />
             </button>
             <button
               use:tooltip={{ content: "Hide Player (coming soon)" }}
-              class="player-button"
+              class="bs-icon-button"
             >
-              <span class="song-details-icon">
-                <Icon src={EyeSlash} />
-              </span>
+              <EyeSlash class="bs-icon" />
             </button>
           </div>
         </div>
         <div class="play-buttons">
           <button
-            class="player-button"
+            class="bs-icon-button"
             disabled={$songsPlayed.length >= 1 ? false : true}
             use:tooltip={{ content: "Backward" }}
             on:click={handleBack}
           >
-            <span class="main-icon">
-              <Icon src={Backward} />
-            </span>
+            <SkipBackward class="bs-icon" style="width: 2rem; height: 100%;" />
           </button>
           <button
-            class="player-button"
-            use:tooltip={{ content: paused ? "Play" : "Pause" }}
+            class="bs-icon-button"
             on:click={() => (paused ? audioBind.play() : audioBind.pause())}
           >
-            <span class="main-icon">
-              {#if paused}
-                <Icon src={Play} />
-              {:else}
-                <Icon src={Pause} />
-              {/if}
-            </span>
+            {#if paused}
+              <Play class="bs-icon" style="width: 2rem; height: 100%;" />
+            {:else}
+              <Pause class="bs-icon" style="width: 2rem; height: 100%;" />
+            {/if}
           </button>
 
           <button
-            class="player-button"
+            class="bs-icon-button"
             disabled={$songsQueued.length > 1 ? false : true}
             use:tooltip={{ content: "Forward" }}
             on:click={handleForward}
           >
-            <span class="main-icon">
-              <Icon src={Forward} />
-            </span>
+            <SkipForward class="bs-icon" style="width: 2rem; height: 100%;" />
           </button>
         </div>
         <div class="volume">
           <article class="volume-control">
             {#if volume === 0}
-              <button class="default-button" on:click={() => (volume = 0)}>
-                <VolumeMute />
+              <button
+                disabled={!$songPlaying}
+                class="default-button"
+                on:click={() => (volume = 0)}
+              >
+                <VolumeMute fill="var(--text-color)" />
               </button>
             {:else}
-              <button class="default-button" on:click={() => (volume = 0)}>
-                <VolumeUp />
+              <button
+                disabled={!$songPlaying}
+                class="default-button"
+                on:click={() => (volume = 0)}
+              >
+                <VolumeUp fill="var(--text-color)" />
               </button>
             {/if}
             <input
@@ -288,56 +280,23 @@
               step="0.01"
             />
           </article>
-          <article class="volume-increment">
-            <button
-              disabled={!$songPlaying}
-              class="player-button"
-              on:click={() => {
-                if (volume - 0.1 >= 0) {
-                  volume = Number.parseFloat((volume -= 0.1).toFixed(1));
-                }
-                return;
-              }}
-            >
-              <span class="volume-icon">
-                <Icon src={Minus} />
-              </span>
-            </button>
-            <button
-              disabled={!$songPlaying}
-              class="player-button"
-              on:click={() => {
-                if (volume + 0.1 <= 1) {
-                  volume = Number.parseFloat((volume += 0.1).toFixed(1));
-                }
-                return;
-              }}
-            >
-              <span class="volume-icon">
-                <Icon src={Plus} />
-              </span>
-            </button>
-          </article>
         </div>
       </div>
-    </div>
 
-    <audio
-      bind:this={audioBind}
-      bind:volume
-      bind:paused
-      bind:currentTime={time}
-      bind:duration
-    >
-      Your browser does not support the audio element.
-    </audio>
+      <audio
+        bind:this={audioBind}
+        bind:volume
+        bind:paused
+        bind:currentTime={time}
+        bind:duration
+      >
+        Your browser does not support the audio element.
+      </audio>
+    </div>
   </section>
 {/if}
 
 <style>
-  span {
-    display: flex;
-  }
   .player-wrapper {
     display: block;
     position: fixed;
@@ -347,8 +306,9 @@
     left: 0;
     width: 100%;
     border-radius: 1rem 0px 0px 0px;
-    background-color: #9898ac;
-    box-shadow: 0px 0px 0.5rem #856bdc;
+    background-color: var(--fg-color);
+    color: var(--text-color);
+    box-shadow: 0px 0px 0.5rem var(--accent-color);
   }
 
   @media only screen and (min-width: 1024px) {
@@ -397,83 +357,18 @@
     column-gap: 0.25rem;
   }
 
-  .volume {
-    gap: 0.3rem;
-    display: flex;
-    flex-direction: column;
-  }
-
   .volume-control {
+    /* border: 1px solid green; */
+
+    width: 100%;
     align-items: center;
-    justify-content: center;
+
     display: flex;
   }
 
-  .volume-increment {
-    display: grid;
-    gap: 0.25rem;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .player-button {
-    font-family: "Sono", sans-serif;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0.25rem 0.25rem;
-    background: none;
-    color: inherit;
-    text-decoration: none;
-    cursor: pointer;
-    border-radius: 0.5rem;
-    transition: all 0.3s ease;
-    border: 0.1rem solid var(--primary-color);
-  }
-  .player-button:hover {
-    background-color: var(--primary-color);
-    box-shadow: 0px 0px 0.5rem var(--primary-color);
-  }
-  .player-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  .song-details-icon {
-    width: 1.25rem;
-  }
-  .main-icon {
-    width: 2rem;
-  }
-  .volume-icon {
-    width: 1.5rem;
-  }
   @media only screen and (min-width: 768px) {
     .play-buttons {
       column-gap: 0.5rem;
-    }
-    .player-button {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      background: none;
-      color: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      border-radius: 0.75rem;
-      transition: all 0.3s ease;
-    }
-    .player-button:hover {
-      background-color: var(--primary-color);
-      box-shadow: 0px 0px 0.5rem var(--primary-color);
-    }
-    .main-icon {
-      width: 2.5rem;
-    }
-    .volume-icon {
-      width: 1.5rem;
     }
   }
 </style>
