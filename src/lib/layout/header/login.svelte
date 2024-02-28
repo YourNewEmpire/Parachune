@@ -17,7 +17,7 @@
   } from "svelte-hero-icons";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import type { Database } from "../../types/DbDefinitions";
+  import type { Database } from "../../../types/DbDefinitions";
 
   const links = [
     {

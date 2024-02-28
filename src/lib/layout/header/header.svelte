@@ -4,11 +4,11 @@
   import Login from "./login.svelte";
   import House from "svelte-bootstrap-icons/lib/House.svelte";
   import Globe from "svelte-bootstrap-icons/lib/Globe.svelte";
+  import CardChecklist from "svelte-bootstrap-icons/lib/CardChecklist.svelte";
   import Moon from "svelte-bootstrap-icons/lib/Moon.svelte";
   import Sun from "svelte-bootstrap-icons/lib/Sun.svelte";
-
   import type { SupabaseClient } from "@supabase/supabase-js";
-  import type { Database } from "../../types/DbDefinitions";
+  import type { Database } from "../../../types/DbDefinitions";
 
   const dispatch = createEventDispatcher();
 
@@ -58,7 +58,9 @@
   <a on:click={closeMenu} class="link" href="/discover">
     <Globe class="icon" /> Discover
   </a>
-
+  <a on:click={closeMenu} class="link" href="/updates">
+    <CardChecklist class="icon" /> Updates
+  </a>
   <article class="login-wrapper">
     <Login {supabase} {profile} {session} />
   </article>

@@ -1,10 +1,10 @@
 <script lang="ts">
-  import Header from "$lib/header/header.svelte";
+  import Header from "$lib/layout/header/header.svelte";
   import { Icon, Bars3 } from "svelte-hero-icons";
   import { fly } from "svelte/transition";
   import clickOutside from "$lib/utils/clickOutside";
   import type { SupabaseClient } from "@supabase/supabase-js";
-  import type { Database } from "../../types/DbDefinitions";
+  import type { Database } from "../../../types/DbDefinitions";
   export let supabase: SupabaseClient;
   export let profile: Database["public"]["Tables"]["profiles"]["Row"] | null;
   export let session: App.PageData["session"];
