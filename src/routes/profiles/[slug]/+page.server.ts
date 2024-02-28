@@ -9,7 +9,11 @@ export const load: PageServerLoad = async ({
 }) => {
   // vars to be set and returned. stripeReady is for UI to render stripe donation for the artist accordingly
   let stripeReady: boolean;
-
+  if (!params.slug) {
+    return error(400, {
+      message: "No slug provided in params",
+    });
+  }
   const { data: artistProfile, error: profileError } = await supabase
     .from("profiles")
     .select(`*, albums(title, id, image_url), songs(*)`)
