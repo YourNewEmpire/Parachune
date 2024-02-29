@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { fly, fade, scale } from "svelte/transition";
-  import { quartIn, quintIn } from "svelte/easing";
+  import { fly, scale } from "svelte/transition";
+  import Tools from "svelte-bootstrap-icons/lib/Tools.svelte";
   import { onMount } from "svelte";
-  import { Icon, WrenchScrewdriver } from "svelte-hero-icons";
   import { heroItems } from "$lib/home/heroItems";
   import Hero from "$lib/home/hero.svelte";
+  import Platformdonate from "$lib/platformdonate.svelte";
   export let data: PageData;
   $: ({ message } = data);
 
@@ -65,15 +65,19 @@
     </article>
 
     <article
-      class="beta-notice"
       in:fly={{
         y: -50,
         opacity: 0,
         delay: 1500,
         duration: 2000,
       }}
+      class="beta-notice"
     >
-      <Icon class="icon" src={WrenchScrewdriver} /> In Early Development
+      <Tools fill="#ffa500" />
+      In Early Development
+    </article>
+    <article in:scale={{ delay: 3000, duration: 2000 }}>
+      <Platformdonate />
     </article>
   {/if}
 </section>
@@ -84,6 +88,7 @@
 <style>
   .landing-section {
     height: 100svh;
+
     /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
@@ -121,6 +126,9 @@
     max-width: fit-content;
     gap: 0.5rem;
     color: orange;
+    padding: 0.5rem;
+    background-color: #000;
+    border-radius: 0.75rem;
   }
   @media only screen and (min-width: 1024px) {
     .title-small {
