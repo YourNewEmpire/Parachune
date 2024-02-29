@@ -25,30 +25,25 @@
   let currentTheme = "";
 
   onMount(() => {
+    const savedTheme = document.documentElement.getAttribute("data-theme");
+    //? Manual theme
+    if (savedTheme) {
+      currentTheme = savedTheme;
+      return;
+    }
+    //? Not manual theme, get prefers-color-scheme
+
     const preferDark = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;
-
-    const isManualDark = document.documentElement.dataset.theme === "dark";
-    const isManualLight = document.documentElement.dataset.theme === "light";
-
-    if (isManualLight) {
-      setTheme("light");
-      return;
-    }
-    if (isManualDark) {
-      setTheme("dark");
-      return;
-    } else {
-      console.log("not manual theme");
-      setTheme(preferDark ? "dark" : "light");
-      return;
-    }
+    const theme = preferDark ? "dark" : "light";
+    setTheme(theme);
   });
 
   const setTheme = (theme: "dark" | "light") => {
-    document.documentElement.dataset.theme = theme;
-    document.cookie = `siteTheme=${theme};max-age=31536000;path="/"`;
+    const one_year = 60 * 60 * 24 * 365;
+    document.cookie = `siteTheme=${theme}; max-age=${one_year}; path=/`;
+    document.documentElement.setAttribute("data-theme", theme);
     currentTheme = theme;
   };
 </script>

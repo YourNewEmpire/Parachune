@@ -44,18 +44,33 @@ export const handle: Handle = async ({ event, resolve }) => {
     "Permissions-Policy": "autoplay=(self)",
     "X-Content-Type-Options": "nosniff",
   });
-
   const theme = event.cookies.get("siteTheme");
-  return resolve(event, {
-    /**
-     * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`
-     *
-     * https://github.com/sveltejs/kit/issues/8061
-     */
-    filterSerializedResponseHeaders(name) {
-      return name === "content-range";
-    },
-    transformPageChunk: ({ html }) =>
-      html.replace('data-theme=""', `data-theme="${theme}"`),
-  });
+  //? Issue fixed with if statement, stop passing "undefined" which was an edge case that was causing ux issues.
+  if (theme) {
+    return resolve(event, {
+      /**
+       *
+       * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`
+       *
+       * https://github.com/sveltejs/kit/issues/8061
+       */
+      filterSerializedResponseHeaders(name) {
+        return name === "content-range";
+      },
+      transformPageChunk: ({ html }) =>
+        html.replace('data-theme=""', `data-theme="${theme}"`),
+    });
+  } else {
+    return resolve(event, {
+      /**
+       *
+       * There´s an issue with `filterSerializedResponseHeaders` not working when using `sequence`
+       *
+       * https://github.com/sveltejs/kit/issues/8061
+       */
+      filterSerializedResponseHeaders(name) {
+        return name === "content-range";
+      },
+    });
+  }
 };
