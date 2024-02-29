@@ -5,7 +5,6 @@ import { stripe } from "$lib/server/stripe";
 export const load: PageServerLoad = async ({
   locals: { supabase },
   params,
-  parent,
 }) => {
   // vars to be set and returned. stripeReady is for UI to render stripe donation for the artist accordingly
   let stripeReady: boolean;
