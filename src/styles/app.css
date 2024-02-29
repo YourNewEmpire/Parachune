@@ -135,7 +135,7 @@ button:hover {
   flex-direction: column;
   row-gap: 6px;
 }
-
+/* todo - Confusing icon classes. icon is old and bs-icon is for new usage of sbi */
 .icon {
   width: 1.5rem;
   height: 1.5rem;
@@ -173,7 +173,7 @@ button:hover {
   column-gap: 0.2rem;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   border: none;
   background: none;
   text-decoration: none;
