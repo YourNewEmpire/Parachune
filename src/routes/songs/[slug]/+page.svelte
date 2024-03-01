@@ -311,11 +311,7 @@
       <!--  TODO - CREATE COMPONENT FOR THIS EACH LOOP -->
       {#each allComments ?? song.song_comments as s}
         <article class="card">
-          <a
-            class="comment-profile"
-            href="/profiles/{s.user_id}"
-            style="font-weight: bold; font-size: 1rem; font-family: Sono, sans-serif; display: flex; flex-direction: row; gap: 0.5rem;"
-          >
+          <a class="comment-profile" href="/profiles/{s.user_id}" style="">
             <Avataricon
               size={3}
               url={s.profiles?.avatar_url ?? ""}
@@ -366,14 +362,18 @@
     /* background: none; */
   }
   .comment-profile {
+    font-weight: bold;
+    font-size: 1rem;
+    font-family: Sono, sans-serif;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
     width: fit-content;
     text-decoration: none;
-  }
-  .comment-profile > p {
-    color: #000;
+    color: var(--text-color);
     transition: all 0.3s ease;
   }
-  .comment-profile:hover > p {
+  .comment-profile:hover {
     text-decoration: underline;
     color: var(--primary-color);
   }
