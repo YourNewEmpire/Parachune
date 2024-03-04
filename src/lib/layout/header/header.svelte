@@ -5,6 +5,7 @@
   import House from "svelte-bootstrap-icons/lib/House.svelte";
   import Globe from "svelte-bootstrap-icons/lib/Globe.svelte";
   import CardChecklist from "svelte-bootstrap-icons/lib/CardChecklist.svelte";
+  import InfoCircle from "svelte-bootstrap-icons/lib/InfoCircle.svelte";
   import Moon from "svelte-bootstrap-icons/lib/Moon.svelte";
   import Sun from "svelte-bootstrap-icons/lib/Sun.svelte";
   import type { SupabaseClient } from "@supabase/supabase-js";
@@ -55,6 +56,9 @@
   </a>
   <a on:click={closeMenu} class="link" href="/updates">
     <CardChecklist class="icon" /> Updates
+  </a>
+  <a on:click={closeMenu} class="link" href="/about">
+    <InfoCircle class="icon" /> About Parachune
   </a>
   <article class="login-wrapper">
     <Login {supabase} {profile} {session} />
