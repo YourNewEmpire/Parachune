@@ -35,12 +35,14 @@
   <ul>
     <li>Graphic design</li>
     <li>
-      Web development (I may need help or guidance adding non-trivial features
-      to the stack)
+      Web development - Feel free to look at the code:
+      https://github.com/YourNewEmpire/Parachune
     </li>
-    <li>community moderators and artist relations</li>
   </ul>
-  <p>...And probably much more, as this is a community effort.</p>
+  <h1>Contact</h1>
+  <p>
+    Need help? Write it in an email and send it to archieparachune@gmail.com
+  </p>
 </article>
 
 <style>
