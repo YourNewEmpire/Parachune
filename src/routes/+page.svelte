@@ -21,6 +21,14 @@
 
 <svelte:head>
   <title>Parachune</title>
+  <meta
+    name="description"
+    content="Parachune music app. Parachute your tunes here for free. Listen for free."
+  />
+  <meta
+    name="keywords"
+    content="music, free, crowdfunded, music player, upload"
+  />
 </svelte:head>
 
 <section class="landing-section">

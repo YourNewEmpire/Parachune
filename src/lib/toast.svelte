@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+  import { goto } from "$app/navigation";
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
 
@@ -6,7 +7,6 @@
 
   export let type = "failure";
   export let dismissable = true;
-
   const handleDismiss = () => {
     if (dismissable) dispatch("dismiss");
     return;
@@ -25,7 +25,6 @@
   button {
     display: flex;
     align-items: center;
-
     width: 100%;
     padding: 1rem;
     border-radius: 0.5rem;
@@ -34,6 +33,7 @@
   button:focus {
     outline: none;
   }
+
   .warning {
     background-color: rgba(242, 96, 5, 0.7);
   }
@@ -49,10 +49,5 @@
   .text {
     font-size: 1.25rem;
     overflow-wrap: break-word;
-    flex: 3;
-  }
-  .icon {
-    width: 1.25rem;
-    flex: 1;
   }
 </style>

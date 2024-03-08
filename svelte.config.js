@@ -18,7 +18,11 @@ const config = {
       directives: {
         "base-uri": ["'self'"],
         "child-src": ["'self'"],
-        "connect-src": ["'self'", "https://hfwrhujnelzjihpvhglb.supabase.co/"],
+        "connect-src": [
+          "'self'",
+          "https://hfwrhujnelzjihpvhglb.supabase.co/",
+          "wss://hfwrhujnelzjihpvhglb.supabase.co/realtime/v1/",
+        ],
         "img-src": [
           "'self'",
           "data:",

@@ -1,17 +1,34 @@
 <script lang="ts">
   import Toast from "./toast.svelte";
 
-  import { dismissToast, toasts } from "./stores";
+  import { dismissLinkToast, dismissToast, linkToasts, toasts } from "./stores";
+  import Linktoast from "./linktoast.svelte";
 </script>
+
+{#if $linkToasts}
+  <section>
+    {#each $linkToasts as toast}
+      <Linktoast
+        type={toast.type}
+        link={toast.link}
+        on:dismiss={() => dismissLinkToast(toast.id)}
+      >
+        {toast.message}
+      </Linktoast>
+    {/each}
+  </section>
+{/if}
 
 {#if $toasts}
   <section>
-    {#each $toasts as toast (toast.id)}
+    {#each $toasts as toast}
       <Toast
         type={toast.type}
         dismissable={toast.dismissable}
-        on:dismiss={() => dismissToast(toast.id)}>{toast.message}</Toast
+        on:dismiss={() => dismissToast(toast.id)}
       >
+        {toast.message}
+      </Toast>
     {/each}
   </section>
 {/if}

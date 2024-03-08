@@ -12,7 +12,7 @@
   import Avataricon from "$lib/avataricon.svelte";
   export let data: PageData;
 
-  let { song, session } = data;
+  let { song, songComments, session } = data;
   let songPlayerData = {
     artistId: song.artist_id ?? "",
     artistName: song.profiles?.username ?? "",
@@ -21,12 +21,9 @@
     songUrl: song.song_url ?? "",
   };
   let allComments = session?.user
-    ? song.song_comments.filter((c) => c.user_id !== session?.user.id)
+    ? songComments.filter((c) => c.user_id !== session?.user.id)
     : null;
-  let userComments = song.song_comments.filter(
-    (c) => c.user_id === session?.user.id
-  );
-
+  let userComments = songComments.filter((c) => c.user_id === session?.user.id);
   // let loading = false;
 
   let insertTextarea: HTMLTextAreaElement;
@@ -205,7 +202,7 @@
 
   <section aria-labelledby="comments-heading">
     <h1 id="comments-heading">Comments</h1>
-    {#if session}
+    {#if session && session.user.id !== song.artist_id}
       <article class="card">
         <form
           aria-label="Write a comment"
@@ -236,6 +233,7 @@
             <label for="comment_private_id"> Set Private</label>
           </div>
           <input readonly hidden name="song_id" value={song.id} />
+          <input readonly hidden name="artist_id" value={song.artist_id} />
           <button style="width:fit-content" class="styled-button" type="submit">
             Submit Comment
           </button>
@@ -256,9 +254,7 @@
             action="?/updateComment"
             use:enhance={handleUpdate}
           >
-            <h1 style="font-size: 1rem;">
-              {u.profiles?.username} (You)
-            </h1>
+            <h1 style="font-size: 1rem;">{u.profiles.username} (You)</h1>
             <textarea
               on:input={() => handleCommentEdit(id)}
               class="editable-text"
@@ -308,17 +304,16 @@
           </form>
         </article>
       {/each}
-      <!--  TODO - CREATE COMPONENT FOR THIS EACH LOOP -->
-      {#each allComments ?? song.song_comments as s}
+      {#each allComments ?? songComments as s}
         <article class="card">
           <a class="comment-profile" href="/profiles/{s.user_id}" style="">
             <Avataricon
               size={3}
-              url={s.profiles?.avatar_url ?? ""}
-              altText="Image of {s.profiles?.username}"
+              url={s.profiles.avatar_url ?? ""}
+              altText="Image of {s.profiles.username}"
             />
             <p>
-              {s.profiles?.username}
+              {s.profiles.username}
             </p>
           </a>
           <p>
@@ -335,7 +330,7 @@
       {#if userComments.length === 0 && session}
         <p>You have no comments on this song yet</p>
       {/if}
-      {#if song.song_comments.length === 0}
+      {#if songComments.length === 0}
         <p>There are no comments from others on this song yet</p>
       {/if}
     </section>

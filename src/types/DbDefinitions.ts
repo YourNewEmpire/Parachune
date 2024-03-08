@@ -126,6 +126,7 @@ export type Database = {
       }
       song_comments: {
         Row: {
+          artist_id: string
           comment_text: string
           created_at: string | null
           id: number
@@ -134,6 +135,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          artist_id: string
           comment_text: string
           created_at?: string | null
           id?: number
@@ -142,6 +144,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          artist_id?: string
           comment_text?: string
           created_at?: string | null
           id?: number
@@ -150,6 +153,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "public_song_comments_artist_id_fkey"
+            columns: ["artist_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "song comments_song_id_fkey"
             columns: ["song_id"]
@@ -290,23 +300,6 @@ export type Database = {
           object: string
         }
         Returns: Record<string, unknown>
-      }
-      manage_comments: {
-        Args: {
-          action_type: string
-          comment_text_input: string
-          user_id_input: string
-          song_id_input: string
-          comment_id_input?: string
-          comment_private_input?: boolean
-        }
-        Returns: {
-          comment_text: string
-          user_id: string
-          song_id: string
-          comment_id: string
-          comment_private: boolean
-        }[]
       }
     }
     Enums: {

@@ -13,6 +13,7 @@
   import Loadingspinner from "$lib/layout/loadingspinner.svelte";
   import Footer from "$lib/layout/footer/footer.svelte";
   import Svgbackground from "$lib/layout/svgbackground.svelte";
+  import { addLinkToast, addToast } from "$lib/stores";
   export let data: LayoutData;
 
   let { supabase, session, url, profile } = data;
@@ -25,6 +26,33 @@
     });
 
     return () => data.subscription.unsubscribe();
+  });
+  // todo - Create callback and put in other correct params and test
+  onMount(() => {
+    if (session) {
+      supabase
+        .channel("comment-inserts")
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "song_comments",
+            filter: `artist_id=eq.${session?.user.id}`,
+          },
+          (payload) => {
+            console.log(`Here's the SB subscription payload: ${payload.new}`);
+            addLinkToast({
+              link: `/songs/${payload.new.song_id}`,
+              message:
+                "Someone commented on your song. Leave current page and check it out?",
+              timeout: 10000,
+              type: "info",
+            });
+          }
+        )
+        .subscribe();
+    }
   });
 </script>
 
