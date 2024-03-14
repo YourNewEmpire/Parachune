@@ -6,12 +6,14 @@
   import { heroItems } from "$lib/home/heroItems";
   import Hero from "$lib/home/hero.svelte";
   import Platformdonate from "$lib/platformdonate.svelte";
+
   export let data: PageData;
   $: ({ message } = data);
 
   const topLines = ["Welcome", "To"];
 
   let animate = false;
+
   onMount(() => {
     setTimeout(() => {
       animate = true;
@@ -89,6 +91,7 @@
     </article>
   {/if}
 </section>
+
 {#each heroItems as h}
   <Hero props={h} />
 {/each}
