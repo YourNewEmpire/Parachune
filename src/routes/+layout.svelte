@@ -40,15 +40,30 @@
             table: "song_comments",
             filter: `artist_id=eq.${session?.user.id}`,
           },
-          (payload) => {
-            console.log(`Here's the SB subscription payload: ${payload.new}`);
-            addLinkToast({
-              link: `/songs/${payload.new.song_id}`,
-              message:
-                "Someone commented on your song. Leave current page and check it out?",
-              timeout: 10000,
-              type: "info",
-            });
+          async (payload) => {
+            const { data, error } = await supabase
+              .from("songs")
+              .select(`name`)
+              .eq("id", payload.new.song_id)
+              .single();
+            if (error) {
+              addLinkToast({
+                link: `/songs/${payload.new.song_id}`,
+                message:
+                  "Someone commented on your song. Leave current page and check it out?",
+                timeout: 10000,
+                type: "info",
+              });
+              return;
+            } else {
+              addLinkToast({
+                link: `/songs/${payload.new.song_id}`,
+                message: `Someone commented on ${data.name}. Leave current page and check it out?`,
+                timeout: 10000,
+                type: "info",
+              });
+              return;
+            }
           }
         )
         .subscribe();
