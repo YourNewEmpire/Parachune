@@ -15,10 +15,10 @@
   //? form element binding to pass profileForm.requestSubmit to Avatar.svelte
   let profileForm: HTMLFormElement;
   let loading = false;
-  let fullName: string | null = profile?.full_name;
-  let username: string | null = profile?.username;
-  let website: string | null = profile?.website;
-  let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url;
+  let fullName: string | null | undefined = profile?.full_name;
+  let username: string | null | undefined = profile?.username;
+  let website: string | null | undefined = profile?.website;
+  let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url ?? "";
 
   const handleSubmit: SubmitFunction = ({ formData, cancel }) => {
     loading = true;
@@ -45,13 +45,32 @@
             dismissable: true,
           });
           return;
-        }
-        addToast({
-          type: result.type,
-          message: "Failed to update account, try again",
-          timeout: 5000,
-          dismissable: true,
-        });
+        } else if (result.data?.isUsernameShort) {
+          addToast({
+            type: result.type,
+            message:
+              "Failed! Username too short, at least 1 character required.",
+            timeout: 5000,
+            dismissable: true,
+          });
+          return;
+        } else if (result.data?.isAuth === false) {
+          addToast({
+            type: result.type,
+            message:
+              "Failed! No user session found, please refresh and login again.",
+            timeout: 5000,
+            dismissable: true,
+          });
+          return;
+        } else
+          addToast({
+            type: result.type,
+            message: "Failed to update account, try again",
+            timeout: 5000,
+            dismissable: true,
+          });
+        return;
       } else {
         addToast({
           type: "success",
@@ -59,6 +78,7 @@
           timeout: 5000,
           dismissable: true,
         });
+        return;
       }
     };
   };

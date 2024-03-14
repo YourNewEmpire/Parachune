@@ -12,6 +12,7 @@ export const load: PageServerLoad = async ({
   if (!session) {
     throw redirect(303, "/");
   }
+
   const profile = await getProfile({ supabase, session });
   if (profile?.stripe_id) {
     try {
@@ -54,10 +55,37 @@ export const actions: Actions = {
     const username = formData.get("username") as string;
     const website = formData.get("website") as string;
     const avatarUrl = formData.get("avatarUrl") as string;
-    const session = await getSession();
 
-    if (username.length < 1 || !session) {
-      return fail(400);
+    // const updateSchema = zfd.formData({
+    //   commentId: zfd.text(),
+    //   commentIndex: zfd.text(),
+    //   commentPrivate: zfd.text(),
+    //   commentText: zfd.text(),
+    // });
+    // const result = updateSchema.safeParse(formData);
+    // if (!result.success) {
+    //   return fail(400);
+    // }
+
+    const session = await getSession();
+    if (username.length < 1) {
+      return fail(400, {
+        fullName,
+        username,
+        website,
+        avatarUrl,
+        isUsernameShort: true,
+      });
+    }
+    //todo - use checkAuth instead
+    if (!session) {
+      return fail(400, {
+        fullName,
+        username,
+        website,
+        avatarUrl,
+        isAuth: false,
+      });
     }
     //@ts-ignore
     const { error } = await supabase.from("profiles").upsert({
