@@ -5,8 +5,7 @@
   export let data: PageData;
 
   let { albumData } = data;
-  // not sure if form binding is needed
-  // let uploadForm: any;
+
   let loading = false;
   let uploadFormMsg: string;
   let albumFormMsg: string;
@@ -28,6 +27,8 @@
           timeout: 5000,
           type: "success",
         });
+        update();
+        return;
       } else {
         addToast({
           dismissable: true,
@@ -37,25 +38,12 @@
           type: "failure",
         });
       }
-      update();
       loading = false;
     };
   };
+
   // INPUT HANDLERS
-  function handleUploadInput(e: any) {
-    if (e.target.value < 1) {
-      uploadFormMsg = "Song title must have at least 1 char";
-    } else {
-      uploadFormMsg = "";
-    }
-  }
-  function handleAlbumInput(e: any) {
-    if (e.target.value < 1) {
-      albumFormMsg = "Album title must have at least 1 char";
-    } else {
-      albumFormMsg = "";
-    }
-  }
+
   function handleFileInput(e: any) {
     if (e.target.files[0].size > 50000000) {
       addToast({
@@ -80,7 +68,7 @@
     >
       <div class="input-item">
         <label for="songName">Song Name</label>
-        <input on:input={handleUploadInput} type="text" name="songName" id="" />
+        <input type="text" name="songName" id="" />
       </div>
 
       <div class="input-item">
@@ -120,7 +108,7 @@
     >
       <div class="input-item">
         <label for="albumName">Album Name</label>
-        <input on:input={handleAlbumInput} type="text" name="albumName" />
+        <input type="text" name="albumName" />
       </div>
       <div class="input-item">
         <label for="albumImage">Album Image (under 50MB)</label>
@@ -153,6 +141,7 @@
 
 <style>
   .upload-radio {
+    color: var(--text-secondary-color);
     display: grid;
     grid-template-columns: 50% 50%;
   }

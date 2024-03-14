@@ -121,7 +121,6 @@ export const actions: Actions = {
       // console.log(dbError);
       return fail(400);
     }
-    console.log(dbData);
     //? No errors were caught, so return good
     return {
       message: "Album complete, go upload to it.",
