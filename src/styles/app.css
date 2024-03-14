@@ -227,6 +227,18 @@ button:hover {
   text-overflow: ellipsis;
 }
 
+/* Global Toast styles */
+.toast-text {
+  font-size: 1rem;
+  overflow-wrap: break-word;
+}
+@media only screen and (min-width: 1024px) {
+  .toast-text {
+    font-size: 1.25rem;
+    overflow-wrap: break-word;
+  }
+}
+
 /*Animation keyframes*/
 
 @-moz-keyframes spin {

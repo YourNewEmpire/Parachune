@@ -19,7 +19,7 @@
 </script>
 
 <div role="alert" class={type} transition:fade>
-  <article class="text">
+  <article class="toast-text">
     <p>
       <slot />
     </p>
@@ -40,7 +40,9 @@
     width: 100%;
     padding: 1rem;
     border-radius: 0.5rem;
-    color: white;
+    color: var(--text-color);
+    background-color: var(--fg-color);
+    border: 0.2rem solid;
   }
   .buttons {
     display: flex;
@@ -59,19 +61,15 @@
     flex-direction: row;
   }
   .warning {
-    background-color: rgba(242, 96, 5, 0.7);
+    border-color: rgba(242, 96, 5, 0.7);
   }
   .failure {
-    background-color: rgba(255, 0, 0, 0.7);
+    border-color: rgba(255, 0, 0, 0.7);
   }
   .success {
-    background-color: rgba(0, 255, 0, 0.7);
+    border-color: rgba(0, 255, 0, 0.7);
   }
   .info {
-    background-color: rgba(0, 0, 255, 0.7);
-  }
-  .text {
-    font-size: 1.25rem;
-    overflow-wrap: break-word;
+    border-color: rgba(0, 0, 255, 0.7);
   }
 </style>

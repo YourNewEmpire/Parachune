@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { createEventDispatcher } from "svelte";
   import { fade } from "svelte/transition";
 
@@ -15,7 +14,7 @@
 
 <div role="alert" transition:fade>
   <button class={type} on:click={() => handleDismiss()}>
-    <article class="text">
+    <article class="toast-text">
       <slot />
     </article>
   </button>
@@ -27,27 +26,25 @@
     align-items: center;
     width: 100%;
     padding: 1rem;
+    border: 0.2rem solid;
     border-radius: 0.5rem;
-    color: white;
+    color: var(--text-color);
+    background-color: var(--fg-color);
   }
   button:focus {
     outline: none;
   }
 
   .warning {
-    background-color: rgba(242, 96, 5, 0.7);
+    border-color: rgba(242, 159, 5, 0.7);
   }
   .failure {
-    background-color: rgba(255, 0, 0, 0.7);
+    border-color: rgba(255, 0, 0, 0.7);
   }
   .success {
-    background-color: rgba(0, 255, 0, 0.7);
+    border-color: rgba(0, 255, 0, 0.7);
   }
   .info {
-    background-color: rgba(0, 0, 255, 0.7);
-  }
-  .text {
-    font-size: 1.25rem;
-    overflow-wrap: break-word;
+    border-color: rgba(0, 0, 255, 0.7);
   }
 </style>
