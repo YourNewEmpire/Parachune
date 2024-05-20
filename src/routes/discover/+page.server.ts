@@ -1,10 +1,7 @@
 import { fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-export const prerender = true;
-export const load: PageServerLoad = async ({
-  locals: { supabase },
-  parent,
-}) => {
+
+export const load: PageServerLoad = async ({ locals: { supabase } }) => {
   const { data: songData, error: songError } = await supabase
     .from("songs")
     .select("*, profiles(username)")
