@@ -8,12 +8,19 @@ export const handle: Handle = async ({ event, resolve }) => {
     import.meta.env.VITE_SUPABASE_ANON_KEY,
     {
       cookies: {
-        get: (key) => event.cookies.get(key),
-        set: (key, value, options) => {
-          event.cookies.set(key, value, { ...options, path: "/" });
+        getAll() {
+          return event.cookies.getAll();
         },
-        remove: (key, options) => {
-          event.cookies.delete(key, { ...options, path: "/" });
+        setAll(cookiesToSet) {
+          /**
+           * Note: You have to add the `path` variable to the
+           * set and remove method due to sveltekit's cookie API
+           * requiring this to be set, setting the path to an empty string
+           * will replicate previous/standard behavior (https://kit.svelte.dev/docs/types#public-types-cookies)
+           */
+          cookiesToSet.forEach(({ name, value, options }) =>
+            event.cookies.set(name, value, { ...options, path: "/" })
+          );
         },
       },
     }
@@ -36,6 +43,26 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession();
     // get profile here and put return obj
     return session;
+  };
+
+  event.locals.safeGetSession = async () => {
+    const {
+      data: { session },
+    } = await event.locals.supabase.auth.getSession();
+    if (!session) {
+      return { session: null, user: null };
+    }
+
+    const {
+      data: { user },
+      error,
+    } = await event.locals.supabase.auth.getUser();
+    if (error) {
+      // JWT validation has failed
+      return { session: null, user: null };
+    }
+
+    return { session, user };
   };
 
   //? Set secure headers.
