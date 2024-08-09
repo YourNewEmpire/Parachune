@@ -5,8 +5,9 @@
     artists and listeners to use. No advertisement, no middle men, no paywalls.
   </p>
   <p>
-    FULL focus on the music community. Direct donations to users. Free usage for
-    all.
+    FULL focus on the music community. Direct donations to users/artists. Free
+    usage for all. This is the problem we solve for you: a site to showcase your
+    music for free with no limits.
   </p>
   <p>
     As an experienced web developer, I have a clue about how to build fast,
@@ -14,23 +15,28 @@
     and high availabilty. So why not put that to good use?
   </p>
   <p>
-    As oppose to having a fixed monthly subscription, you can donate what you
-    can, when you can, to the platform or to an artist.
+    Rather than a fixed monthly subscription, you can donate what you can, when
+    you can, to the platform or to an artist.
   </p>
   <p>
-    Artists of all sizes can lose the thought of having a "label", and release
-    music freely. Your music is yours here, not Parachunes, we just convey your
-    music for you.
+    We want a peaceful community for people to share their music on comfortably.
   </p>
 
   <h1>How will this work?</h1>
-  <p>With popularity, donations will cover the costs of the app.</p>
-
-  <h1>Meet the team? Oh we need a team.</h1>
-  <p>I am Archie, the developer and creator of the project.</p>
   <p>
-    If you want to volunteer and help this project, here are some skills we
-    need:
+    With popularity, kind donations will cover the costs of the app. No user has
+    set limits, everyone is included.
+  </p>
+
+  <h1>Meet the team</h1>
+  <p>
+    I am Archie, the developer and creator of the project. View my <a
+      class="styled-link"
+      href="https://www.linkedin.com/in/archiesmyth26/">Linkedin</a
+    >
+  </p>
+  <p>
+    If you want to volunteer and help this project, here are some skills I need:
   </p>
   <ul>
     <li>Graphic design</li>
