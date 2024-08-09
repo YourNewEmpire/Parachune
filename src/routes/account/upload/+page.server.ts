@@ -1,17 +1,23 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { v4 as uuidv4 } from "uuid";
 import type { Actions, PageServerLoad } from "./$types";
+import { invalidate } from "$app/navigation";
 export const prerender = false;
 
 export const load: PageServerLoad = async ({
-  locals: { getSession, supabase },
+  locals: { getSession, supabase, checkAuth },
 }) => {
+  const authCheck = await checkAuth();
+  if (!authCheck) {
+    invalidate("supabase:auth");
+    throw redirect(401, "/");
+  }
   const session = await getSession();
   if (!session) {
     throw redirect(303, "/");
   }
 
-  const { data: albumData, error: albumError } = await supabase
+  const { data: albumData } = await supabase
     .from("albums")
     .select("*")
     .eq("artist_id", session.user.id);
@@ -20,7 +26,15 @@ export const load: PageServerLoad = async ({
 };
 
 export const actions: Actions = {
-  uploadSong: async ({ request, locals: { supabase, getSession } }) => {
+  uploadSong: async ({
+    request,
+    locals: { supabase, getSession, checkAuth },
+  }) => {
+    const authCheck = await checkAuth();
+    if (!authCheck) {
+      invalidate("supabase:auth");
+      throw redirect(401, "/");
+    }
     const session = await getSession();
     if (!session) {
       return fail(400, {
@@ -44,7 +58,7 @@ export const actions: Actions = {
     }
     // Prepare song file
     const fileExt = songFile.name.split(".").pop();
-    let uId = uuidv4();
+    let uId = crypto.randomUUID();
     let url = `${uId}.${fileExt}`;
 
     //? Upload and insert to supabase
@@ -96,7 +110,8 @@ export const actions: Actions = {
     }
     // Prepare song file
     const fileExt = albumImage.name.split(".").pop();
-    let uId = uuidv4();
+    let uId = crypto.randomUUID();
+
     let url = `${uId}.${fileExt}`;
     const { data, error } = await supabase.storage
       .from("album-images")

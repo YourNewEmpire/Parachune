@@ -5,6 +5,7 @@
   export let data: PageData;
 
   let { savedSongs, profile } = data;
+  //todo - handle empty data, current if statement not working as expected
 </script>
 
 <div>
@@ -15,7 +16,10 @@
         {#if saved.song}
           <Songcard
             unSave={true}
-            song={{ ...saved.song, profiles: { username: profile?.username } }}
+            song={{
+              ...saved.song,
+              profiles: { username: profile?.username || "" },
+            }}
           />
         {:else}
           <p>No song. skeleton needed here</p>
