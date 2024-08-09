@@ -37,8 +37,8 @@ importers:
         specifier: ^9.0.8
         version: 9.0.8
       stripe:
-        specifier: ^15.12.0
-        version: 15.12.0
+        specifier: ^16.2.0
+        version: 16.2.0
       svelte:
         specifier: ^4.2.18
         version: 4.2.18
@@ -893,8 +893,8 @@ packages:
     resolution: {integrity: sha512-laJTa3Jb+VQpaC6DseHhF7dXVqHTfJPCRDaEbid/drOhgitgYku/letMUqOXFoWV0zIIUbjpdH2t+tYj4bQMRQ==}
     engines: {node: '>=8'}
 
-  stripe@15.12.0:
-    resolution: {integrity: sha512-slTbYS1WhRJXVB8YXU8fgHizkUrM9KJyrw4Dd8pLEwzKHYyQTIE46EePC2MVbSDZdE24o1GdNtzmJV4PrPpmJA==}
+  stripe@16.2.0:
+    resolution: {integrity: sha512-kNHb5x6mlQJ8V92Afn+F+uyHG3U0+Mc1pOYxDkbEh/kI3oF63URnUt6dwTQthELYWBy04arerm2XjwgtzEPDEA==}
     engines: {node: '>=12.*'}
 
   svelte-bootstrap-icons@3.1.1:
@@ -1863,7 +1863,7 @@ snapshots:
     dependencies:
       min-indent: 1.0.1
 
-  stripe@15.12.0:
+  stripe@16.2.0:
     dependencies:
       '@types/node': 20.14.10
       qs: 6.12.3
