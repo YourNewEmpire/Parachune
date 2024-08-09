@@ -2,18 +2,28 @@ import { error, fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 import { stripe } from "$lib/server/stripe";
 import { getProfile } from "$lib/server/getProfile";
+import { invalidate } from "$app/navigation";
+
 export const prerender = false;
+
 export const load: PageServerLoad = async ({
-  locals: { getSession, supabase },
+  locals: { getSession, supabase, checkAuth },
 }) => {
   let stripeReady: boolean = false;
-  const session = await getSession();
 
+  const authCheck = await checkAuth();
+  if (!authCheck) {
+    invalidate("supabase:auth");
+    throw redirect(401, "/");
+  }
+
+  const session = await getSession();
   if (!session) {
-    throw redirect(303, "/");
+    throw redirect(401, "/");
   }
 
   const profile = await getProfile({ supabase, session });
+
   if (profile?.stripe_id) {
     try {
       const stripeAcc = await stripe.accounts.retrieve(profile.stripe_id);
@@ -45,17 +55,27 @@ export const load: PageServerLoad = async ({
 
 export const actions: Actions = {
   update: async ({ request, locals: { supabase, getSession, checkAuth } }) => {
-    // const authCheck = await checkAuth();
-    // if (authCheck == false) {
-    //   await supabase.auth.signOut();
-    //   throw fail(401);
-    // }
+    const authCheck = await checkAuth();
+    if (authCheck == false) {
+      invalidate("supabase:auth");
+      await supabase.auth.signOut();
+      throw error(401);
+    }
     const formData = await request.formData();
-    const fullName = formData.get("fullName") as string;
     const username = formData.get("username") as string;
-    const website = formData.get("website") as string;
+    const fullName = formData.get("fullName") as string;
+    const website = formData.get("websiteUrl") as string;
     const avatarUrl = formData.get("avatarUrl") as string;
+    const socialMediaPrefix = "social_";
+    const socialMediaUpsert: { [key: string]: string } = {};
 
+    for (let [key, value] of formData.entries()) {
+      if (key.startsWith(socialMediaPrefix)) {
+        const socialMediaKey = key.slice(socialMediaPrefix.length); // Remove the prefix
+        socialMediaUpsert[socialMediaKey] = value as string;
+      }
+    }
+    console.log(socialMediaUpsert);
     // const updateSchema = zfd.formData({
     //   commentId: zfd.text(),
     //   commentIndex: zfd.text(),
@@ -67,6 +87,7 @@ export const actions: Actions = {
     //   return fail(400);
     // }
 
+    //? dont really need session for upsert but makes sure and no issue doing it, paranoia more than anythingtbh.
     const session = await getSession();
     if (username.length < 1) {
       return fail(400, {
@@ -77,7 +98,6 @@ export const actions: Actions = {
         isUsernameShort: true,
       });
     }
-    //todo - use checkAuth instead
     if (!session) {
       return fail(400, {
         fullName,
@@ -88,21 +108,24 @@ export const actions: Actions = {
       });
     }
     //@ts-ignore
-    const { error } = await supabase.from("profiles").upsert({
+    const { error: profileUpError } = await supabase.from("profiles").upsert({
       id: session?.user.id,
       full_name: fullName,
       username,
       website,
       avatar_url: avatarUrl,
+      social_media_urls: socialMediaUpsert,
       updated_at: new Date(),
     });
-    if (error) {
-      let isNameDuplicate = error.message.includes("duplicate");
+
+    if (profileUpError) {
+      let isNameDuplicate = profileUpError.message.includes("duplicate");
       return fail(500, {
         fullName,
         username,
         website,
         avatarUrl,
+        social_media_urls: socialMediaUpsert,
         isUsernameTaken: isNameDuplicate ? true : false,
       });
     }
@@ -113,6 +136,7 @@ export const actions: Actions = {
       username,
       website,
       avatarUrl,
+      social_media_urls: socialMediaUpsert,
     };
   },
   signout: async ({ locals: { supabase, getSession } }) => {

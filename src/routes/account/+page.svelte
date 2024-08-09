@@ -6,6 +6,10 @@
   import Avatar from "./avatar.svelte";
   import Createstripe from "$lib/createstripe.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
+  import TwitterX from "svelte-bootstrap-icons/lib/TwitterX.svelte";
+  import Tiktok from "svelte-bootstrap-icons/lib/Tiktok.svelte";
+  import Spotify from "svelte-bootstrap-icons/lib/Spotify.svelte";
+  import type { Json } from "../../types/DbDefinitions";
 
   export let data: PageData;
   export let form: ActionData;
@@ -19,6 +23,27 @@
   let username: string | null | undefined = profile?.username;
   let website: string | null | undefined = profile?.website;
   let avatarUrl: string = form?.avatarUrl ?? profile?.avatar_url ?? "";
+  let socialMediaData: Json | undefined = profile?.social_media_urls;
+  let urls = socialMediaData as { [key: string]: string };
+
+  let newPlatform = "";
+  let newUrl = "";
+
+  function addSocialMediaUrl() {
+    if (newPlatform && newUrl) {
+      urls[newPlatform] = newUrl;
+      newPlatform = "";
+      newUrl = "";
+    } else {
+      addToast({
+        dismissable: true,
+        timeout: 3000,
+        type: "failure",
+        message: "please fill the platform name and url fields",
+      });
+    }
+    console.log(urls);
+  }
 
   const handleSubmit: SubmitFunction = ({ formData, cancel }) => {
     loading = true;
@@ -104,7 +129,13 @@
 <section>
   <h1>Manage Your Account</h1>
   <section class="account-container">
-    <section class="card col-span-full">
+    <section class="card col-span-full" style="position: relative;">
+      <a
+        href="/profiles/{session.user.id}"
+        class="styled-link"
+        style="position: absolute; right: 0; margin-right: 1rem;"
+        >View Profile
+      </a>
       <form
         class="account-form"
         method="post"
@@ -142,16 +173,46 @@
               value={form?.username ?? username ?? ""}
             />
           </div>
-
           <div class="input-item">
             <label for="website">Website</label>
             <input
               id="website"
-              name="website"
-              type="website"
+              name="websiteUrl"
+              type="text"
               value={form?.website ?? website ?? ""}
             />
           </div>
+          <p>Add your social platforms. Be sure to press update</p>
+          <div class="input-item">
+            <label for="">Platform name</label>
+            <input
+              type="text"
+              placeholder="Platform"
+              bind:value={newPlatform}
+            />
+            <label for="">Platform url</label>
+
+            <input type="text" placeholder="URL" bind:value={newUrl} />
+            <button
+              class="styled-button"
+              on:click|preventDefault={addSocialMediaUrl}>Add</button
+            >
+          </div>
+          {#if Object.keys(urls).length > 0}
+            {#each Object.entries(urls) as [key, value]}
+              <div class="input-item">
+                <label for={`social_${key}`}>{key}</label>
+                <input
+                  type="text"
+                  id={`social_${key}`}
+                  name={`social_${key}`}
+                  {value}
+                />
+              </div>
+            {/each}
+          {:else}
+            <p>No social links added</p>
+          {/if}
         </div>
         <Avatar
           {supabase}
