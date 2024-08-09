@@ -6,6 +6,6 @@ export const stripe = new Stripe(
     ? import.meta.env.VITE_STRIPE_DEV
     : import.meta.env.VITE_STRIPE_PROD,
   {
-    apiVersion: "2023-10-16",
+    apiVersion: "2024-06-20",
   }
 );
