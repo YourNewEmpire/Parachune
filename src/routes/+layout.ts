@@ -34,19 +34,31 @@ export const load: LayoutLoad = async ({ fetch, data, depends, url }) => {
           },
         }
       );
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select(`*`)
-    .eq("id", session?.user.id)
-    .single();
+  //? get session on the client
+  const session = isBrowser()
+    ? (await supabase.auth.getSession()).data.session
+    : data.session;
+
+  //? I need this profile fetched here to pass username (and potentially more in future) to the layout.svelte file
+  //* fetch profile if user has a session, else return the empty session and handle in client
+  if (session) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select(`*`)
+      .eq("id", session?.user.id)
+      .single();
+
+    return {
+      supabase,
+      session,
+      url: url.pathname,
+      profile: profile,
+    };
+  }
 
   return {
     supabase,
     session,
     url: url.pathname,
-    profile: profile,
   };
 };
