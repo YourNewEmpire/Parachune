@@ -30,8 +30,9 @@ export const handle: Handle = async ({ event, resolve }) => {
   event.locals.checkAuth = async () => {
     const {
       data: { user },
+      error,
     } = await event.locals.supabase.auth.getUser();
-    if (!user) {
+    if (!user || error) {
       return false;
     } else return true;
   };
@@ -43,26 +44,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession();
     // get profile here and put return obj
     return session;
-  };
-
-  event.locals.safeGetSession = async () => {
-    const {
-      data: { session },
-    } = await event.locals.supabase.auth.getSession();
-    if (!session) {
-      return { session: null, user: null };
-    }
-
-    const {
-      data: { user },
-      error,
-    } = await event.locals.supabase.auth.getUser();
-    if (error) {
-      // JWT validation has failed
-      return { session: null, user: null };
-    }
-
-    return { session, user };
   };
 
   //? Set secure headers.
