@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Playbutton from "$lib/playbutton.svelte";
-  import Queuebutton from "$lib/queuebutton.svelte";
-  import Savebutton from "$lib/savebutton.svelte";
+  import Playbutton from "$lib/ui/playbutton.svelte";
+  import Queuebutton from "$lib/ui/queuebutton.svelte";
+  import Savebutton from "$lib/ui/savebutton.svelte";
   import { Icon, MusicalNote } from "svelte-hero-icons";
 
   type Song = {

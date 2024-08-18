@@ -3,10 +3,10 @@
   import type { Provider, SupabaseClient } from "@supabase/supabase-js";
   import { enhance } from "$app/forms";
   import { addToast } from "$lib/stores";
-  import Discordicon from "$lib/discordicon.svelte";
-  import Googleicon from "$lib/googleicon.svelte";
-  import Dropmenu from "$lib/dropdown/dropmenu.svelte";
-  import Dropitem from "$lib/dropdown/dropitem.svelte";
+  import Discord from "svelte-bootstrap-icons/lib/Discord.svelte";
+  import Google from "svelte-bootstrap-icons/lib/Google.svelte";
+  import Dropmenu from "$lib/ui/dropdown/dropmenu.svelte";
+  import Dropitem from "$lib/ui/dropdown/dropitem.svelte";
   import {
     ArrowRightOnRectangle,
     Bookmark,
@@ -15,7 +15,6 @@
     UserCircle,
     CircleStack,
   } from "svelte-hero-icons";
-  import { page } from "$app/stores";
   import { onMount } from "svelte";
   import type { Database } from "../../../types/DbDefinitions";
 
@@ -47,17 +46,6 @@
   export let session: App.PageData["session"];
   let orig: string;
   let pageUrl: string;
-
-  onMount(() => {
-    // page.subscribe((p) => {
-    //   supabase = p.data.supabase;
-    //   profile = p.data.profile;
-    //   session = p.data.session;
-    //   orig = p.url.origin;
-    //   pageUrl = p.url.pathname;
-    //   // console.log(p.url)
-    // });
-  });
 
   const _providerSignIn = async (provider: Provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -119,11 +107,11 @@
   <form method="POST" use:enhance={handleSocialLogin}>
     <div class="login">
       <button class="styled-button" formaction="?/login&provider=google">
-        <Googleicon size={20} />
+        <Google />
         Sign in with Google
       </button>
       <button class="styled-button" formaction="?/login&provider=discord">
-        <Discordicon size={20} />
+        <Discord />
         Sign in with Discord
       </button>
       <button class="styled-button" disabled={true} formaction="?/withGithub"

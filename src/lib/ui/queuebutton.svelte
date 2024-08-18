@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Icon, Bars3CenterLeft } from "svelte-hero-icons";
   import { addToast, songsQueued } from "$lib/stores";
-  import tooltip from "./utils/tooltip";
+  import tooltip from "$lib/utils/tooltip";
   import { type StoreSong } from "$lib/stores";
 
   export let songData: StoreSong;

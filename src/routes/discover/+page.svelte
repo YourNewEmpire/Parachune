@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import SongCard from "$lib/songcard.svelte";
-  import AvatarIcon from "$lib/avataricon.svelte";
+  import SongCard from "$lib/ui/songcard.svelte";
+  import AvatarIcon from "$lib/ui/avataricon.svelte";
   export let data: PageData;
   let { songData, profileData } = data;
 </script>

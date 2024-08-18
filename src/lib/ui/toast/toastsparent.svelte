@@ -1,7 +1,12 @@
 <script lang="ts">
   import Toast from "./toast.svelte";
 
-  import { dismissLinkToast, dismissToast, linkToasts, toasts } from "./stores";
+  import {
+    dismissLinkToast,
+    dismissToast,
+    linkToasts,
+    toasts,
+  } from "$lib/stores";
   import Linktoast from "./linktoast.svelte";
 </script>
 

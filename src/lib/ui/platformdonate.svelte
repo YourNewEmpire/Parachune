@@ -1,7 +1,7 @@
 <script lang="ts">
   import Stripe from "svelte-bootstrap-icons/lib/Stripe.svelte";
-  import { addToast } from "./stores";
-  import tooltip from "./utils/tooltip";
+  import { addToast } from "../stores";
+  import tooltip from "../utils/tooltip";
 
   async function createDonation() {
     addToast({

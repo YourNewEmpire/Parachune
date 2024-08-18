@@ -1,5 +1,6 @@
 <!-- https://svelte.dev/repl/2f5ab01c05f84790bcb94a0f79afee7b -->
-
+<!-- todo - add script and add prop for dropdown styling. the prop should change the menu direction, up or down -->
+<!-- todo - for menu showing under, bottom 100% is omitted and border radius is opposite. then finally it can be reused else where, slightly more elegantly -->
 <div>
   <button><slot name="toggle" /></button>
   <menu><slot /></menu>
@@ -18,6 +19,7 @@
     position: absolute;
     display: block;
     margin-block-end: 0;
+    margin-top: 0;
     padding: 0;
     background: linear-gradient(
       260deg,

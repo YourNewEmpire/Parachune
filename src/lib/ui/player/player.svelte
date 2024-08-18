@@ -2,7 +2,7 @@
   import { fly } from "svelte/transition";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import { songsQueued, songPlaying, songsPlayed, addToast } from "$lib/stores";
-  import tooltip from "./utils/tooltip";
+  import tooltip from "$lib/utils/tooltip";
   import Playerdisc from "./playerdisc.svelte";
   import VolumeUp from "svelte-bootstrap-icons/lib/VolumeUp.svelte";
   import VolumeMute from "svelte-bootstrap-icons/lib/VolumeMute.svelte";

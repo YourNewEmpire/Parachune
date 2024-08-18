@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Songcard from "$lib/songcard.svelte";
+  import Songcard from "$lib/ui/songcard.svelte";
   import type { PageData } from "./$types";
 
   export let data: PageData;

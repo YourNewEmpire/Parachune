@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { addToast } from "./stores";
-  import { goto } from "$app/navigation";
+  import { addToast } from "../stores";
 
   async function createAccount() {
-    //add toast : Redirecting to stripe soon.
     addToast({
       type: "info",
       dismissable: false,
-      message: "Waiting for redirect to Stripe account setup",
+      message: "Waiting for redirect to Stripe account setup...",
       timeout: 10000,
     });
     const response = await fetch("/api/linkstripe", {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Icon, Star, MinusCircle } from "svelte-hero-icons";
   import { addToast } from "$lib/stores";
-  import tooltip from "./utils/tooltip";
+  import tooltip from "$lib/utils/tooltip";
 
   export let songId: string;
   export let songUrl: string;

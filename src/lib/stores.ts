@@ -37,7 +37,6 @@ export type StoreSong = {
   artistName: string;
 };
 //? SONGS STORES
-//TODO - songsQueued & songsPlayed will be object array with url and others, as oppose to string[] of url
 export const songsQueued: Writable<StoreSong[]> = writable([]);
 export const songPlaying: Writable<boolean> = writable(false);
 export const songsPlayed: Writable<StoreSong[]> = writable([]);

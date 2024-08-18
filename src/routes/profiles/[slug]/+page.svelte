@@ -2,10 +2,10 @@
   import type { PageData } from "./$types";
   import { addToast } from "$lib/stores";
   import tooltip from "$lib/utils/tooltip";
-  import AvatarIcon from "$lib/avataricon.svelte";
+  import AvatarIcon from "$lib/ui/avataricon.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
-  import Songcard from "$lib/songcard.svelte";
-  import Albumimage from "$lib/albumimage.svelte";
+  import Songcard from "$lib/ui/songcard.svelte";
+  import Albumimage from "$lib/ui/albumimage.svelte";
 
   export let data: PageData;
   let { artistProfile, stripeReady } = data;

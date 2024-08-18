@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Songcard from "$lib/songcard.svelte";
+  import Songcard from "$lib/ui/songcard.svelte";
   import type { PageData } from "./$types";
   export let data: PageData;
 
@@ -9,6 +9,8 @@
 <h1>Your music</h1>
 <section class="card-container">
   {#each dbData ?? [] as song}
-    <Songcard song={{ ...song, profiles: { username: profile?.username } }} />
+    <Songcard
+      song={{ ...song, profiles: { username: profile?.username ?? "" } }}
+    />
   {/each}
 </section>

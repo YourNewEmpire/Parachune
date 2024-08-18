@@ -6,14 +6,14 @@
   import type { LayoutData } from "./$types";
   import Header from "$lib/layout/header/header.svelte";
   import Menu from "$lib/layout/header/menu.svelte";
-  import Player from "$lib/player.svelte";
-  import ToastsParent from "$lib/toastsparent.svelte";
-  import PageTransition from "$lib/transition.svelte";
+  import Player from "$lib/ui/player/player.svelte";
+  import ToastsParent from "$lib/ui/toast/toastsparent.svelte";
+  import PageTransition from "$lib/layout/transition.svelte";
   import { navigating } from "$app/stores";
   import Loadingspinner from "$lib/layout/loadingspinner.svelte";
   import Footer from "$lib/layout/footer/footer.svelte";
   import Svgbackground from "$lib/layout/svgbackground.svelte";
-  import { addLinkToast, addToast } from "$lib/stores";
+  import { addLinkToast } from "$lib/stores";
   export let data: LayoutData;
 
   let { supabase, session, url, profile } = data;

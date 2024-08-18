@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { heroItems } from "$lib/home/heroItems";
   import Hero from "$lib/home/hero.svelte";
-  import Platformdonate from "$lib/platformdonate.svelte";
+  import Platformdonate from "$lib/ui/platformdonate.svelte";
 
   export let data: PageData;
   $: ({ message } = data);

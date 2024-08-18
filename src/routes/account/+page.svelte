@@ -4,7 +4,7 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import Avatar from "./avatar.svelte";
-  import Createstripe from "$lib/createstripe.svelte";
+  import Createstripe from "$lib/ui/createstripe.svelte";
   import Stripeicon from "$lib/stripeicon.svelte";
   import TwitterX from "svelte-bootstrap-icons/lib/TwitterX.svelte";
   import Tiktok from "svelte-bootstrap-icons/lib/Tiktok.svelte";

@@ -19,7 +19,7 @@ export const POST: RequestHandler = async ({
   });
 
   if (!account) {
-    throw error(404, "Error when creating express account");
+    throw error(404, "Error when creating account");
   }
 
   const { error: sbError } = await supabase
@@ -31,10 +31,7 @@ export const POST: RequestHandler = async ({
     .eq("user_id", session?.user.id);
 
   if (sbError) {
-    throw error(
-      404,
-      "Error when syncing express stripe account to database profile"
-    );
+    throw error(404, "Error when syncing stripe account to database profile");
   }
 
   const accountLink = await stripe.accountLinks.create({
