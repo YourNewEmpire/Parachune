@@ -4,26 +4,34 @@
     Upcoming features
   </h1>
   <ul>
-    <li>
-      Real-time notifications when users comment on your songs while using the
-      app.
-    </li>
-    <li>
-      Something to let the user know it was seen, a like or heart or something.
-    </li>
+    <li>Likes or love hearts for songs.</li>
     <li>
       Music player loading state. When you click play on a song, the player
       slides into view but loading can sometimes take a couple seconds. The
       interface needs to indicate the loading state to the user.
     </li>
-    <li>Song queue persisted after leaving the app or refreshing the app</li>
+    <li>Song queue persisted after leaving the app or refreshing the app.</li>
+    <li>
+      Social media linking, for example showing your favourite spotify playlists
+      on your profile or perhaps your tiktok content
+    </li>
   </ul>
 </article>
 <article aria-labelledby="notes-heading">
   <h1 id="notes-heading">
     <span class="circle" style="background-color: red;"></span> Current issues
   </h1>
-  <p>None! 🪂 🎛️ 🟢</p>
+  <ul>
+    <li>Spacing not being preserved when setting a comment.</li>
+    <li>
+      Adding social media urls to your account is working, but not being
+      displayed in the profile. This will be coming soon
+    </li>
+    <li>
+      Social media url linking cannot be undone. A bin button will be added to
+      remove the link to your social media account
+    </li>
+  </ul>
 </article>
 
 <!-- <article aria-labelledby="notes-heading">
