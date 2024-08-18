@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import AvatarIcon from "$lib/avataricon.svelte";
+  import Avataricon from "$lib/ui/avataricon.svelte";
 
   export let data: PageData;
   let { profileList } = data;
@@ -11,7 +11,7 @@
   <section class="card-container">
     {#each profileList ?? [] as profile}
       <a href="/profiles/{profile.id}" class="link-card col-container">
-        <AvatarIcon
+        <Avataricon
           altText={profile.username ?? ""}
           size={10}
           url={profile.avatar_url ?? ""}

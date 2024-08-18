@@ -1,15 +1,14 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import AvatarIcon from "$lib/avataricon.svelte";
-  import Playbutton from "$lib/playbutton.svelte";
-  import Queuebutton from "$lib/queuebutton.svelte";
-  import Savebutton from "$lib/savebutton.svelte";
-  import Albumimage from "$lib/albumimage.svelte";
+  import Avataricon from "$lib/ui/avataricon.svelte";
+  import Playbutton from "$lib/ui/playbutton.svelte";
+  import Queuebutton from "$lib/ui/queuebutton.svelte";
+  import Savebutton from "$lib/ui/savebutton.svelte";
+  import Albumimage from "$lib/ui/albumimage.svelte";
   import type { SubmitFunction } from "@sveltejs/kit";
   import { addToast } from "$lib/stores";
   import { enhance } from "$app/forms";
   import tooltip from "$lib/utils/tooltip";
-  import Avataricon from "$lib/avataricon.svelte";
   export let data: PageData;
 
   let { song, songComments, session } = data;
@@ -187,7 +186,7 @@
       </article>
     </div>
     <div class="card">
-      <AvatarIcon
+      <Avataricon
         altText={song.profiles?.username ?? "No avatar"}
         size={5}
         url={song.profiles?.avatar_url ?? ""}
