@@ -6,10 +6,11 @@
   import { heroItems } from "$lib/home/heroItems";
   import Hero from "$lib/home/hero.svelte";
   import Platformdonate from "$lib/ui/platformdonate.svelte";
-
+  import type Stripe from "stripe";
+  import formatTimestamp from "$lib/utils/formatTimestamp";
   export let data: PageData;
   $: ({ message } = data);
-
+  let payments: Stripe.PaymentIntent[];
   const topLines = ["Welcome", "To"];
 
   let animate = false;
@@ -18,6 +19,12 @@
     setTimeout(() => {
       animate = true;
     }, 500);
+  });
+  //? fetch payments from stripe
+  onMount(async () => {
+    const res = await fetch("api/getpayments");
+    const data: Stripe.PaymentIntent[] = await res.json();
+    payments = data;
   });
 </script>
 
@@ -88,6 +95,16 @@
     </article>
     <article in:scale={{ delay: 3000, duration: 2000 }}>
       <Platformdonate />
+      <h1>We need £25 a month when in production. Most recent donations:</h1>
+      {#each payments as p}
+        <p>
+          {formatTimestamp(p.created)}. {(p.amount_received / 100).toFixed(2)}
+          {p.currency.toUpperCase()}
+        </p>
+      {/each}
+      {#if payments.length < 1}
+        <p>No payments found.</p>
+      {/if}
     </article>
   {/if}
 </section>

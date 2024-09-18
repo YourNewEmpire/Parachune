@@ -28,6 +28,7 @@
     return () => data.subscription.unsubscribe();
   });
   // todo - Create callback and put in other correct params and test
+
   onMount(() => {
     if (session) {
       supabase

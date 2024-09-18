@@ -1,5 +1,6 @@
 import { SupabaseClient, Session } from "@supabase/supabase-js";
 import { Database } from "./types/DbDefinitions";
+
 declare global {
   namespace App {
     interface Locals {
