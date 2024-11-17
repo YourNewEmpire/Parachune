@@ -95,13 +95,18 @@
     </article>
     <article in:scale={{ delay: 3000, duration: 2000 }}>
       <Platformdonate />
+    </article>
+    <article in:scale={{ delay: 3000, duration: 2000 }}>
       <h1>We need £25 a month when in production. Most recent donations:</h1>
-      {#each payments as p}
-        <p>
-          {formatTimestamp(p.created)}. {(p.amount_received / 100).toFixed(2)}
-          {p.currency.toUpperCase()}
-        </p>
-      {/each}
+      {#if payments}
+        <!-- content here -->
+        {#each payments as p}
+          <p>
+            {formatTimestamp(p.created)}. {(p.amount_received / 100).toFixed(2)}
+            {p.currency.toUpperCase()}
+          </p>
+        {/each}
+      {/if}
       {#if payments.length < 1}
         <p>No payments found.</p>
       {/if}
